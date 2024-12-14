@@ -1,0 +1,10 @@
+
+
+Tue Jun 25 2024 13:00:48:169 GMT-0300 (-03) -- [ERROR] Necessary ports to start BrowserStack Binary were occupied by PID: -
+Tue Jun 25 2024 13:00:48:169 GMT-0300 (-03) -- [ERROR] Please ensure that 45691 is available to use
+Tue Jun 25 2024 13:00:48:169 GMT-0300 (-03) -- [ERROR] SYS_CONFLICT:1001 https://browserstack.com/docs/local-testing/binary/errors/1001
+Tue Jun 25 2024 13:00:48:172 GMT-0300 (-03) -- [ERROR] Necessary ports to start BrowserStack Binary were occupied by PID: -
+Tue Jun 25 2024 13:00:48:178 GMT-0300 (-03) -- [ERROR] Please ensure that 45690 is available to use
+Tue Jun 25 2024 13:00:48:178 GMT-0300 (-03) -- [ERROR] SYS_CONFLICT:1001 https://browserstack.com/docs/local-testing/binary/errors/1001
+Tue Jun 25 2024 13:00:48:181 GMT-0300 (-03) -- You can learn more about BrowserStack Binary flags by running ./BrowserStackLocal --help
+Tue Jun 25 2024 13:00:48:181 GMT-0300 (-03) -- You can learn more about BrowserStack Binary flags by running ./BrowserStackLocal --help

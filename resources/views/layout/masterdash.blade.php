@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    @include('layout.head')
+    @include('layout.header')
+    <body>
+        @yield('content')
+        @livewireScripts
+    </body>
+    @include('layout.footer')
+    @include('layout.scripts')
+</html>

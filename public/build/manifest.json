@@ -1,0 +1,88 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-9453611a.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/images/avatar.png": {
+    "file": "assets/avatar-54a1ebd3.png",
+    "src": "resources/images/avatar.png"
+  },
+  "resources/images/bottom.png": {
+    "file": "assets/bottom-8c871907.png",
+    "src": "resources/images/bottom.png"
+  },
+  "resources/images/edit.svg": {
+    "file": "assets/edit-dec481f9.svg",
+    "src": "resources/images/edit.svg"
+  },
+  "resources/images/favicon/android-chrome-192x192.png": {
+    "file": "assets/android-chrome-192x192-06f1cdfe.png",
+    "src": "resources/images/favicon/android-chrome-192x192.png"
+  },
+  "resources/images/favicon/android-chrome-384x384.png": {
+    "file": "assets/android-chrome-384x384-85b4e43e.png",
+    "src": "resources/images/favicon/android-chrome-384x384.png"
+  },
+  "resources/images/favicon/apple-touch-icon.png": {
+    "file": "assets/apple-touch-icon-59131d4c.png",
+    "src": "resources/images/favicon/apple-touch-icon.png"
+  },
+  "resources/images/favicon/favicon-16x16.png": {
+    "file": "assets/favicon-16x16-ec801979.png",
+    "src": "resources/images/favicon/favicon-16x16.png"
+  },
+  "resources/images/favicon/favicon-32x32.png": {
+    "file": "assets/favicon-32x32-3d981b9b.png",
+    "src": "resources/images/favicon/favicon-32x32.png"
+  },
+  "resources/images/favicon/favicon.ico": {
+    "file": "assets/favicon-4f623332.ico",
+    "src": "resources/images/favicon/favicon.ico"
+  },
+  "resources/images/favicon/mstile-150x150.png": {
+    "file": "assets/mstile-150x150-3128e396.png",
+    "src": "resources/images/favicon/mstile-150x150.png"
+  },
+  "resources/images/favicon/safari-pinned-tab.svg": {
+    "file": "assets/safari-pinned-tab-d73e22a3.svg",
+    "src": "resources/images/favicon/safari-pinned-tab.svg"
+  },
+  "resources/images/favicon/site.webmanifest": {
+    "file": "assets/site-3251ca33.webmanifest",
+    "src": "resources/images/favicon/site.webmanifest"
+  },
+  "resources/images/fundo_login.png": {
+    "file": "assets/fundo_login-3daf79a0.png",
+    "src": "resources/images/fundo_login.png"
+  },
+  "resources/images/fundo_logo.png": {
+    "file": "assets/fundo_logo-d760249a.png",
+    "src": "resources/images/fundo_logo.png"
+  },
+  "resources/images/lixeira.svg": {
+    "file": "assets/lixeira-4d44bf8f.svg",
+    "src": "resources/images/lixeira.svg"
+  },
+  "resources/images/login.svg": {
+    "file": "assets/login-5eb9f9ef.svg",
+    "src": "resources/images/login.svg"
+  },
+  "resources/images/logo.svg": {
+    "file": "assets/logo-8944cde3.svg",
+    "src": "resources/images/logo.svg"
+  },
+  "resources/images/mountain.png": {
+    "file": "assets/mountain-5ac816ed.png",
+    "src": "resources/images/mountain.png"
+  },
+  "resources/images/top.png": {
+    "file": "assets/top-ff4703bb.png",
+    "src": "resources/images/top.png"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-7f0192a1.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  }
+}

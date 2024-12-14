@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Tests\\Feature\\OneCodeTest::test_getGrupos":8},"times":{"Tests\\Feature\\OneCodeTest::test_getGrupos":1.727,"Tests\\Feature\\OneCodeTest::test_saveGrupos_should_save":0.002,"Tests\\Feature\\OneCodeTest::test_saveGrupos_should_dont_save":0.004}}

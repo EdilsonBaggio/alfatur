@@ -1,0 +1,60 @@
+version: '3.5'
+
+services:
+  alfatur:
+    build:
+      context: '.'
+    container_name: alfatur
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/html/
+    depends_on:
+      - "alfatur-db"
+      - "alfatur-mail"
+    networks:
+      - app
+
+  alfatur-db:
+    image: mysql:8
+    tty: true
+    container_name: alfatur-db
+    ports:
+      - 3308:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - DB_CONNECTION=mysql
+      - DB_HOST=alfatur-db
+      - DB_PORT=3306
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=mysql
+    networks:
+      - app
+
+  alfatur-mail:
+    image: mailhog/mailhog:latest
+    container_name: alfatur-mail
+    ports:
+      - "8125:8025"
+      - "2525:1025"
+    environment:
+      - MT_USER=alfatur
+      - MT_PASSWD=alfatur
+      - MT_MAILBOX_LIMIT=512000001
+      - MT_MESSAGE_LIMIT=102400001'
+    networks:
+      - app
+    
+  alfatur-redis:
+    image: redis:latest
+    container_name: alfatur-redis
+    ports:
+      - 6379:6379
+    networks:
+      - app
+networks:
+  app:
+    driver: bridge
