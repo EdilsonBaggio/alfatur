@@ -41,11 +41,15 @@ $azul: #1167a0;
 $vermelho: #fd0000;
 $amarelo: #d6c52c;
  
+html{
+    height: 100%;
+}
 body {
     line-height: 1;
     background: $branco;
     font-family: $fontInter;
     align-items: center;
+    height: 100%;
 }
 ol, ul {
     list-style: none;
@@ -71,7 +75,7 @@ table {
     background-size: cover;
     background-position: bottom;
     background-repeat: no-repeat;
-    display: flex
+    display: flex;
 }
 .content-login{
     .row{

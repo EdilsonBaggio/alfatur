@@ -28,11 +28,16 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   line-height: 1;
   background: #FFFFFF;
   font-family: "Inter", sans-serif;
   align-items: center;
+  height: 100%;
 }
 
 ol, ul {
