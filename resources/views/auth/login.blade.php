@@ -34,19 +34,15 @@
                      @enderror
                   </div>
                   <div class="content-login-esqueci">
-                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="lembrar">
-                        <label class="form-check-label" for="lembrar">
-                          Lembrar-me
-                        </label>
-                     </div>
-                     <a href="{{ route('esqueci-a-senha') }}">Esqueceu sua senha?</a>
+                     <a href="{{ route('esqueci-a-senha') }}">¿Olvidaste tu contraseña?</a>
                   </div>
                   <div class="mb-0 botoes-cadastro">
                      <button type="submit" class="btn btn-primary"> 
-                        Log In
+                        Entrar
                      </button>
                   </div>
+                  <img class="img-fluid mt-3" src="{{ Vite::asset('resources/images/mountain.png') }}" alt="">
+                  <i class="derechos">ALFATUR Chile - Todos los Derechos Reservados</i>
                </form>
             </div>
          </div>

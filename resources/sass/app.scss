@@ -128,9 +128,17 @@ table {
         align-items: center;
         background-size: cover;
         border: 0;
+        text-align: center;
         form{
             width: 265px;
             margin: auto;
+            .derechos{
+                color: $branco;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
         }
         .form-group{
             display: flex;
@@ -174,9 +182,9 @@ table {
             }
         }
         .content-login-esqueci{
-            display: flex;
+            display: grid;
             justify-content: space-between;
-            align-items: center;
+            justify-content: center;
             padding-top: 15px;
             padding-bottom: 15px;
             a{
@@ -186,6 +194,7 @@ table {
                 font-weight: 400;
                 line-height: normal;
                 text-decoration-line: underline;
+                color: $branco;
             }
             .form-check{
                 display: flex;

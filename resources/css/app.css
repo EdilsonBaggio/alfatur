@@ -123,10 +123,18 @@ table {
   align-items: center;
   background-size: cover;
   border: 0;
+  text-align: center;
 }
 .content-login .card form {
   width: 265px;
   margin: auto;
+}
+.content-login .card form .derechos {
+  color: #FFFFFF;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 .content-login .card .form-group {
   display: flex;
@@ -168,9 +176,9 @@ table {
   cursor: pointer;
 }
 .content-login .card .content-login-esqueci {
-  display: flex;
+  display: grid;
   justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -181,6 +189,7 @@ table {
   font-weight: 400;
   line-height: normal;
   text-decoration-line: underline;
+  color: #FFFFFF;
 }
 .content-login .card .content-login-esqueci .form-check {
   display: flex;
