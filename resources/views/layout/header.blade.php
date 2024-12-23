@@ -48,18 +48,68 @@
     </div> 
 </nav>
 <div class="content-lateral-menu">
-    <div class="menu">
+    <div class=" container menu">
         <ul>
-            <li>
-                <a href="{{ route("home") }}" class="{{ request()->routeIs(['home']) ? 'current' : '' }}">
-                    Home
-                </a>
-            </li> 
             <li>
                 <a href="{{ route("usuarios") }}" class="{{ request()->routeIs(['usuarios']) ? 'current' : '' }}">
                     Usuarios
                 </a>
-            </li>             
+            </li>  
+            <li>
+                <a href="" class="{{ request()->routeIs(['vender']) ? 'current' : '' }}">
+                    Vender
+                </a>
+            </li> 
+            <li>
+                <a href="" class="{{ request()->routeIs(['misvendas']) ? 'current' : '' }}">
+                    Mis Vendas
+                </a>
+            </li> 
+            <li>
+                <a href="" class="{{ request()->routeIs(['viajes']) ? 'current' : '' }}">
+                    Viajes/Vendedor
+                </a>
+            </li> 
+            <li>
+                <a href="" class="{{ request()->routeIs(['logistica']) ? 'current' : '' }}">
+                    Logística
+                </a>
+            </li> 
+            <li>
+                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
+                    Conformar Relalizadas
+                </a>
+            </li>  
+            <li>
+                <a href="" class="{{ request()->routeIs(['realizadas-por-pagar']) ? 'current' : '' }}">
+                    Realizadas Por Pagar
+                </a>
+            </li> 
+            <li>
+                <a href="" class="{{ request()->routeIs(['liquidaciones']) ? 'current' : '' }}">
+                    Liquidaciones
+                </a>
+            </li>
+            <li>
+                <a href="" class="{{ request()->routeIs(['viajes-full']) ? 'current' : '' }}">
+                    Viajes FULL
+                </a>
+            </li>  
+            <li>
+                <a href="" class="{{ request()->routeIs(['pagos-full']) ? 'current' : '' }}">
+                    Pagos FULL
+                </a>
+            </li>  
+            <li>
+                <a href="" class="{{ request()->routeIs(['estimativo']) ? 'current' : '' }}">
+                    Estimativo
+                </a>
+            </li>   
+            <li>
+                <a href="" class="{{ request()->routeIs(['tours']) ? 'current' : '' }}">
+                    Tours
+                </a>
+            </li>                
         </ul>
     </div>
 </div>
