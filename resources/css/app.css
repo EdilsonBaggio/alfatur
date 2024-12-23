@@ -440,6 +440,17 @@ table {
   text-align: center;
   font-weight: 800px;
 }
+@media screen and (max-width: 769px) {
+  .content-lateral-menu .menu ul li a:hover {
+    border-left: solid #EF592A;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
+    border-radius: 0;
+    text-align: left;
+    background-color: #EFF0F2;
+  }
+}
 .content-lateral-menu .menu ul li .current {
   color: #EF592A;
   background-color: #FFF;

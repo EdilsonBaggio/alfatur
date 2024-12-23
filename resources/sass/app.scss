@@ -441,6 +441,15 @@ table {
                         border-radius: 100px;
                         text-align: center;
                         font-weight: 800px;
+                        @media screen and (max-width:769px) {
+                            border-left:solid #EF592A;
+                            border-top: 0;
+                            border-bottom: 0;
+                            border-right: 0;
+                            border-radius: 0;
+                            text-align: left;
+                            background-color: $cinzaclaro;
+                        }
                     }
                 }
                 .current{
