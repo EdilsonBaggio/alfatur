@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->intended('vincular-veiculos');
+            return redirect()->intended('home');
         }
         return back()->withErrors(['email' => 'Os dados estão incorretos ou não existe usuário cadastrado.'])->withInput($request->only('email'));
     }

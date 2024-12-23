@@ -19,11 +19,13 @@ use App\Http\Controllers\TiigoController;
 */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/vincular-veiculos', [TiigoController::class, 'index'])->name('vincular-veiculos');
+    Route::get('/home', function () { 
+        return view('home');
+    })->name('home');
 
-    Route::get('/configurar-alertas', function () { 
-        return view('configurar-alertas');
-    })->name('configurar-alertas');
+    Route::get('/usuarios', function () { 
+        return view('cadastrar-usuarios');
+    })->name('usuarios');
 });
 
 Route::get('/esqueci', function () {

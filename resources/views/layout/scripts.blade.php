@@ -22,13 +22,13 @@
         $(".menu-mobile").click(function(){
             if ($(".content-lateral-menu").is(":visible")) {
                 $(".content-lateral-menu").animate({
-                    left: "-250px" // ajuste a largura conforme necessário
+                    left: "-250px",
                 }, 400, function() {
                     $(this).hide();
                 });
             } else {
                 $(".content-lateral-menu").show().animate({
-                    left: "0"
+                    left: "0",
                 }, 400);
             }
         });

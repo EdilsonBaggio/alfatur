@@ -1,12 +1,16 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-3ccd9d0a.css",
+    "file": "assets/app-a4faf9e5.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
   "resources/images/avatar.png": {
     "file": "assets/avatar-54a1ebd3.png",
     "src": "resources/images/avatar.png"
+  },
+  "resources/images/bg-top.png": {
+    "file": "assets/bg-top-51fa31fc.png",
+    "src": "resources/images/bg-top.png"
   },
   "resources/images/bottom.png": {
     "file": "assets/bottom-8c871907.png",
