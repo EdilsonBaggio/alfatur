@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\OneCodeController;
 use Illuminate\Console\Command;
 
 class updateGroups extends Command
