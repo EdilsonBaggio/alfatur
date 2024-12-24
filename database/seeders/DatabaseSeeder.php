@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'Administrador',
             'rut' => '12345678901',
             'whatsapp' => '(99) 99999-9999',
-            'commission_percentage' => 10.5,
+            'commission_percentage' => 10,
         ]);
     }
 }
