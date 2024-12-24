@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-6 order-1">
                 <div class="d-flex">
-                    <div><i class="bi bi-person-circle"></i> Usuário:</div> {{ Auth::user()->name }}
+                    <div><i class="bi bi-person-circle"></i> Usuário:</div> {{ Auth::user()->email }}
                 </div>
                 <div class="d-flex">
                     <div><i class="bi bi-lock-fill"></i>Contraseña:</div> <a href="http://">Cambiar Contraseña</a>
