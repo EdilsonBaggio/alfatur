@@ -24,12 +24,13 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     })->name('home');
 
-    // Route::get('/usuarios', function () { 
-    //     return view('cadastrar-usuarios');
-    // })->name('usuarios');
-
     Route::get('/usuarios/criar', [UserController::class, 'create'])->name('usuarios.create');
     Route::post('/usuarios/store', [UserController::class, 'store'])->name('usuarios.store');
+    Route::get('/usuarios/lista', [UserController::class, 'lista'])->name('users.list');
+    // Rota para editar um usuário
+    Route::get('/usuarios/{id}/editar', [UserController::class, 'edit'])->name('users.edit');
+    // Rota para salvar as alterações (opcional, dependendo do CRUD)
+    Route::put('/usuarios/{id}', [UserController::class, 'update'])->name('users.update');
 });
 
 Route::get('/esqueci', function () {

@@ -50,6 +50,9 @@
 <div class="content-lateral-menu">
     <div class=" container menu">
         <ul>
+            <li class="mobile">
+                <a href="{{ route("home") }}" class="{{ request()->routeIs(['home']) ? 'current' : '' }}">Mi conta</a>
+            </li>
             @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="{{ route("usuarios.create") }}" class="{{ request()->routeIs(['usuarios.create']) ? 'current' : '' }}">

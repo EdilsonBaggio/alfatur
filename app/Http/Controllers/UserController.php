@@ -37,4 +37,42 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Usuário criado com sucesso!');
     }
+
+    public function lista()
+    {
+        // Buscar todos os usuários
+        $users = User::all();
+    
+        // Passar os usuários para a view
+        return view('users.list', compact('users'));
+    }   
+
+
+    public function edit($id)
+    {
+        $user = User::findOrFail($id); // Busca o usuário pelo ID
+        return view('users.edit', compact('user')); // Carrega a view para edição
+    }
+
+    
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        // Validação dos dados
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'role' => 'required|string',
+            'rut' => 'required|string|max:20|unique:users,rut,' . $id,
+            'whatsapp' => 'required|string|max:20',
+            'commission_percentage' => 'nullable|numeric|min:0|max:100',
+        ]);
+
+        // Atualiza os dados
+        $user->update($request->all());
+
+        return redirect()->route('users.list')->with('success', 'Usuário atualizado com sucesso!');
+    }
+
 }

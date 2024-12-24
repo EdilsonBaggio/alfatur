@@ -9,7 +9,7 @@
     </div>
     <div class="content-dados-conta">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 order-1">
                 <div class="d-flex">
                     <div><i class="bi bi-person-circle"></i> Usuário:</div> {{ Auth::user()->name }}
                 </div>
@@ -29,7 +29,7 @@
                     <div><i class="bi bi-person-arms-up"></i>Perfil:</div> {{ Auth::user()->role }}
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 order-2">
                 <div class="foto"></div>
             </div>
         </div>

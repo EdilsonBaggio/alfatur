@@ -33,13 +33,13 @@
 
         <!-- Senha -->
         <div class="mb-3">
-            <label for="password" class="form-label">Senha</label>
+            <label for="password" class="form-label">Senha:</label>
             <input type="password" id="password" name="password" class="form-control" required>
         </div>
 
         <!-- RUT -->
         <div class="mb-3">
-            <label for="rut" class="form-label">RUT (CPF)</label>
+            <label for="rut" class="form-label">RUT</label>
             <input type="text" id="rut" name="rut" class="form-control" required>
         </div>
 
@@ -56,7 +56,16 @@
         </div>
 
         <!-- Botão Criar -->
-        <button type="submit" class="btn btn-primary">Crear Usuário</button>
+        <button type="submit" class="btn btn-outline-primary">Crear Usuário</button>
+        <a class="btn btn-outline-secondary" href="{{ route('users.list') }}">Ver lista de usuarios</a>
     </form>
 </div>
+@endsection
+@section('script')
+<script>
+    $(document).ready(function(){
+        $('#rut').mask('00.000.000-0', {reverse: true});
+        $('#whatsapp').mask('+00 90000-0000');
+    });
+</script>
 @endsection

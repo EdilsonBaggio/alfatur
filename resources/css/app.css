@@ -434,6 +434,11 @@ table {
   text-decoration: none;
   font-size: 14px;
 }
+@media screen and (max-width: 1024px) {
+  .content-lateral-menu .menu ul li a {
+    font-size: 10px;
+  }
+}
 @media screen and (max-width: 769px) {
   .content-lateral-menu .menu ul li a {
     border: 0;
@@ -481,6 +486,11 @@ table {
     background-color: #376cd7;
   }
 }
+@media screen and (max-width: 1024px) {
+  .content-lateral-menu .menu ul li {
+    width: 17.2%;
+  }
+}
 @media screen and (max-width: 769px) {
   .content-lateral-menu .menu ul li {
     width: 100%;
@@ -488,9 +498,6 @@ table {
   }
 }
 
-.content-tabelas {
-  padding: 35px 20px;
-}
 .content-tabelas .card {
   border-color: #EFF0F2;
 }
@@ -503,111 +510,6 @@ table {
   font-weight: 500;
   line-height: normal;
   border-color: #EFF0F2;
-}
-.content-tabelas .content-table-menus form {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-@media screen and (max-width: 769px) {
-  .content-tabelas .content-table-menus form {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
-  }
-}
-.content-tabelas .content-table-menus form .form-check {
-  display: grid;
-}
-@media screen and (max-width: 1200px) {
-  .content-tabelas .content-table-menus form .form-check {
-    display: flex;
-    padding: 0;
-    align-items: center;
-  }
-}
-.content-tabelas .content-table-menus form .form-check span {
-  color: #000;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-}
-@media screen and (max-width: 1200px) {
-  .content-tabelas .content-table-menus form .form-check span {
-    margin-bottom: 0px;
-    margin-right: 5px;
-  }
-}
-.content-tabelas .content-table-menus form .form-group {
-  padding-top: 15px;
-  margin-right: 20px;
-}
-.content-tabelas .content-table-menus form .form-group input {
-  width: 180px;
-  height: 29px;
-  border-radius: 4px;
-  border: 0.5px solid #CED4DA;
-  background: #FFF;
-  margin-top: 10px;
-  color: #1A1823;
-  font-size: 12.6px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-.content-tabelas .content-table-menus form .form-group span {
-  color: #000;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-@media screen and (max-width: 1200px) {
-  .content-tabelas .content-table-menus form .form-group {
-    width: 250px;
-  }
-}
-@media screen and (max-width: 769px) {
-  .content-tabelas .content-table-menus form .form-group {
-    margin-right: 0px;
-    width: 100%;
-  }
-  .content-tabelas .content-table-menus form .form-group input {
-    width: 100%;
-  }
-}
-.content-tabelas .content-table-menus form .button-adicionar {
-  background-color: #EF592A;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 500;
-  width: 110px;
-  height: 39px;
-  margin-top: 25px;
-  margin-left: 163px;
-}
-@media screen and (max-width: 769px) {
-  .content-tabelas .content-table-menus form .button-adicionar {
-    margin-left: 0;
-  }
-}
-.content-tabelas .content-table-menus form .button-enviar {
-  background-color: #EF592A;
-  color: #FFFFFF;
-  font-size: 14px;
-  font-weight: 500;
-  width: 110px;
-  height: 39px;
-  margin-top: 25px;
-  margin-left: 200px;
-}
-@media screen and (max-width: 769px) {
-  .content-tabelas .content-table-menus form .button-enviar {
-    margin-left: 0;
-  }
 }
 .content-tabelas .content-table .dt-info {
   float: left;
@@ -905,6 +807,7 @@ input[switch=dark]:checked + label {
   border: 1px solid #0567D4;
   border-radius: 15px;
   margin: 5px;
+  display: flex;
 }
 .content-dados-conta .row .col-md-6 {
   padding: 15px;
@@ -919,8 +822,8 @@ input[switch=dark]:checked + label {
 }
 @media screen and (max-width: 769px) {
   .content-dados-conta .row .col-md-6 .foto {
-    width: 100%;
-    height: 300px;
+    width: 140px;
+    height: 140px;
   }
 }
 @media screen and (max-width: 769px) {
@@ -929,6 +832,20 @@ input[switch=dark]:checked + label {
     flex: 0 0 100%;
     max-width: 100%;
   }
+}
+@media screen and (max-width: 769px) {
+  .content-dados-conta .row .order-2 {
+    order: 1 !important;
+  }
+  .content-dados-conta .row .order-1 {
+    order: 2 !important;
+  }
+}
+.content-dados-conta .row .order-2 {
+  order: 2;
+}
+.content-dados-conta .row .order-1 {
+  order: 1;
 }
 .content-dados-conta i {
   margin-right: 10px;
@@ -939,6 +856,11 @@ input[switch=dark]:checked + label {
 .content-dados-conta .d-flex div {
   color: #EF592A;
   margin-right: 15px;
+}
+
+.content-edit {
+  clear: both;
+  padding: 25px;
 }
 
 /*# sourceMappingURL=app.css.map */
