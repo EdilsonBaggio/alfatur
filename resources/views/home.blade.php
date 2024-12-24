@@ -14,7 +14,7 @@
                     <div><i class="bi bi-person-circle"></i> Usuário:</div> {{ Auth::user()->email }}
                 </div>
                 <div class="d-flex">
-                    <div><i class="bi bi-lock-fill"></i>Contraseña:</div> <a href="http://">Cambiar Contraseña</a>
+                    <div><i class="bi bi-lock-fill"></i>Contraseña:</div> <a href="{{ route('password.request') }}">Cambiar Contraseña</a>
                 </div>
                 <div class="d-flex">
                     <div><i class="bi bi-person-circle"></i>Nombre:</div> {{ Auth::user()->name }}
