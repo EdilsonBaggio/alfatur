@@ -17,7 +17,7 @@
                             
                         <div class="d-grid">
                             <p>Hola, {{ Auth::user()->name }}</p>
-                            <span>Administrador</span>
+                            <span>{{ Auth::user()->role }}</span>
                         </div>
                     </div>
                     <div class="mobile-none">
@@ -50,11 +50,13 @@
 <div class="content-lateral-menu">
     <div class=" container menu">
         <ul>
+            @if(Auth::user()->role == "Administrador")
             <li>
-                <a href="{{ route("usuarios") }}" class="{{ request()->routeIs(['usuarios']) ? 'current' : '' }}">
+                <a href="{{ route("usuarios.create") }}" class="{{ request()->routeIs(['usuarios.create']) ? 'current' : '' }}">
                     Usuarios
                 </a>
             </li>  
+            @endif
             <li>
                 <a href="" class="{{ request()->routeIs(['vender']) ? 'current' : '' }}">
                     Vender
@@ -64,22 +66,30 @@
                 <a href="" class="{{ request()->routeIs(['misvendas']) ? 'current' : '' }}">
                     Mis Vendas
                 </a>
-            </li> 
+            </li>
+            @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="" class="{{ request()->routeIs(['viajes']) ? 'current' : '' }}">
                     Viajes/Vendedor
                 </a>
-            </li> 
+            </li>
+            @endif
             <li>
                 <a href="" class="{{ request()->routeIs(['logistica']) ? 'current' : '' }}">
                     Logística
                 </a>
-            </li> 
+            </li>
             <li>
                 <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
-                    Conformar Relalizadas
+                    Confirmados
                 </a>
-            </li>  
+            </li>
+            <li>
+                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
+                    Mis Liquidaciones
+                </a>
+            </li> 
+            @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="" class="{{ request()->routeIs(['realizadas-por-pagar']) ? 'current' : '' }}">
                     Realizadas Por Pagar
@@ -99,17 +109,21 @@
                 <a href="" class="{{ request()->routeIs(['pagos-full']) ? 'current' : '' }}">
                     Pagos FULL
                 </a>
-            </li>  
+            </li> 
+            @endif
             <li>
                 <a href="" class="{{ request()->routeIs(['estimativo']) ? 'current' : '' }}">
                     Estimativo
                 </a>
-            </li>   
+            </li> 
+            @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="" class="{{ request()->routeIs(['tours']) ? 'current' : '' }}">
                     Tours
                 </a>
-            </li>                
+            </li>  
+            @endif       
         </ul>
+        <br style="clear: both">
     </div>
 </div>

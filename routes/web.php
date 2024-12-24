@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\TiigoController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,12 @@ Route::middleware(['auth'])->group(function () {
         return view('home');
     })->name('home');
 
-    Route::get('/usuarios', function () { 
-        return view('cadastrar-usuarios');
-    })->name('usuarios');
+    // Route::get('/usuarios', function () { 
+    //     return view('cadastrar-usuarios');
+    // })->name('usuarios');
+
+    Route::get('/usuarios/criar', [UserController::class, 'create'])->name('usuarios.create');
+    Route::post('/usuarios/store', [UserController::class, 'store'])->name('usuarios.store');
 });
 
 Route::get('/esqueci', function () {
