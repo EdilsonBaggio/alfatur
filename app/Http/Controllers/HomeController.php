@@ -34,8 +34,9 @@ class HomeController extends Controller
             }
 
             // Salva a nova foto
-            $path = $request->file('photo')->store('photos'); // Armazena em storage/app/photos
-            $users->photo = $path;
+            $imagePath = $request->file('photo')->store('photos', 'public');
+            $imageUrl = asset('storage/' . $imagePath);
+            $users->photo = $imageUrl;
             $users->save();
         }
 

@@ -38,9 +38,9 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
+            'root' => storage_path('app/public/photos'), // Ajustado para o diretório correto
+            'url' => env('APP_URL') . '/storage/photos', // Caminho correto para acesso público
+            'visibility' => 'public', // Corrigido para 'public'
             'throw' => false,
         ],
 
