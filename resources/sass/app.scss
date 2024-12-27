@@ -235,8 +235,6 @@ table {
                     background-color: $branco;
                     color: $laranja;
                 }
-            }@media screen and (max-width:1440px) {
-                width: 100%;
             }
         }
         .link-esqueci{
@@ -399,7 +397,8 @@ table {
     background: #fff;
     @media screen and (max-width: 769px){
         width: 260px;
-        height: 1000px;
+        height: 588px;
+        overflow: auto;
         border-right: 1px solid #EFF0F2;
         float: left;
         position: absolute;
@@ -421,7 +420,8 @@ table {
         padding: 10px;
         ul{
             li{
-                width: 18.2%;
+                width: 31%;
+                height: 48px;
                 float: left;
                 list-style: none;
                 margin: 10px;
@@ -794,36 +794,11 @@ input[switch="dark"]:checked + label {
         .col-md-6{
             padding: 15px;
             display: grid;
-            .foto{
-                width: 360px;
-                height: 360px;
-                background-image: url(../images/foto.png);
-                background-size: cover;
-                margin: 0 auto;
-                @media screen and (max-width: 769px) {
-                    width: 140px;
-                    height: 140px;
-                }
-            }
             @media screen and (max-width: 769px) {
                 width: 100%;
                 flex: 0 0 100%;
                 max-width: 100%;
             }
-        }
-        @media screen and (max-width:769px) {
-            .order-2{
-                order: 1!important;
-            }
-            .order-1{
-                order: 2!important;
-            }
-        }
-        .order-2{
-            order: 2;
-        }
-        .order-1{
-            order: 1;
         }
     }
     i{
@@ -840,4 +815,21 @@ input[switch="dark"]:checked + label {
 .content-edit{
   clear: both;
   padding: 25px;
+}
+footer{
+    clear: both;
+    width: 100%;
+    height: 100px;
+    margin-top: 50px;
+    background-image: url(../images/footer-bg.svg);
+    .content-rodape {
+        display: flex;
+        justify-content: center;
+        height: 100px;
+        align-items: center;
+        p{
+            color: #fff;
+            text-align: center;
+        }
+    }
 }

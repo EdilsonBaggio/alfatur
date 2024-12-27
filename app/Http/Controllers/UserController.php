@@ -74,5 +74,4 @@ class UserController extends Controller
 
         return redirect()->route('users.list')->with('success', 'Usuário atualizado com sucesso!');
     }
-
 }

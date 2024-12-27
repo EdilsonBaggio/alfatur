@@ -7,7 +7,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\TiigoController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,10 +20,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', function () { 
-        return view('home');
-    })->name('home');
-
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/usuarios/criar', [UserController::class, 'create'])->name('usuarios.create');
     Route::post('/usuarios/store', [UserController::class, 'store'])->name('usuarios.store');
     Route::get('/usuarios/lista', [UserController::class, 'lista'])->name('users.list');
@@ -31,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/usuarios/{id}/editar', [UserController::class, 'edit'])->name('users.edit');
     // Rota para salvar as alterações (opcional, dependendo do CRUD)
     Route::put('/usuarios/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::post('/users/{id}/photo', [HomeController::class, 'updatePhoto'])->name('users.updatePhoto');
 });
 
 Route::get('/esqueci', function () {

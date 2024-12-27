@@ -28,9 +28,29 @@
                 <div class="d-flex">
                     <div><i class="bi bi-person-arms-up"></i>Perfil:</div> {{ Auth::user()->role }}
                 </div>
+                <form action="{{ route('users.updatePhoto', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                
+                    <div class="d-flex">
+                        <div class="align-self-center"><i class="bi bi-person-arms-up"></i> Foto:</div>
+                        <div>
+                            <input type="file" name="photo" class="form-control" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <button type="submit" class="btn btn-primary mt-2">Atualizar Foto</button>
+                    </div>
+                </form>  
             </div>
             <div class="col-md-6 order-2">
-                <div class="foto"></div>
+                <div class="text-center">
+                    @if(Auth::user()->photo) <!-- Verifica se o usuário possui uma foto cadastrada -->
+                        <img class="img-fluid" src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Foto do usuário">
+                    @else
+                        <img class="img-fluid" src="{{ Vite::asset('resources/images/foto.png') }}" alt="Foto padrão">
+                    @endif
+                </div>
             </div>
         </div>
     </div>

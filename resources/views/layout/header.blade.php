@@ -56,7 +56,7 @@
             @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="{{ route("usuarios.create") }}" class="{{ request()->routeIs(['usuarios.create']) ? 'current' : '' }}">
-                    Usuarios
+                    <i class="bi bi-person-circle"></i> Usuarios
                 </a>
             </li>  
             @endif

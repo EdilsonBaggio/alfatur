@@ -5,6 +5,5 @@
         @yield('content')
         @livewireScripts
     </body>
-    @include('layout.footer')
     @include('layout.scripts')
 </html>
