@@ -358,6 +358,10 @@ table {
                     font-weight: 600;
                     @media screen and (max-width:769px){
                         font-size: 16px;
+                        width: 120px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
                 a{
@@ -403,7 +407,9 @@ table {
         position: relative;
         display: none;
         z-index: 1;
-        background: $azul;
+        background-image: url(../images/bg-top.png);
+        background-repeat: repeat;
+        background-size: cover;
         margin-bottom: 20px;
     }
     .menu{
@@ -458,7 +464,9 @@ table {
                             border-right: 0;
                             border-radius: 0;
                             text-align: left;
-                            background-color: #376cd7;
+                            background-image: url(../images/bg-top.png);
+                            background-repeat: repeat;
+                            background-size: cover;
                         }
                     }
                 }
@@ -478,7 +486,9 @@ table {
                         border-right: 0;
                         border-radius: 0;
                         text-align: left;
-                        background-color: #376cd7;
+                        background-image: url(../images/bg-top.png);
+                        background-repeat: repeat;
+                        background-size: cover;
                     }
                 }
                 @media screen and (max-width:1024px) {
@@ -807,6 +817,11 @@ input[switch="dark"]:checked + label {
                 flex: 0 0 100%;
                 max-width: 100%;
             }
+            .foto{
+                img{
+                    max-height: 430px;
+                }
+            }
         }
     }
     i{
@@ -817,6 +832,13 @@ input[switch="dark"]:checked + label {
         div{
             color: $laranja;
             margin-right: 2px;
+        }
+        @media screen and (max-width:769px) {
+            flex-direction: column;
+            div{
+                margin-bottom: 15px;
+            }
+            margin: 15px 0px;
         }
     }
 }
@@ -847,5 +869,11 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
         white-space: nowrap;
         justify-content: center;
         display: flex;
+    }
+}
+
+.foto-btn {
+    @media screen and (max-width:769px) {
+        width: 100%;
     }
 }

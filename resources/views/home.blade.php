@@ -33,18 +33,18 @@
                     @method('POST')
                 
                     <div class="d-flex">
-                        <div class="align-self-center"><i class="bi bi-person-arms-up"></i> Foto:</div>
                         <div>
-                            <input type="file" name="photo" class="form-control" accept="image/*" required>
+                            <div class="mb-2"><i class="bi bi-person-arms-up"></i> Foto:</div>
+                            <input type="file" name="photo" class="form-control" accept="image/*" capture="environment" required>
                         </div>
                     </div>
                     <div class="d-flex">
-                        <button type="submit" class="btn btn-primary mt-2">Atualizar Foto</button>
+                        <button type="submit" class="foto-btn btn btn-primary mt-2">Atualizar Foto</button>
                     </div>
                 </form>  
             </div>
             <div class="col-md-6 order-2">
-                <div class="text-center">
+                <div class="text-center foto">
                     @if(Auth::user()->photo) <!-- Verifica se o usuário possui uma foto cadastrada -->
                         <img class="img-fluid" src="{{ asset('' . Auth::user()->photo) }}" alt="Foto do usuário">
                     @else
