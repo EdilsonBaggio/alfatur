@@ -34,7 +34,7 @@
                 
                     <div class="d-flex">
                         <div>
-                            <div class="mb-2"><i class="bi bi-person-arms-up"></i> Foto:</div>
+                            <div class="mb-2"><i class="bi bi-card-image"></i> Foto:</div>
                             <input type="file" name="photo" class="form-control" accept="image/*" capture="environment" required>
                         </div>
                     </div>
