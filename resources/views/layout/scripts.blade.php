@@ -20,17 +20,7 @@
     AOS.init();
     $(document).ready(function(){
         $(".menu-mobile").click(function(){
-            if ($(".content-lateral-menu").is(":visible")) {
-                $(".content-lateral-menu").animate({
-                    left: "-250px",
-                }, 400, function() {
-                    $(this).hide();
-                });
-            } else {
-                $(".content-lateral-menu").show().animate({
-                    left: "0",
-                }, 400);
-            }
+            $('.content-lateral-menu').toggle();
         });
     });
 </script>

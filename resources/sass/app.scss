@@ -373,7 +373,7 @@ table {
                     fill: #fff;
                     margin-right: 5px;
                     @media screen and (max-width:769px) {
-                        width: 30px;
+                        width: 22px;
                     }
                 }
                 .current{
@@ -396,12 +396,12 @@ table {
     float: left;
     background: #fff;
     @media screen and (max-width: 769px){
-        width: 260px;
-        height: 588px;
+        width: 100%;
+        height: 300px;
         overflow: auto;
         border-right: 1px solid #EFF0F2;
         float: left;
-        position: absolute;
+        position: relative;
         display: none;
         z-index: 1;
         background: #fff;
@@ -808,7 +808,7 @@ input[switch="dark"]:checked + label {
         margin: 15px;
         div{
             color: $laranja;
-            margin-right: 15px;
+            margin-right: 2px;
         }
     }
 }

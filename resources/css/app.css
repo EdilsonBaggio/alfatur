@@ -366,7 +366,7 @@ table {
 }
 @media screen and (max-width: 769px) {
   .content-top-menu .container .menu-top-logado div svg {
-    width: 30px;
+    width: 22px;
   }
 }
 .content-top-menu .container .menu-top-logado div .current {
@@ -388,12 +388,12 @@ table {
 }
 @media screen and (max-width: 769px) {
   .content-lateral-menu {
-    width: 260px;
-    height: 588px;
+    width: 100%;
+    height: 300px;
     overflow: auto;
     border-right: 1px solid #EFF0F2;
     float: left;
-    position: absolute;
+    position: relative;
     display: none;
     z-index: 1;
     background: #fff;
@@ -825,7 +825,7 @@ input[switch=dark]:checked + label {
 }
 .content-dados-conta .d-flex div {
   color: #EF592A;
-  margin-right: 15px;
+  margin-right: 2px;
 }
 
 .content-edit {

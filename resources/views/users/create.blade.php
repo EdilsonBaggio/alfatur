@@ -1,7 +1,7 @@
 @extends('layout.masterdash')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <div class="card">
         <div class="card-header">
           Cadastrar usuarios
