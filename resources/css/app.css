@@ -843,6 +843,9 @@ input[switch=dark]:checked + label {
 }
 .content-dados-conta .row .col-md-6 .foto img {
   max-height: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .content-dados-conta i {
   margin-right: 10px;
