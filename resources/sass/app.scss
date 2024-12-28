@@ -818,11 +818,11 @@ input[switch="dark"]:checked + label {
                 max-width: 100%;
             }
             .foto{
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 img{
                     max-height: 430px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
                 }
             }
         }

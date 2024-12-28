@@ -841,11 +841,13 @@ input[switch=dark]:checked + label {
     max-width: 100%;
   }
 }
-.content-dados-conta .row .col-md-6 .foto img {
-  max-height: 430px;
+.content-dados-conta .row .col-md-6 .foto {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.content-dados-conta .row .col-md-6 .foto img {
+  max-height: 430px;
 }
 .content-dados-conta i {
   margin-right: 10px;
