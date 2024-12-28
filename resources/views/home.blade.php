@@ -46,11 +46,11 @@
             <div class="col-md-6 order-2">
                 <div class="text-center">
                     @if(Auth::user()->photo) <!-- Verifica se o usuário possui uma foto cadastrada -->
-                        <img class="img-fluid" src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Foto do usuário">
+                        <img class="img-fluid" src="{{ asset('' . Auth::user()->photo) }}" alt="Foto do usuário">
                     @else
-                        <img class="img-fluid" src="{{ Vite::asset('resources/images/foto.png') }}" alt="Foto padrão">
+                        <img class="img-fluid" src="{{ asset('uploads/foto.png') }}" alt="Foto padrão">
                     @endif
-                </div>
+                </div>                               
             </div>
         </div>
     </div>

@@ -24,23 +24,26 @@ class HomeController extends Controller
         ]);
 
         // Encontrar o usuário
-        $users = User::findOrFail($id);
+        $user = User::findOrFail($id); // Corrigido para $user no singular
 
         // Upload do arquivo
         if ($request->hasFile('photo')) {
             // Deleta a foto antiga, se existir
-            if ($users->photo) {
-                Storage::delete($users->photo);
+            if ($user->photo) {
+                Storage::delete($user->photo); // Mantido como $user
             }
 
             // Salva a nova foto
-            $imagePath = $request->file('photo')->store('photos', 'public');
-            $imageUrl = asset('storage/' . $imagePath);
-            $users->photo = $imageUrl;
-            $users->save();
+            $path = $request->file('photo')->move(
+                public_path('uploads'),
+                uniqid() . '.' . $request->file('photo')->getClientOriginalExtension()
+            );
+
+            // Salva no banco de dados apenas 'uploads/arquivo.png'
+            $user->photo = 'uploads/' . basename($path);
+            $user->save(); // Mantido como $user
         }
 
         return back()->with('success', 'Foto atualizada com sucesso!');
     }
-
 }
