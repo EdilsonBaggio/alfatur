@@ -61,12 +61,12 @@
             </li>  
             @endif
             <li>
-                <a href="" class="{{ request()->routeIs(['vender']) ? 'current' : '' }}">
+                <a href="{{ route("vendas.create") }}" class="{{ request()->routeIs(['vendas.create']) ? 'current' : '' }}">
                     Vender
                 </a>
             </li> 
             <li>
-                <a href="" class="{{ request()->routeIs(['misvendas']) ? 'current' : '' }}">
+                <a href="{{ route("vendas.list") }}" class="{{ request()->routeIs(['vendas.list']) ? 'current' : '' }}">
                     Mis Vendas
                 </a>
             </li>

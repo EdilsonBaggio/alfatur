@@ -8,6 +8,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\TiigoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\VendasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,11 @@ Route::middleware(['auth'])->group(function () {
     // Rota para salvar as alterações (opcional, dependendo do CRUD)
     Route::put('/usuarios/{id}', [UserController::class, 'update'])->name('users.update');
     Route::post('/users/{id}/photo', [HomeController::class, 'updatePhoto'])->name('users.updatePhoto');
+
+    Route::get('/vendas/list', [VendasController::class, 'index'])->name('vendas.list');
+    Route::get('/vendas/create', [VendasController::class, 'create'])->name('vendas.create');
+    Route::post('/vendas', [VendasController::class, 'store'])->name('vendas.store');
+
 });
 
 Route::get('/esqueci', function () {

@@ -39,7 +39,7 @@ $cinzaescuro:#959396;
 $cinzaclaro: #EFF0F2;
 $preto: #000000;
 $laranja: #EF592A;
-$azul: #1167a0;
+$azul: #007bff;
 $vermelho: #fd0000;
 $amarelo: #d6c52c;
  
@@ -855,6 +855,8 @@ footer{
     height: 100px;
     margin-top: 50px;
     background-image: url(../images/footer-bg.svg);
+    position: absolute;
+    border: 0;
     .content-rodape {
         display: flex;
         justify-content: center;
@@ -874,9 +876,40 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
         display: flex;
     }
 }
-
 .foto-btn {
     @media screen and (max-width:769px) {
         width: 100%;
+    }
+}
+.card{
+    .card-header{
+        background-image: url(../images/bg-top.png);
+        background-position: center;
+        background-size: cover;
+        color: $branco!important;
+        font-weight: 700;
+        font-size: 20px;
+    }
+    .card-body{
+        label{
+            margin-bottom: 5px;
+        }
+    }
+}
+.dt-buttons{
+    .dt-button{
+        background-color: $azul!important;
+        color: $branco!important;
+        border: 0px!important;
+        border-radius: 5px !important;
+        box-shadow: none!important;
+    }
+}
+.dados{
+    h3{
+        background: $laranja;
+        padding: 15px;
+        color: $branco;
+        font-weight: 700;
     }
 }
