@@ -64,7 +64,13 @@ class VendasController extends Controller
         // Processa o upload do comprovante, se fornecido
         $comprovantePath = null;
         if ($request->hasFile('comprovante')) {
-            $comprovantePath = $request->file('comprovante')->store('comprovantes', 'public');
+            // Move o arquivo para a pasta 'uploads' na raiz pública
+            $file = $request->file('comprovante');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $fileName);
+
+            // Salva no banco apenas 'uploads/arquivo.extensão'
+            $comprovantePath = 'uploads/' . $fileName;
         }
 
         // Criar Venda
@@ -109,5 +115,5 @@ class VendasController extends Controller
         // Redireciona com mensagem de sucesso
         return redirect()->back()->with('success', 'Venda adicionada com sucesso!');
     }
-
+    
 }

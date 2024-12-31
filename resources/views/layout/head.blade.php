@@ -36,6 +36,8 @@
     <!-- DataTables Buttons CSS -->
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
 
+    <!-- Lightbox CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/css/lightbox.min.css" rel="stylesheet">
 
     <link rel="icon" type="image/png" sizes="16x16" href="{{ Vite::asset('resources/images/favicon/favicon-16x16.png') }}">
     <link rel="mask-icon" href="{{ Vite::asset('resources/images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">

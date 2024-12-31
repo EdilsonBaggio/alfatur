@@ -28,7 +28,8 @@
                         <th>Preço Adulto</th>
                         <th>PAX Infantil</th>
                         <th>Preço Infantil</th>
-                        <th>Ações</th>
+                        <th>Observacoes</th>
+                        <th>Comprovantes</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -53,9 +54,15 @@
                             <td>{{ $tour->preco_adulto }}</td>
                             <td>{{ $tour->pax_infantil }}</td>
                             <td>{{ $tour->preco_infantil }}</td>
+                            <td>{{ $venda->observacoes }}</td>
                             <td>
-                              <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                            </td>
+                                @if($venda->comprovante) <!-- Verifica se o usuário tem um comprovante -->
+                                    <!-- Link com atributo 'data-lightbox' para Lightbox -->
+                                    <a href="{{ asset($venda->comprovante) }}" data-lightbox="comprovante-{{$venda->id}}" data-title="Comprovante de Venda" target="_blank">Ver Comprovante</a>
+                                @else
+                                    N/A
+                                @endif
+                            </td>               
                           </tr>
                         @endforeach
                       @endforeach
