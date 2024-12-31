@@ -936,4 +936,8 @@ footer .content-rodape p {
   font-weight: 700;
 }
 
+table.dataTable > tbody > tr.child ul.dtr-details {
+  width: 100%;
+}
+
 /*# sourceMappingURL=app.css.map */

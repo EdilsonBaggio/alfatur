@@ -1,44 +1,66 @@
 @extends('layout.masterdash')
 @section('content')
 <div class="content-tabelas">
-    <div class="container">
+    <div class="container-fluid">
         <div class="card">
             <div class="card-header">
               Lista de Vendas
             </div>
             <div class="card-body">
               <div class="content-table">
-                  <table id="tabela-vendas" class="display table responsive mt-4" style="width: 100%">
+                  <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%">
                     <thead>
                       <tr>
-                        <th>ID</th>
                         <th>Vendedor</th>
                         <th>Nome</th>
                         <th>Telefone</th>
                         <th>Email</th>
                         <th>Hotel</th>
                         <th>Valor Total</th>
+                        <th>Valor Pago</th>
+                        <th>Valor a Pagar</th>
+                        <th>Estado do Pagamento</th>
+                        <th>Forma de Pagamento</th>
                         <th>Data do Pagamento</th>
+                        <th>Tour</th>
+                        <th>Data Tour</th>
+                        <th>PAX Adulto</th>
+                        <th>Preço Adulto</th>
+                        <th>PAX Infantil</th>
+                        <th>Preço Infantil</th>
                         <th>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($vendas as $venda)
-                      <tr>
-                        <td>{{ $venda->id }}</td>
-                        <td>{{ $venda->vendedor }}</td>
-                        <td>{{ $venda->nome }}</td>
-                        <td>{{ $venda->telefone }}</td>
-                        <td>{{ $venda->email }}</td>
-                        <td>{{ $venda->hotel }}</td>
-                        <td>{{ $venda->valor_total }}</td>
-                        <td>{{ $venda->data_pagamento }}</td>
-                        <td>
-                          <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                        </td>
-                      </tr>
+                        @foreach($venda->tours as $tour)
+                          <tr>
+                            <td>{{ $venda->vendedor }}</td>
+                            <td>{{ $venda->nome }}</td>
+                            <td>{{ $venda->telefone }}</td>
+                            <td>{{ $venda->email }}</td>
+                            <td>{{ $venda->hotel }}</td>
+                            <td>{{ $venda->valor_total }}</td>
+                            <td>{{ $venda->valor_pago }}</td>
+                            <td>{{ $venda->valor_a_pagar }}</td>
+                            <td>{{ $venda->estado_pagamento }}</td>
+                            <td>{{ $venda->forma_pagamento }}</td>
+                            <td>{{ $venda->data_pagamento }}</td>
+                            <!-- Dados do Tour -->
+                            <td>{{ $tour->tour }}</td>
+                            <td>{{ $tour->data_tour }}</td>
+                            <td>{{ $tour->pax_adulto }}</td>
+                            <td>{{ $tour->preco_adulto }}</td>
+                            <td>{{ $tour->pax_infantil }}</td>
+                            <td>{{ $tour->preco_infantil }}</td>
+                            <td>
+                              <a href="#" class="btn btn-primary btn-sm">Editar</a>
+                            </td>
+                          </tr>
+                        @endforeach
                       @endforeach
                     </tbody>
+                    
                   </table>
               </div>
             </div>
@@ -75,7 +97,12 @@
         "lengthChange": false,
         "dom": 'Bfrtip',
         "buttons": [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel'
+        ],
+        "columnDefs": [ 
+          {
+            "targets": [0], 
+          }
         ],
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros por página",

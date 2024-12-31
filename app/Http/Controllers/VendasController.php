@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Venda;
 use App\Models\User;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,9 @@ class VendasController extends Controller
 
     public function index()
     {
-        $vendas = Venda::where('user_id', Auth::id())->get();
+        // Buscar as vendas com os tours relacionados e filtrar por user_id
+        $vendas = Venda::with('tours')->where('user_id', Auth::id())->get();
+
         return view('vendas.list', compact('vendas'));
     }
 
@@ -37,13 +40,13 @@ class VendasController extends Controller
             'pais_origem' => 'nullable|string',
             'idioma' => 'nullable|string',
 
-            // Tour 1
-            'tour' => 'required|string',
-            'data_tour' => 'required|date',
-            'pax_adulto' => 'required|integer',
-            'preco_adulto' => 'required|numeric',
-            'pax_infantil' => 'nullable|integer',
-            'preco_infantil' => 'nullable|numeric',
+            // Tours dinâmicos
+            'tour.*' => 'required|string',
+            'data_tour.*' => 'required|date',
+            'pax_adulto.*' => 'required|integer',
+            'preco_adulto.*' => 'required|numeric',
+            'pax_infantil.*' => 'nullable|integer',
+            'preco_infantil.*' => 'nullable|numeric',
 
             // Pagamento
             'estado_pagamento' => 'required|string',
@@ -55,7 +58,7 @@ class VendasController extends Controller
 
             // Observações e comprovante
             'observacoes' => 'nullable|string',
-            'comprovante' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:2048', // Suporta PDF e imagens até 2MB
+            'comprovante' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:2048',
         ]);
 
         // Processa o upload do comprovante, se fornecido
@@ -64,8 +67,8 @@ class VendasController extends Controller
             $comprovantePath = $request->file('comprovante')->store('comprovantes', 'public');
         }
 
-        // Criação do registro
-        Venda::create([
+        // Criar Venda
+        $venda = Venda::create([
             'user_id' => auth()->id(),
             'vendedor' => $request->vendedor,
             'nome' => $request->nome,
@@ -77,14 +80,6 @@ class VendasController extends Controller
             'habitacao' => $request->habitacao,
             'pais_origem' => $request->pais_origem,
             'idioma' => $request->idioma,
-
-            // Tour 1
-            'tour' => $request->tour,
-            'data_tour' => $request->data_tour,
-            'pax_adulto' => $request->pax_adulto,
-            'preco_adulto' => $request->preco_adulto,
-            'pax_infantil' => $request->pax_infantil,
-            'preco_infantil' => $request->preco_infantil,
 
             // Pagamento
             'estado_pagamento' => $request->estado_pagamento,
@@ -98,6 +93,18 @@ class VendasController extends Controller
             'observacoes' => $request->observacoes,
             'comprovante' => $comprovantePath,
         ]);
+
+        // Salva os tours associados
+        foreach ($request->tour as $index => $tour) {
+            $venda->tours()->create([
+                'tour' => $tour,
+                'data_tour' => $request->data_tour[$index],
+                'pax_adulto' => $request->pax_adulto[$index],
+                'preco_adulto' => $request->preco_adulto[$index],
+                'pax_infantil' => $request->pax_infantil[$index] ?? null,
+                'preco_infantil' => $request->preco_infantil[$index] ?? null,
+            ]);
+        }
 
         // Redireciona com mensagem de sucesso
         return redirect()->back()->with('success', 'Venda adicionada com sucesso!');

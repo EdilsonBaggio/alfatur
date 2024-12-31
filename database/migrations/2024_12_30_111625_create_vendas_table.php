@@ -26,14 +26,6 @@ class CreateVendasTable extends Migration
             $table->string('habitacao');
             $table->string('pais_origem')->nullable();
             $table->string('idioma')->nullable();
-            
-            // Tour 1
-            $table->string('tour');
-            $table->date('data_tour');
-            $table->integer('pax_adulto');
-            $table->decimal('preco_adulto', 10, 2);
-            $table->integer('pax_infantil')->nullable();
-            $table->decimal('preco_infantil', 10, 2)->nullable();
 
             // Informações de Pagamento
             $table->string('estado_pagamento');

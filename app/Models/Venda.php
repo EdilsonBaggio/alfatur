@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tour;
 
 class Venda extends Model
 {
@@ -21,12 +22,6 @@ class Venda extends Model
         'pais_origem',
         'idioma',
         'habitacao',
-        'tour',
-        'data_tour',
-        'pax_adulto',
-        'preco_adulto',
-        'pax_infantil',
-        'preco_infantil',
         'estado_pagamento',
         'forma_pagamento',
         'data_pagamento',
@@ -36,4 +31,10 @@ class Venda extends Model
         'observacoes',
         'comprovante'
     ];
+    
+    // Relacionamento com a tabela 'tours'
+    public function tours()
+    {
+        return $this->hasMany(Tour::class);
+    }
 }
