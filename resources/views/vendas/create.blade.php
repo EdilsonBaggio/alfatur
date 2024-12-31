@@ -173,9 +173,17 @@
                 $(this).val(''); // Limpa o valor
             });
 
+            // Adicionar botão de remoção ao novo bloco
+            newTour.append('<button type="button" class="btn btn-danger mb-3 remove-tour">x</button>');
+
             // Adicionar o novo bloco ao container
             $('#tours-container').append(newTour);
             tourIndex++;
+        });
+
+        // Evento para remover o bloco de tour
+        $(document).on('click', '.remove-tour', function () {
+            $(this).closest('.tour-item').remove();
         });
     });
 </script>
