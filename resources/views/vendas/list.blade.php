@@ -8,7 +8,12 @@
             </div>
             <div class="card-body">
               <div class="content-table">
-                  <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%">
+                  <div id="loading" style="text-align: center; margin-top: 20px;">
+                      <div class="spinner-border text-primary" role="status">
+                          <span class="sr-only">Carregando...</span>
+                      </div>
+                  </div>
+                  <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%; display:none;">
                     <thead>
                       <tr>
                         <th class="td_id">ID</th>
@@ -31,7 +36,6 @@
                         <th>Precio Infantil</th>
                         <th>Observaciones</th>
                         <th>Comprobantes</th>
-
                       </tr>
                     </thead>
                     <tbody>
@@ -83,7 +87,6 @@
                         @endforeach
                       @endforeach
                     </tbody>
-                    
                   </table>
               </div>
             </div>
@@ -114,38 +117,44 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
 <script>
-  $(document).ready(function(){
-    $('#tabela-vendas').DataTable({
-        "scrollX": true,
-        "lengthChange": false,
-        "dom": 'Bfrtip',
-        "buttons": [
-            'copy', 'csv', 'excel'
-        ],
-        "columnDefs": [ 
-          {
-            //
+  $(document).ready(function () {
+      // Inicializa o DataTable com configurações
+      $('#tabela-vendas').DataTable({
+          "scrollX": true,
+          "lengthChange": false,
+          "dom": 'Bfrtip',
+          "buttons": [
+              'copy', 'csv', 'excel'
+          ],
+          "columnDefs": [
+              {
+                  // Configurações específicas da coluna
+              }
+          ],
+          "language": {
+              "lengthMenu": "Mostrar _MENU_ registros por página",
+              "zeroRecords": "Nada encontrado - desculpe",
+              "info": "Mostrando página _PAGE_ de _PAGES_",
+              "infoEmpty": "Nenhum registro disponível",
+              "infoFiltered": "(filtrado de _MAX_ registros no total)",
+              "responsive": true,
+              "sSearch": "Pesquisar:",
+              "oPaginate": {
+                  "sNext": "Próximo",
+                  "sPrevious": "Anterior",
+                  "sFirst": "Primeiro",
+                  "sLast": "Último"
+              },
+              "sProcessing": "Processando...",
+              "sLoadingRecords": "Carregando...",
+              "sZeroRecords": "Nenhum registro encontrado"
+          },
+          "initComplete": function () {
+              // Esconde o spinner de carregamento e exibe a tabela após o carregamento
+              $('#loading').hide();
+              $('#tabela-vendas').show();
           }
-        ],
-        "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "Nada encontrado - desculpe",
-            "info": "Mostrando página _PAGE_ de _PAGES_",
-            "infoEmpty": "Nenhum registro disponível",
-            "infoFiltered": "(filtrado de _MAX_ registros no total)",
-            "responsive": true,
-            "sSearch": "Pesquisar:",
-            "oPaginate": {
-                "sNext": "Próximo",
-                "sPrevious": "Anterior",
-                "sFirst": "Primeiro",
-                "sLast": "Último"
-            },
-            "sProcessing": "Processando...",
-            "sLoadingRecords": "Carregando...",
-            "sZeroRecords": "Nenhum registro encontrado"
-        }
-    });
+      });
   });
 </script>
 
