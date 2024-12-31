@@ -1,7 +1,7 @@
 @extends('layout.masterdash')
 @section('content')
 <div class="content-tabelas">
-    <div class="container-fluid">
+    <div class="container">
         <div class="card">
             <div class="card-header">
               Lista de Vendas
@@ -11,35 +11,38 @@
                   <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%">
                     <thead>
                       <tr>
-                        <th>Vendedor</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Email</th>
+                        <th>ID</th>
+                        <th class="td_vendedor">Vendedor</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Tour</th>
                         <th>Hotel</th>
                         <th>Valor Total</th>
-                        <th>Valor Pago</th>
-                        <th>Valor a Pagar</th>
-                        <th>Estado do Pagamento</th>
-                        <th>Forma de Pagamento</th>
-                        <th>Data do Pagamento</th>
-                        <th>Tour</th>
-                        <th>Data Tour</th>
+                        <th>Valor Pagado</th>
+                        <th>Valor por Pagar</th>
+                        <th>Estado del Pago</th>
+                        <th>Forma de Pago</th>
+                        <th>Fecha de Pago</th>
+                        <th>Correo Electrónico</th>
+                        <th>Fecha del Tour</th>
                         <th>PAX Adulto</th>
-                        <th>Preço Adulto</th>
+                        <th>Precio Adulto</th>
                         <th>PAX Infantil</th>
-                        <th>Preço Infantil</th>
-                        <th>Observacoes</th>
-                        <th>Comprovantes</th>
+                        <th>Precio Infantil</th>
+                        <th>Observaciones</th>
+                        <th>Comprobantes</th>
+
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($vendas as $venda)
                         @foreach($venda->tours as $tour)
                           <tr>
+                            <td>{{ $tour->id }}</td>
                             <td>{{ $venda->vendedor }}</td>
                             <td>{{ $venda->nome }}</td>
                             <td>{{ $venda->telefone }}</td>
-                            <td>{{ $venda->email }}</td>
+                            <td>{{ $tour->tour }}</td>
                             <td>{{ $venda->hotel }}</td>
                             <td>{{ $venda->valor_total }}</td>
                             <td>{{ $venda->valor_pago }}</td>
@@ -47,8 +50,7 @@
                             <td>{{ $venda->estado_pagamento }}</td>
                             <td>{{ $venda->forma_pagamento }}</td>
                             <td>{{ $venda->data_pagamento }}</td>
-                            <!-- Dados do Tour -->
-                            <td>{{ $tour->tour }}</td>
+                            <td>{{ $venda->email }}</td>
                             <td>{{ $tour->data_tour }}</td>
                             <td>{{ $tour->pax_adulto }}</td>
                             <td>{{ $tour->preco_adulto }}</td>
@@ -63,12 +65,12 @@
                               @if(in_array($extensao, ['jpg', 'jpeg', 'png', 'gif']))
                                   @isset($venda->comprovante) <!-- Verifica se o usuário tem um comprovante -->
                                       <!-- Link com atributo 'data-lightbox' para Lightbox -->
-                                      <a href="{{ asset($venda->comprovante) }}" data-lightbox="comprovante-{{$venda->id}}" data-title="Comprovante de Venda" target="_blank">Ver Comprovante</a>
+                                      <a class="btn btn-primary btn-sm" href="{{ asset($venda->comprovante) }}" data-lightbox="comprovante-{{$venda->id}}" data-title="Comprovante de Venda" target="_blank">Ver Comprovante</a>
                                   @else
                                       N/A
                                   @endisset
                               @elseif($extensao === 'pdf')
-                                  <a href="{{ asset($venda->comprovante) }}" target="_blank">Ver Comprovante</a>
+                                  <a class="btn btn-primary btn-sm" href="{{ asset($venda->comprovante) }}" target="_blank">Ver Comprovante</a>
                               @else
                                   <span>Arquivo não suportado</span>
                               @endif
@@ -118,7 +120,7 @@
         ],
         "columnDefs": [ 
           {
-            "targets": [0], 
+            //
           }
         ],
         "language": {

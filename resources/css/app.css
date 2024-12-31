@@ -554,7 +554,6 @@ table {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  text-transform: uppercase;
 }
 @media screen and (max-width: 500px) {
   .content-tabelas .content-table table.dataTable td {
@@ -568,7 +567,7 @@ table {
   text-transform: none !important;
 }
 .content-tabelas .content-table table.dataTable td, .content-tabelas .content-table table.dataTable th {
-  padding: 15px;
+  padding: 10px;
 }
 .content-tabelas .content-table .even {
   background-color: #EFF0F2;

@@ -548,7 +548,6 @@ table {
             font-style: normal;
             font-weight: 400;
             line-height: normal;
-            text-transform: uppercase;
             @media screen and (max-width:500px) {
                 max-width: 50px;
                 overflow: hidden;
@@ -560,7 +559,7 @@ table {
             text-transform: none!important;
         }
         table.dataTable td, table.dataTable th {
-            padding: 15px;
+            padding: 10px;
         }
         .even{
             background-color: #EFF0F2;
