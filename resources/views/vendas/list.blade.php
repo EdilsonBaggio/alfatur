@@ -11,7 +11,7 @@
                   <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%">
                     <thead>
                       <tr>
-                        <th>ID</th>
+                        <th class="td_id">ID</th>
                         <th class="td_vendedor">Vendedor</th>
                         <th>Nombre</th>
                         <th>Teléfono</th>
@@ -23,7 +23,7 @@
                         <th>Estado del Pago</th>
                         <th>Forma de Pago</th>
                         <th>Fecha de Pago</th>
-                        <th>Correo Electrónico</th>
+                        <th>E-mail</th>
                         <th>Fecha del Tour</th>
                         <th>PAX Adulto</th>
                         <th>Precio Adulto</th>
@@ -38,7 +38,11 @@
                       @foreach($vendas as $venda)
                         @foreach($venda->tours as $tour)
                           <tr>
-                            <td>{{ $tour->id }}</td>
+                            <td>
+                              <div class="id_venda">
+                                #{{ $tour->id }}
+                              </div>
+                            </td>
                             <td>{{ $venda->vendedor }}</td>
                             <td>{{ $venda->nome }}</td>
                             <td>{{ $venda->telefone }}</td>
