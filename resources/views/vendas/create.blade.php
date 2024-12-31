@@ -73,39 +73,40 @@
                     <div class="col-md-12 pt-4 pb-4">
                         <h3>Tours</h3>
                     </div>
-
-                    <!-- Tour 1 -->
-                    <div class="tour-item row">
-                        <div class="form-group col-md-6">
-                            <label for="tour">Tour:</label>
-                            <input type="text" name="tour[]" class="form-control" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="data_tour">Data Tour:</label>
-                            <input type="date" name="data_tour[]" class="form-control" required>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="pax_adulto">PAX Adulto:</label>
-                            <input type="number" name="pax_adulto[]" class="form-control" required>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="preco_adulto">Preço Adulto:</label>
-                            <input type="number" step="0.01" name="preco_adulto[]" class="form-control" required>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="pax_infantil">PAX Infantil:</label>
-                            <input type="number" name="pax_infantil[]" class="form-control">
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="preco_infantil">Preço Infantil:</label>
-                            <input type="number" step="0.01" name="preco_infantil[]" class="form-control">
+                    <div class="col-md-12">
+                        <!-- Tour 1 -->
+                        <div class="tour-item row">
+                            <div class="form-group col-md-6">
+                                <label for="tour">Tour:</label>
+                                <input type="text" name="tour[]" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="data_tour">Data Tour:</label>
+                                <input type="date" name="data_tour[]" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="pax_adulto">PAX Adulto:</label>
+                                <input type="number" name="pax_adulto[]" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="preco_adulto">Preço Adulto:</label>
+                                <input type="number" step="0.01" name="preco_adulto[]" class="form-control" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="pax_infantil">PAX Infantil:</label>
+                                <input type="number" name="pax_infantil[]" class="form-control">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="preco_infantil">Preço Infantil:</label>
+                                <input type="number" step="0.01" name="preco_infantil[]" class="form-control">
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Botão para adicionar mais tours -->
                 <div class="pt-4">
-                    <button type="button" id="add-tour" class="btn btn-primary">Adicionar Tour</button>
+                    <button type="button" id="add-tour" class="btn btn-primary">+ Tour</button>
                 </div>
 
                 <!-- Pagamento -->
