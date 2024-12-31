@@ -56,13 +56,23 @@
                             <td>{{ $tour->preco_infantil }}</td>
                             <td>{{ $venda->observacoes }}</td>
                             <td>
-                                @if($venda->comprovante) <!-- Verifica se o usuário tem um comprovante -->
-                                    <!-- Link com atributo 'data-lightbox' para Lightbox -->
-                                    <a href="{{ asset($venda->comprovante) }}" data-lightbox="comprovante-{{$venda->id}}" data-title="Comprovante de Venda" target="_blank">Ver Comprovante</a>
-                                @else
-                                    N/A
-                                @endif
-                            </td>               
+                              @php
+                                  $extensao = strtolower(pathinfo($venda->comprovante, PATHINFO_EXTENSION)); // Garantir comparação insensível a maiúsculas
+                              @endphp
+                          
+                              @if(in_array($extensao, ['jpg', 'jpeg', 'png', 'gif']))
+                                  @isset($venda->comprovante) <!-- Verifica se o usuário tem um comprovante -->
+                                      <!-- Link com atributo 'data-lightbox' para Lightbox -->
+                                      <a href="{{ asset($venda->comprovante) }}" data-lightbox="comprovante-{{$venda->id}}" data-title="Comprovante de Venda" target="_blank">Ver Comprovante</a>
+                                  @else
+                                      N/A
+                                  @endisset
+                              @elseif($extensao === 'pdf')
+                                  <a href="{{ asset($venda->comprovante) }}" target="_blank">Ver Comprovante</a>
+                              @else
+                                  <span>Arquivo não suportado</span>
+                              @endif
+                          </td>                              
                           </tr>
                         @endforeach
                       @endforeach
