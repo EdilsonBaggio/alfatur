@@ -73,9 +73,9 @@
                     <div class="col-md-12 pt-4 pb-4">
                         <h3>Tours</h3>
                     </div>
-                    <div class="col-md-12">
+                    <div class="tour-item col-md-12">
                         <!-- Tour 1 -->
-                        <div class="tour-item row">
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="tour">Tour:</label>
                                 <input type="text" name="tour[]" class="form-control" required>
