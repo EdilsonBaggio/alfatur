@@ -116,14 +116,24 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="estado_pagamento">Estado do Pagamento:</label>
-                        <input type="text" name="estado_pagamento" class="form-control" required>
+                        <select name="estado_pagamento" id="estado_pagamento" class="form-select" required="required">
+                            <option value="" selected="selected">Elegir</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Recaudado">Recaudado</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="forma_pagamento">Forma de Pagamento:</label>
-                        <input type="text" name="forma_pagamento" class="form-control" required>
+                        <label for="forma_pagamento">Forma de Pago:</label>
+                        <select name="forma_pagamento" class="form-select" id="forma_pagamento" required>
+                            <option value="" selected="selected">Seleccione...</option>
+                            <option value="Efectivo en Van">Efectivo en Van</option>
+                            <option value="Efectivo Oficina">Efectivo Oficina</option>
+                            <option value="Tarjeta de Credito">Tarjeta de Crédito</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="data_pagamento">Data do Pagamento:</label>
+                        <label for="data_pagamento">Fecha de pago:</label>
                         <input type="date" name="data_pagamento" class="form-control" required>
                     </div>
                     <div class="form-group col-md-4">
@@ -131,7 +141,7 @@
                         <input type="number" step="0.01" name="valor_total" class="form-control" required>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="valor_pago">Valor Pago:</label>
+                        <label for="valor_pago">Valor Pagado:</label>
                         <input type="number" step="0.01" name="valor_pago" class="form-control">
                     </div>
                     <div class="form-group col-md-4">
@@ -142,16 +152,16 @@
 
                 <!-- Observações e Comprovante -->
                 <div class="form-group">
-                    <label for="observacoes">Observações:</label>
+                    <label for="observacoes">Observaciones:</label>
                     <textarea name="observacoes" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="comprovante">Comprovante:</label>
+                    <label for="comprovante">Comprobante:</label>
                     <input type="file" name="comprovante">
                 </div>
 
                 <!-- Botão -->
-                <button type="submit" class="btn btn-primary">Salvar Venda</button>
+                <button type="submit" class="btn btn-primary">Ingresar Venda</button>
             </form>
         </div>
     </div>
