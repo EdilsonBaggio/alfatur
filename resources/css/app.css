@@ -940,6 +940,17 @@ table.dataTable > tbody > tr.child ul.dtr-details {
 }
 
 @media screen and (max-width: 500px) {
+  #tabela-usuarios .sorting_1 {
+    min-width: 260px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #tabela-usuarios .id_usuario {
+    min-width: 260px;
+  }
+}
+
+@media screen and (max-width: 500px) {
   #tabela-vendas .sorting_1 {
     min-width: 260px;
   }

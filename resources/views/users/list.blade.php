@@ -21,7 +21,11 @@
                     <tbody>
                       @foreach($users as $user)
                       <tr>
-                        <td>{{ $user->id }}</td>
+                        <td>
+                          <div class="id_usuario">
+                            #{{ $user->id }}
+                          </div>
+                        </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role }}</td>

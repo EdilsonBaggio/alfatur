@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="telefone">Teléfono:</label>
-                        <input type="text" name="telefone" class="form-control" required>
+                        <input type="text" id="telefone" name="telefone" class="form-control" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="email">E-mail:</label>
@@ -200,6 +200,7 @@
         $(document).on('click', '.remove-tour', function () {
             $(this).closest('.tour-item').remove();
         });
+        $('#telefone').mask('+00 00900000000');
     });
 </script>
 @endsection

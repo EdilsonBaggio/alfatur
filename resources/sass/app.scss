@@ -916,6 +916,18 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
 table.dataTable>tbody>tr.child ul.dtr-details{
     width: 100%;
 }
+#tabela-usuarios{
+    .sorting_1{
+        @media screen and (max-width:500px){
+            min-width: 260px;
+        }
+    }
+    .id_usuario{
+        @media screen and (max-width:500px){
+            min-width: 260px;
+        }
+    }
+}
 #tabela-vendas{
     .sorting_1{
         @media screen and (max-width:500px){

@@ -1,5 +1,10 @@
 @extends('layout.masterdash')
 @section('content')
+<div id="loading" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background-color: #fff; z-index: 9999;">
+  <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Carregando...</span>
+  </div>
+</div>
 <div class="content-tabelas">
     <div class="container">
         <div class="card">
@@ -8,12 +13,7 @@
             </div>
             <div class="card-body">
               <div class="content-table">
-                  <div id="loading" style="text-align: center; margin-top: 20px;">
-                      <div class="spinner-border text-primary" role="status">
-                          <span class="sr-only">Carregando...</span>
-                      </div>
-                  </div>
-                  <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%; display:none;">
+                  <table id="tabela-vendas" class="display responsive table mt-4" style="width: 100%;">
                     <thead>
                       <tr>
                         <th class="td_id">ID</th>
@@ -22,10 +22,10 @@
                         <th>Teléfono</th>
                         <th>Tour</th>
                         <th>Hotel</th>
-                        <th>Valor Total</th>
-                        <th>Valor Pagado</th>
-                        <th>Valor por Pagar</th>
-                        <th>Estado del Pago</th>
+                        <th>Total</th>
+                        <th>Pagado</th>
+                        <th>Pagar</th>
+                        <th>Estado pago</th>
                         <th>Forma de Pago</th>
                         <th>Fecha de Pago</th>
                         <th>E-mail</th>
@@ -120,16 +120,58 @@
   $(document).ready(function () {
       // Inicializa o DataTable com configurações
       $('#tabela-vendas').DataTable({
-          "scrollX": true,
+          "scrollX": false,
           "lengthChange": false,
           "dom": 'Bfrtip',
           "buttons": [
               'copy', 'csv', 'excel'
           ],
           "columnDefs": [
-              {
-                  // Configurações específicas da coluna
-              }
+            {
+                "targets": 1, 
+                "width": "200px" 
+            },
+            {
+                "targets": 2, 
+                "width": "230px" 
+            },
+            {
+                "targets": 3, 
+                "width": "200px" 
+            },
+            {
+                "targets": 4, 
+                "width": "200px" 
+            },
+            {
+                "targets": 5, 
+                "width": "200px" 
+            },
+            {
+                "targets": 6, 
+                "width": "200px" 
+            },
+            {
+                "targets": 7, 
+                "width": "200px" 
+            }
+            ,
+            {
+                "targets": 8, 
+                "width": "200px" 
+            },
+            {
+                "targets": 9, 
+                "width": "230px" 
+            },
+            {
+                "targets": 10, 
+                "width": "230px" 
+            },
+            {
+                "targets": 11, 
+                "width": "230px" 
+            }
           ],
           "language": {
               "lengthMenu": "Mostrar _MENU_ registros por página",
@@ -152,7 +194,6 @@
           "initComplete": function () {
               // Esconde o spinner de carregamento e exibe a tabela após o carregamento
               $('#loading').hide();
-              $('#tabela-vendas').show();
           }
       });
   });

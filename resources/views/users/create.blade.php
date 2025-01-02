@@ -72,7 +72,7 @@
 <script>
     $(document).ready(function(){
         $('#rut').mask('00.000.000-0', {reverse: true});
-        $('#whatsapp').mask('+00 90000-0000');
+        $('#whatsapp').mask('+00 00900000000');
     });
 </script>
 @endsection
