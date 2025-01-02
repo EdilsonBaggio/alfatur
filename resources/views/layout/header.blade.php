@@ -121,7 +121,7 @@
             </li> 
             @if(Auth::user()->role == "Administrador")
             <li>
-                <a href="" class="{{ request()->routeIs(['tours']) ? 'current' : '' }}">
+                <a href="{{ route("tours.create") }}" class="{{ request()->routeIs(['tours.create']) ? 'current' : '' }}">
                     Tours
                 </a>
             </li>  

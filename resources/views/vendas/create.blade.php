@@ -78,7 +78,12 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="tour">Tour:</label>
-                                <input type="text" name="tour[]" class="form-control" required>
+                                <select name="tour[]" class="form-select" required="required">
+                                    <option value="" selected="selected">Seleccione...</option>
+                                    @foreach($tourPlaces as $id => $name)
+                                        <option value="{{ $id }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="data_tour">Data Tour:</label>

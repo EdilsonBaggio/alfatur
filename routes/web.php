@@ -9,6 +9,7 @@ use App\Http\Controllers\TiigoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VendasController;
+use App\Http\Controllers\TourController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vendas/create', [VendasController::class, 'create'])->name('vendas.create');
     Route::post('/vendas', [VendasController::class, 'store'])->name('vendas.store');
 
+    Route::get('/tours/create', [TourController::class, 'create'])->name('tours.create');
+    Route::post('/tours', [TourController::class, 'store'])->name('tours.store');
 });
 
 Route::get('/esqueci', function () {

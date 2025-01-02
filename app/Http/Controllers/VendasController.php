@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Venda;
 use App\Models\User;
 use App\Models\Tour;
+use App\Models\TourPlaces;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,13 +16,13 @@ class VendasController extends Controller
     {
         // Buscar as vendas com os tours relacionados e filtrar por user_id
         $vendas = Venda::with('tours')->where('user_id', Auth::id())->get();
-
         return view('vendas.list', compact('vendas'));
     }
 
     public function create()
     {
-        return view('vendas.create');
+        $tourPlaces = TourPlaces::pluck('name', 'id');
+        return view('vendas.create', compact('tourPlaces'));
     }
 
     public function store(Request $request)
@@ -115,5 +116,4 @@ class VendasController extends Controller
         // Redireciona com mensagem de sucesso
         return redirect()->back()->with('success', 'Venda adicionada com sucesso!');
     }
-    
 }

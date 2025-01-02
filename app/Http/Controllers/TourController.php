@@ -2,64 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tour;
+use App\Models\TourPlaces;
 use Illuminate\Http\Request;
 
 class TourController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('tours.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'min_price' => 'required|numeric',
+            'cost' => 'required|numeric',
+            'child_price' => 'required|numeric',
+            'child_cost' => 'required|numeric',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tour $tour)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tour $tour)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tour $tour)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tour $tour)
-    {
-        //
+        TourPlaces::create($request->all());
+        return redirect()->route('tours.create')->with('success', 'Tour criado com sucesso!');
     }
 }
