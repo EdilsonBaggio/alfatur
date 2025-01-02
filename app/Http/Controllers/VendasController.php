@@ -21,7 +21,7 @@ class VendasController extends Controller
 
     public function create()
     {
-        $tourPlaces = TourPlaces::pluck('name', 'id');
+        $tourPlaces = TourPlaces::where('status', '!=', 1)->pluck('name', 'id');
         return view('vendas.create', compact('tourPlaces'));
     }
 

@@ -34,6 +34,7 @@
                 </div>
                 <span>*Dato requerido, si no tiene valor ingrese 0 (ciero).</span><br>
                 <button type="submit" class="btn btn-primary mt-3">Criar Tour</button>
+                <a class="btn btn-outline-secondary mt-3" href="{{ route('tours.list') }}">Ver tours</a>
             </form>
         </div>
     </div>

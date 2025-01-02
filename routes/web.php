@@ -36,8 +36,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vendas/create', [VendasController::class, 'create'])->name('vendas.create');
     Route::post('/vendas', [VendasController::class, 'store'])->name('vendas.store');
 
+    Route::get('/tours', [TourController::class, 'index'])->name('tours.list');
+
     Route::get('/tours/create', [TourController::class, 'create'])->name('tours.create');
     Route::post('/tours', [TourController::class, 'store'])->name('tours.store');
+
+    // Rota para editar um tour existente
+    Route::get('/tours/{id}/edit', [TourController::class, 'edit'])->name('tours.edit');
+    Route::put('/tours/{id}', [TourController::class, 'update'])->name('tours.update');
 });
 
 Route::get('/esqueci', function () {
