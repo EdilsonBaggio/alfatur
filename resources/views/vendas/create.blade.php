@@ -81,7 +81,7 @@
                                 <select name="tour[]" class="form-select" required="required">
                                     <option value="" selected="selected">Seleccione...</option>
                                     @foreach($tourPlaces as $id => $name)
-                                        <option value="{{ $id }}">{{ $name }}</option>
+                                        <option value="{{ $name }}">{{ $name }}</option>
                                     @endforeach
                                 </select>
                             </div>

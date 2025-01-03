@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\EstimativoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     // Rota para editar um tour existente
     Route::get('/tours/{id}/edit', [TourController::class, 'edit'])->name('tours.edit');
     Route::put('/tours/{id}', [TourController::class, 'update'])->name('tours.update');
+
+    Route::get('/estimativo', [EstimativoController::class, 'index'])->name('estimativo.index');
+
 });
 
 Route::get('/esqueci', function () {

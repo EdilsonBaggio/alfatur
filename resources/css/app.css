@@ -961,4 +961,50 @@ table.dataTable > tbody > tr.child ul.dtr-details {
   }
 }
 
+.estimativo .col-md-4 .day-group {
+  background: #FEAC00;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+.estimativo .col-md-4 .day-group h5 {
+  text-align: center;
+  background: #EDEDED;
+  color: #007bff;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.estimativo .col-md-4 .day-group h5 .date {
+  background-color: #FF0000;
+  font-weight: 600;
+  color: #FFFFFF;
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+.estimativo .col-md-4 .day-group ul li {
+  background: #EDEDED;
+  color: #007bff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+.estimativo .col-md-4 .day-group ul li .id_tour {
+  background-color: #fd0000;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  width: 35px;
+  height: 30px;
+  text-align: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  margin-right: 5px;
+}
+
 /*# sourceMappingURL=app.css.map */

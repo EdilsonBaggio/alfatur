@@ -115,7 +115,7 @@
             </li> 
             @endif
             <li>
-                <a href="" class="{{ request()->routeIs(['estimativo']) ? 'current' : '' }}">
+                <a href="{{ route("estimativo.index") }}" class="{{ request()->routeIs(['estimativo.index']) ? 'current' : '' }}">
                     Estimativo
                 </a>
             </li> 
