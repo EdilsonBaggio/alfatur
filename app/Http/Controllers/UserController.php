@@ -25,6 +25,14 @@ class UserController extends Controller
             'commission_percentage' => 'nullable|numeric|min:0|max:100',
         ]);
 
+        if (User::where('email', $request->input('email'))->exists()) {
+            return redirect()->back()->with('error', 'O e-mail já está em uso!');
+        }
+        
+        if (User::where('rut', $request->input('rut'))->exists()) {
+            return redirect()->back()->with('error', 'O RUT já está em uso!');
+        }
+        
         User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
