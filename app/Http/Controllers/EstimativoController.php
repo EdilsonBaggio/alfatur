@@ -11,17 +11,18 @@ class EstimativoController extends Controller
 {
     public function index(Request $request)
     {
-        // Obtém a data inicial passada pelo usuário ou usa a data atual
-        $startDate = $request->input('filterDate', Carbon::now()->format('Y-m-d'));  
-        
-        // Garante que a data seja no formato correto e sem horário
-        $startDate = Carbon::parse($startDate)->startOfDay();  
-        $endDate = $startDate->copy()->addDays(14)->endOfDay(); 
+        // Obtém as datas fornecidas no formulário ou define um intervalo padrão
+        $startDate = $request->input('filterDateStart') ?? Carbon::now()->format('Y-m-d');
+        $endDate = $request->input('filterDateEnd') ?? Carbon::now()->addDays(30)->format('Y-m-d');
 
-        // Busca os tours com dados vinculados à venda e filtra pelo user_id
+        // Converte as datas para objetos Carbon e aplica horários
+        $startDate = Carbon::parse($startDate)->startOfDay();
+        $endDate = Carbon::parse($endDate)->endOfDay();
+
+        // Busca os tours vinculados à venda do usuário autenticado no intervalo especificado
         $tours = Tour::with('venda')
-            ->whereBetween('data_tour', [$startDate, $endDate]) // Intervalo de 14 dias
-            ->whereHas('venda', function ($query) { // Filtro pela tabela vendas
+            ->whereBetween('data_tour', [$startDate, $endDate])
+            ->whereHas('venda', function ($query) {
                 $query->where('user_id', Auth::id());
             })
             ->orderBy('data_tour')
@@ -29,10 +30,10 @@ class EstimativoController extends Controller
 
         // Agrupa os tours por data
         $groupedTours = $tours->groupBy(function ($tour) {
-            return Carbon::parse($tour->data_tour)->format('Y-m-d'); 
+            return Carbon::parse($tour->data_tour)->format('Y-m-d');
         });
 
-        // Retorna a view com os dados e a data de filtro
-        return view('estimativo.index', compact('groupedTours', 'startDate'));
+        // Retorna a view com os dados e as datas de filtro
+        return view('estimativo.index', compact('groupedTours', 'startDate', 'endDate'));
     }
 }

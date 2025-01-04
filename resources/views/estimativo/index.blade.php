@@ -10,9 +10,19 @@
             <div class="card-body">
               <!-- Formulário de filtro por data -->
               <form method="GET" action="{{ route('estimativo.index') }}">
-                <div class="form-group">
-                    <label for="filterDate">Filtrar por Data:</label>
-                    <input type="date" id="filterDate" name="filterDate" class="form-control">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="filterDateStart">Data Inicial:</label>
+                      <input type="date" id="filterDateStart" name="filterDateStart" class="form-control">
+                  </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="filterDateEnd">Data Final:</label>
+                      <input type="date" id="filterDateEnd" name="filterDateEnd" class="form-control">
+                  </div>
+                  </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Filtrar</button>
             </form>
