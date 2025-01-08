@@ -23,6 +23,43 @@
               <div class="table-responsive">
                   <table class="table table-bordered table-striped logistica mt-4">
                     <tbody id="logisticsTableBody">
+                      <!-- Linha com Selects e Botões -->
+                      <tr>
+                        <td colspan="18" style="text-align: left; padding: 10px;">
+                          <form id="assignForm" method="POST">
+                              @csrf
+                              <!-- Restante do conteúdo do formulário -->
+                              <div class="row mt-3">
+                                  <div class="col-md-2">
+                                      <div class="input-group input-group-sm mb-3 d-flex">
+                                          <i class="bi bi-arrow-90deg-down p-2"></i>
+                                          <select id="guia" class="form-select">
+                                              <option value="">Selecione o Guia</option>
+                                              @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
+                                                  <option value="{{ $guia->id }}">{{ $guia->name }}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <div class="input-group input-group-sm mb-3">
+                                          <select id="condutor" class="form-select">
+                                              <option value="">Selecione o Condutor</option>
+                                              @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
+                                                  <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
+                                              @endforeach
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <div class="input-group input-group-sm mb-3">
+                                          <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </form>
+                        </td>
+                      </tr>
                       @php
                         $groupedLogistics = collect($logistics)->groupBy(function($item) {
                           return $item->tour . ' - ' . \Carbon\Carbon::parse($item->data)->format('d/m/Y');
@@ -34,44 +71,6 @@
                         <tr>
                           <td colspan="18" style="background: #000; color: #fff; text-align: left; padding: 10px;">
                             {{ $key }}
-                          </td>
-                        </tr>
-
-                        <!-- Linha com Selects e Botões -->
-                        <tr>
-                          <td colspan="18" style="text-align: left; padding: 10px;">
-                            <form id="assignForm" method="POST">
-                                @csrf
-                                <!-- Restante do conteúdo do formulário -->
-                                <div class="row mt-3">
-                                    <div class="col-md-2">
-                                        <div class="input-group input-group-sm mb-3 d-flex">
-                                            <i class="bi bi-arrow-90deg-down p-2"></i>
-                                            <select id="guia" class="form-select">
-                                                <option value="">Selecione o Guia</option>
-                                                @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
-                                                    <option value="{{ $guia->id }}">{{ $guia->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="input-group input-group-sm mb-3">
-                                            <select id="condutor" class="form-select">
-                                                <option value="">Selecione o Condutor</option>
-                                                @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
-                                                    <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="input-group input-group-sm mb-3">
-                                            <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
                           </td>
                         </tr>
                         <tr>
@@ -108,8 +107,21 @@
                             <td>{{ $logistica->nome }}</td>
                             <td style="text-align: center">{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
                             <td>{{ $logistica->venda->direcao_hotel }}</td>
-                            <td class="guia-cell">{{ empty($logistica->guia) ? 'Asignar' : $logistica->guia }}</td>
-                            <td class="condutor-cell">{{ empty($logistica->condutor) ? 'Asignar' : $logistica->condutor }}</td>
+                            <td class="guia-cell">
+                                @if(empty($logistica->guia))
+                                    Asignar
+                                @else
+                                    {{ \App\Models\User::find($logistica->guia)->name ?? 'Asignar' }}
+                                @endif
+                            </td>
+
+                            <td class="condutor-cell">
+                                @if(empty($logistica->condutor))
+                                    Asignar
+                                @else
+                                    {{ \App\Models\User::find($logistica->condutor)->name ?? 'Asignar' }}
+                                @endif
+                            </td>
                             <td>{{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
                             <td>{{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
                             <td>{{ $logistica->hotel }}</td>
@@ -243,8 +255,9 @@
                         var row = $('input[value="' + id + '"]').closest('tr');
                         
                         // Atualiza Guia e Condutor
-                        row.find('.guia-cell').text(response.guia_name || 'Atribuir');
-                        row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
+                        // row.find('.guia-cell').text(response.guia_name || 'Atribuir');
+                        // row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
+                        location.reload();
                     });
                 } else {
                     alert('Erro: ' + response.message);

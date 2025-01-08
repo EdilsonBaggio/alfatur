@@ -222,10 +222,10 @@ class VendasController extends Controller
                                 ($createdTour->preco_infantil * ($createdTour->pax_infantil ?? 0)), // Valor total
                 'condutor' => $createdTour->motorista ?? null, // Motorista (opcional)
                 'guia' => $createdTour->guia ?? null, // Guia (opcional)
-                'valor_pago' => $createdTour->valor_pago ?? 0, // Valor pago
-                'valor_a_pagar' => $createdTour->valor_a_pagar ?? 0, // Valor a pagar
-                'voucher' => $venda->voucher ?? 'N/A', // Voucher (padrão: N/A)
-                'observacao' => $request->observacao ?? null, // Observação (opcional)
+                'valor_pago' => $venda->valor_pago ?? 0, // Valor pago
+                'valor_a_pagar' => $venda->valor_a_pagar ?? 0, // Valor a pagar
+                'voucher' => $venda->id ?? 'N/A', // Voucher (padrão: N/A)
+                'observacao' => $venda->observacao ?? null, // Observação (opcional)
                 'conferido' => $request->conferido ?? null, // Conferido (opcional)
             ]);
                        

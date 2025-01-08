@@ -52,8 +52,8 @@ class LogisticaController extends Controller
         $logistics = Logistica::whereIn('id', $request->logistics_ids)->get();
 
         foreach ($logistics as $logistica) {
-            $logistica->guia = User::find($request->guia_id)->name;
-            $logistica->condutor = User::find($request->condutor_id)->name;
+            $logistica->guia = User::find($request->guia_id)->id;
+            $logistica->condutor = User::find($request->condutor_id)->id;
             $logistica->hora = Carbon::now()->format('H:i:s'); // Atualiza com a hora atual
             $logistica->save();
         }
