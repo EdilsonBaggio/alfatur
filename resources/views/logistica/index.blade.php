@@ -25,23 +25,25 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Data</th>
+                        <th>Fecha</th>
                         <th>Hora</th>
                         <th>ID</th>
                         <th>Pax</th>
-                        <th>Nome</th>
-                        <th>Endereço</th>
-                        <th>Motorista</th>
-                        <th>Guia</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Conductor</th>
+                        <th>Guía</th>
                         <th>Valor Total</th>
                         <th>Valor a Pagar</th>
                         <th>Hotel</th>
-                        <th>Telefone</th>
-                        <th>Estado Pagamento</th>
+                        <th>Teléfono</th>
+                        <th>Vendedor</th>
+                        <th>Estado de Pago</th>
                         <th>Voucher</th>
-                        <th>Conferido</th>
-                        <th>Ações</th>
-                      </tr>
+                        <th>Verificado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    
                     </thead>
                     <tbody id="logisticsTableBody">
                       @php
@@ -62,36 +64,37 @@
                         <tr>
                           <td colspan="18" style="text-align: left; padding: 10px;">
                             <form id="assignForm" method="POST">
-                              @csrf
-                              <!-- Restante do conteúdo do formulário -->
-                              <div class="row mt-3">
-                                  <div class="col-md-2">
-                                      <div class="input-group input-group-sm mb-3">
-                                          <select id="guia" class="form-select">
-                                              <option value="">Selecione o Guia</option>
-                                              @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
-                                                  <option value="{{ $guia->id }}">{{ $guia->name }}</option>
-                                              @endforeach
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <div class="input-group input-group-sm mb-3">
-                                          <select id="condutor" class="form-select">
-                                              <option value="">Selecione o Condutor</option>
-                                              @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
-                                                  <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
-                                              @endforeach
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <div class="input-group input-group-sm mb-3">
-                                          <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
-                                      </div>
-                                  </div>
-                              </div>
-                          </form>
+                                @csrf
+                                <!-- Restante do conteúdo do formulário -->
+                                <div class="row mt-3">
+                                    <div class="col-md-2">
+                                        <div class="input-group input-group-sm mb-3 d-flex">
+                                            <i class="bi bi-arrow-90deg-down p-2"></i>
+                                            <select id="guia" class="form-select">
+                                                <option value="">Selecione o Guia</option>
+                                                @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
+                                                    <option value="{{ $guia->id }}">{{ $guia->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <select id="condutor" class="form-select">
+                                                <option value="">Selecione o Condutor</option>
+                                                @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
+                                                    <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="input-group input-group-sm mb-3">
+                                            <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                           </td>
                         </tr>
 
@@ -101,17 +104,18 @@
                             <td><input type="checkbox" name="logistics_ids[]" value="{{ $logistica->id }}"></td>
                             <td>{{ \Carbon\Carbon::parse($logistica->data)->format('d/m/Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($logistica->hora)->format('H:i') }}</td>
-                            <td>ALF-{{ $logistica->venda_id }}</td>
+                            <td><div style="width: 70px">ALF-{{ $logistica->venda_id }}</div></td>
                             <td>{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
                             <td>{{ $logistica->nome }}</td>
                             <td>{{ $logistica->venda->direcao_hotel }}</td>
-                            <td class="guia-cell">{{ empty($logistica->guia) ? 'Atribuir' : $logistica->guia }}</td>
-                            <td class="condutor-cell">{{ empty($logistica->condutor) ? 'Atribuir' : $logistica->condutor }}</td>
+                            <td class="guia-cell">{{ empty($logistica->guia) ? 'Asignar' : $logistica->guia }}</td>
+                            <td class="condutor-cell">{{ empty($logistica->condutor) ? 'Asignar' : $logistica->condutor }}</td>
                             <td>{{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
                             <td>{{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
                             <td>{{ $logistica->hotel }}</td>
                             <td>{{ $logistica->telefone }}</td>
-                            <td style="width: 100px">
+                            <td>{{ $logistica->vendedor }}</td>
+                            <td>
                               @if($logistica->estado_pagamento === 'Pago')
                                 <span class="badge bg-success">Pago</span>
                               @else
