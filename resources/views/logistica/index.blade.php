@@ -13,38 +13,15 @@
               Lista de Logísticas
             </div>
             <div class="card-body">
-              <div class="row mb-3">
-                <div class="col-md-3">
-                  <div class="input-group input-group-sm">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group input-group-sm pt-3" style="width: 200px; margin: 0 auto">
                     <input type="date" id="dateFilter" class="form-control" value="{{ $filterDate }}" placeholder="Filtrar por datas (ex: 2025-02-13, 2025-02-14)">
                   </div>
                 </div>
               </div>
               <div class="table-responsive">
                   <table class="table table-bordered table-striped logistica mt-4">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>ID</th>
-                        <th>Pax</th>
-                        <th>Nombre</th>
-                        <th>Dirección</th>
-                        <th>Conductor</th>
-                        <th>Guía</th>
-                        <th>Valor Total</th>
-                        <th>Valor a Pagar</th>
-                        <th>Hotel</th>
-                        <th>Teléfono</th>
-                        <th>Vendedor</th>
-                        <th>Estado de Pago</th>
-                        <th>Voucher</th>
-                        <th>Verificado</th>
-                        <th>Acciones</th>
-                    </tr>
-                    
-                    </thead>
                     <tbody id="logisticsTableBody">
                       @php
                         $groupedLogistics = collect($logistics)->groupBy(function($item) {
@@ -97,16 +74,39 @@
                             </form>
                           </td>
                         </tr>
-
+                        <tr>
+                          <td>#</td>
+                          <td>Fecha</td>
+                          <td>Hora</td>
+                          <td>ID</td>
+                          <td>Nombre</td>
+                          <td>Pax</td>
+                          <td>Dirección</td>
+                          <td>Conductor</td>
+                          <td>Guía</td>
+                          <td>Valor</td>
+                          <td>Pendiente</td>
+                          <td>Hotel</td>
+                          <td>Teléfono</td>
+                          <td>Vendedor</td>
+                          <td>Voucher</td>
+                          <td>Verificado</td>
+                          <td>Acciones</td>
+                      </tr>
                         <!-- Linhas de Dados -->
                         @foreach ($group as $logistica)
-                          <tr class="logistics-row" data-logistica-date="{{ \Carbon\Carbon::parse($logistica->data)->format('Y-m-d') }}">
+                          <tr id="logistica-{{ $logistica->id }}" class="logistics-row" data-logistica-date="{{ \Carbon\Carbon::parse($logistica->data)->format('Y-m-d') }}">
                             <td><input type="checkbox" name="logistics_ids[]" value="{{ $logistica->id }}"></td>
                             <td>{{ \Carbon\Carbon::parse($logistica->data)->format('d/m/Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($logistica->hora)->format('H:i') }}</td>
+                            <td>
+                                <div style="width: 50px; cursor: pointer;" 
+                                    onclick="openModal('{{ $logistica->id }}', '{{ \Carbon\Carbon::parse($logistica->hora)->format('H:i') }}')">
+                                    <i class="bi bi-alarm"></i> {{ \Carbon\Carbon::parse($logistica->hora)->format('H:i') }}
+                                </div>
+                            </td>
                             <td><div style="width: 70px">ALF-{{ $logistica->venda_id }}</div></td>
-                            <td>{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
                             <td>{{ $logistica->nome }}</td>
+                            <td style="text-align: center">{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
                             <td>{{ $logistica->venda->direcao_hotel }}</td>
                             <td class="guia-cell">{{ empty($logistica->guia) ? 'Asignar' : $logistica->guia }}</td>
                             <td class="condutor-cell">{{ empty($logistica->condutor) ? 'Asignar' : $logistica->condutor }}</td>
@@ -115,22 +115,22 @@
                             <td>{{ $logistica->hotel }}</td>
                             <td>{{ $logistica->telefone }}</td>
                             <td>{{ $logistica->vendedor }}</td>
-                            <td>
-                              @if($logistica->estado_pagamento === 'Pago')
-                                <span class="badge bg-success">Pago</span>
-                              @else
-                                <span class="badge bg-warning">Pendente</span>
-                              @endif
-                            </td>
-                            <td><i class="bi bi-ticket-detailed"></i></td>
-                            <td>{{ $logistica->conferido ? 'Sim' : 'Não' }}</td>
-                            <td>
+                            <td style="text-align: center"><i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i></td>
+                            <td style="text-align: center">{!! $logistica->conferido ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' : '<i style="font-size: 1.2rem; color: red;" class="bi bi-hand-thumbs-down-fill"></i>' !!}</td>
+                            <td style="text-align: center">
                               <a href="{{ route('logistics.edit', $logistica->id) }}">
                                 <i class="bi bi-pen-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i>
                               </a>
                             </td>
                           </tr>
                         @endforeach
+                        <tr>
+                          <td colspan="3" class="border-right-0">Exportar</td>
+                          <td style="background-color: #81E979;" class="border-right-0"></td>
+                          <td style="background-color: #81E979; color: #fff; font-weight: bold" class="border-left-0 border-right-0"><div style="width: 70px">PAX TOTAL</div></td>
+                          <td style="background-color: #81E979; color: #fff; font-weight: bold; text-align:center" class="border-left-0">{{ $group->sum('pax_total') }}</td>
+                          <td colspan="12" style="text-align: left; padding: 10px;"></td>
+                        </tr>
                       @endforeach
                     </tbody>
                   </table>
@@ -138,6 +138,43 @@
             </div>
         </div>          
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLabel">Atualizar Logística</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="updateForm">
+                  <input type="hidden" id="logistica_id">
+
+                  <!-- Campo Guia -->
+                  <div class="mb-3">
+                      <label for="guia" class="form-label">Guia</label>
+                      <input type="text" class="form-control" id="guia_text" required>
+                  </div>
+
+                  <!-- Campo Condutor -->
+                  <div class="mb-3">
+                      <label for="condutor" class="form-label">Condutor</label>
+                      <input type="text" class="form-control" id="condutor_text" required>
+                  </div>
+
+                  <!-- Campo Hora -->
+                  <div class="mb-3">
+                      <label for="hora" class="form-label">Hora</label>
+                      <input type="time" class="form-control" id="hora" required>
+                  </div>
+
+                  <button type="button" class="btn btn-primary" id="saveChanges">Salvar</button>
+              </form>
+          </div>
+      </div>
+  </div>
 </div>
 @endsection
 
@@ -215,6 +252,59 @@
             },
             error: function (xhr) {
                 alert('Erro ao processar a requisição. Tente novamente.');
+            }
+        });
+    });
+
+
+    //modal
+
+    // Abre o modal ao clicar no ícone do relógio
+    window.openModal = function (id, hora) {
+        // Busca a linha (tr) correspondente pelo ID
+        let row = $('#logistica-' + id);
+
+        // Obtém os valores do guia e condutor pelas classes
+        let guia = row.find('.guia-cell').text().trim();
+        let condutor = row.find('.condutor-cell').text().trim();
+
+        // Preenche os campos do modal com os IDs corretos
+        $('#logistica_id').val(id);
+        $('#guia_text').val(guia);             // Guia
+        $('#condutor_text').val(condutor);     // Condutor
+        $('#hora').val(hora);                  // Hora
+
+        // Exibe o modal
+        $('#updateModal').modal('show');
+    };
+
+    // Salva as alterações ao clicar no botão
+    $('#saveChanges').click(function () {
+        let id = $('#logistica_id').val();
+        let guia = $('#guia_text').val();       // Corrigido para guia_text
+        let condutor = $('#condutor_text').val(); // Corrigido para condutor_text
+        let hora = $('#hora').val();           // Hora mantida
+
+        $.ajax({
+            url: "{{ route('logistics.hora') }}", // URL da rota Laravel
+            type: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                logistics_ids: [id], // Envia ID como array
+                guia_id: guia,
+                condutor_id: condutor,
+                hora: hora
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Atualizado com sucesso!');
+                    location.reload(); // Atualiza a página
+                } else {
+                    alert('Erro ao atualizar!');
+                }
+            },
+            error: function () {
+                alert('Erro ao processar a requisição!');
             }
         });
     });

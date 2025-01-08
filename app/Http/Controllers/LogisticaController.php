@@ -6,6 +6,10 @@ use App\Models\Logistica;
 use App\Models\Venda;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LogisticsExport;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 
 class LogisticaController extends Controller
@@ -50,6 +54,7 @@ class LogisticaController extends Controller
         foreach ($logistics as $logistica) {
             $logistica->guia = User::find($request->guia_id)->name;
             $logistica->condutor = User::find($request->condutor_id)->name;
+            $logistica->hora = Carbon::now()->format('H:i:s'); // Atualiza com a hora atual
             $logistica->save();
         }
 
@@ -59,5 +64,48 @@ class LogisticaController extends Controller
             'guia_name' => User::find($request->guia_id)->name,
             'condutor_name' => User::find($request->condutor_id)->name
         ]);
+    }
+
+
+    public function hora(Request $request)
+    {
+        $request->validate([
+            'logistics_ids' => 'required|array|min:1',
+            'logistics_ids.*' => 'exists:logistics,id',
+            'guia_id' => 'required|string',
+            'condutor_id' => 'required|string',
+            'hora' => 'required|date_format:H:i',
+        ]);
+
+        $logistics = Logistica::whereIn('id', $request->logistics_ids)->get();
+
+        foreach ($logistics as $logistica) {
+            $logistica->guia = $request->guia_id;
+            $logistica->condutor = $request->condutor_id;
+            $logistica->hora = $request->hora; // Atualiza a hora
+            $logistica->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Atribuição realizada com sucesso!',
+        ]);
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $logisticsIds = $request->logistics_ids;
+        $logistics = Logistics::whereIn('id', $logisticsIds)->get();
+        
+        return Excel::download(new LogisticsExport($logistics), 'logistics.xlsx');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $logisticsIds = $request->logistics_ids;
+        $logistics = Logistics::whereIn('id', $logisticsIds)->get();
+        
+        $pdf = Pdf::loadView('logistics.pdf', compact('logistics'));
+        return $pdf->download('logistics.pdf');
     }
 }
