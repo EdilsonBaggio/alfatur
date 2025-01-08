@@ -522,6 +522,9 @@ table {
   line-height: normal;
   border-color: #EFF0F2;
 }
+.content-tabelas .card .card-body {
+  padding: 10px;
+}
 .content-tabelas .content-table .dt-info {
   float: left;
   margin-top: 30px;
@@ -535,10 +538,11 @@ table {
 }
 .content-tabelas .content-table table.dataTable th {
   color: #1A1823;
-  font-size: 14px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  padding: 5px;
 }
 @media screen and (max-width: 500px) {
   .content-tabelas .content-table table.dataTable th {
@@ -961,6 +965,25 @@ table.dataTable > tbody > tr.child ul.dtr-details {
   }
 }
 
+#tabela-logisticas .elipses {
+  width: 200px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: ltr;
+}
+@media screen and (max-width: 500px) {
+  #tabela-logisticas .sorting_1 {
+    min-width: 260px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #tabela-logisticas .id_venda {
+    min-width: 260px;
+  }
+}
+
 .estimativo .col-md-4 .day-group {
   background: #FEAC00;
   border-radius: 10px;
@@ -1005,6 +1028,14 @@ table.dataTable > tbody > tr.child ul.dtr-details {
   font-weight: bold;
   font-size: 15px;
   margin-right: 5px;
+}
+
+th {
+  white-space: nowrap;
+}
+
+.table td, .table th {
+  font-size: 12px;
 }
 
 /*# sourceMappingURL=app.css.map */

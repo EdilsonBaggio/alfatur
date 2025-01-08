@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="content-tabelas">
-    <div class="container">
+    <div class="container-fluid">
         <div class="card">
             <div class="card-header">
               Lista de Vendas
@@ -122,6 +122,7 @@
       $('#tabela-vendas').DataTable({
           "scrollX": false,
           "lengthChange": false,
+          "ordering": false,
           "dom": 'Bfrtip',
           "buttons": [
               'copy', 'csv', 'excel'

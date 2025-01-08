@@ -55,7 +55,11 @@
                     <tbody>
                       @foreach($inactiveTours as $tour)
                       <tr>
-                        <td>#{{ $tour->id }}</td>
+                        <td>
+                          <div class="id_venda">
+                            #{{ $tour->id }}
+                          </div>
+                        </td>
                         <td>{{ $tour->name }}</td>
                         <td>R$ {{ number_format($tour->price, 2, ',', '.') }}</td>
                         <td>{{ $tour->status ? 'Inativo' : '' }}</td>

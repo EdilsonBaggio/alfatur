@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VendasController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\EstimativoController;
+use App\Http\Controllers\LogisticaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,7 +48,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/tours/{id}', [TourController::class, 'update'])->name('tours.update');
 
     Route::get('/estimativo', [EstimativoController::class, 'index'])->name('estimativo.index');
+    
+    Route::get('/logistica', [LogisticaController::class, 'index'])->name('logistica.index');
+    Route::get('logistics/{logistica}/edit', [LogisticaController::class, 'edit'])->name('logistics.edit');
+    Route::put('logistics/{logistica}', [LogisticaController::class, 'update'])->name('logistics.update');
 
+    // Rota para atualizar múltiplas logísticas
+    Route::post('/logistics/assign', [LogisticaController::class, 'assign'])->name('logistics.assign');
 });
 
 Route::get('/esqueci', function () {

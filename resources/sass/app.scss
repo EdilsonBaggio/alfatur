@@ -516,6 +516,9 @@ table {
             line-height: normal;
             border-color: #EFF0F2;
         }
+        .card-body{
+            padding: 10px;
+        }
     }
     .content-table{
         .dt-info{
@@ -531,10 +534,11 @@ table {
         }
         table.dataTable th {
             color: #1A1823;
-            font-size: 14px;
+            font-size: 13px;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
+            padding: 5px;
             @media screen and (max-width:500px) {
                 max-width: 50px;
                 overflow: hidden;
@@ -940,6 +944,26 @@ table.dataTable>tbody>tr.child ul.dtr-details{
         }
     }
 }
+#tabela-logisticas{
+    .elipses{
+        width: 200px;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        direction: ltr;
+    }
+    .sorting_1{
+        @media screen and (max-width:500px){
+            min-width: 260px;
+        }
+    }
+    .id_venda{
+        @media screen and (max-width:500px){
+            min-width: 260px;
+        }
+    }
+}
 .estimativo{
     .col-md-4{
         .day-group {
@@ -990,4 +1014,10 @@ table.dataTable>tbody>tr.child ul.dtr-details{
             }
         }
     }
+}
+th {
+    white-space: nowrap;
+}
+.table td, .table th{
+    font-size: 12px;
 }

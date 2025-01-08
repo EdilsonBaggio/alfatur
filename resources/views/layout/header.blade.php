@@ -78,7 +78,7 @@
             </li>
             @endif
             <li>
-                <a href="" class="{{ request()->routeIs(['logistica']) ? 'current' : '' }}">
+                <a href="{{ route("logistica.index") }}" class="{{ request()->routeIs(['logistica.index']) ? 'current' : '' }}">
                     Logística
                 </a>
             </li>
