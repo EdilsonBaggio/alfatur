@@ -18,7 +18,7 @@
 
 <!-- Lightbox JS -->
 <script src="https://cdn.jsdelivr.net/npm/lightbox2@2.11.3/dist/js/lightbox.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     AOS.init();
     $(document).ready(function(){

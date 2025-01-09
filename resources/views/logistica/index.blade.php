@@ -20,46 +20,44 @@
                   </div>
                 </div>
               </div>
-              <div class="table-responsive">
+              <div class="table">
+                  <div>
+                      <form id="assignForm" method="POST">
+                        @csrf
+                        <!-- Restante do conteúdo do formulário -->
+                        <div class="row mt-3 content-atribuir">
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm d-flex">
+                                    <i class="bi bi-arrow-90deg-down p-2"></i>
+                                    <select id="guia" class="form-select">
+                                        <option value="">Selecione o Guia</option>
+                                        @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
+                                            <option value="{{ $guia->id }}">{{ $guia->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm">
+                                    <select id="condutor" class="form-select">
+                                        <option value="">Selecione o Condutor</option>
+                                        @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
+                                            <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group input-group-sm">
+                                    <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                  </div>
                   <table class="table table-bordered table-striped logistica mt-4">
                     <tbody id="logisticsTableBody">
                       <!-- Linha com Selects e Botões -->
-                      <tr>
-                        <td colspan="18" style="text-align: left; padding: 10px;">
-                          <form id="assignForm" method="POST">
-                              @csrf
-                              <!-- Restante do conteúdo do formulário -->
-                              <div class="row mt-3">
-                                  <div class="col-md-2">
-                                      <div class="input-group input-group-sm mb-3 d-flex">
-                                          <i class="bi bi-arrow-90deg-down p-2"></i>
-                                          <select id="guia" class="form-select">
-                                              <option value="">Selecione o Guia</option>
-                                              @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
-                                                  <option value="{{ $guia->id }}">{{ $guia->name }}</option>
-                                              @endforeach
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <div class="input-group input-group-sm mb-3">
-                                          <select id="condutor" class="form-select">
-                                              <option value="">Selecione o Condutor</option>
-                                              @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
-                                                  <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
-                                              @endforeach
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <div class="input-group input-group-sm mb-3">
-                                          <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
-                                      </div>
-                                  </div>
-                              </div>
-                          </form>
-                        </td>
-                      </tr>
                       @php
                         $groupedLogistics = collect($logistics)->groupBy(function($item) {
                           return $item->tour . ' - ' . \Carbon\Carbon::parse($item->data)->format('d/m/Y');
@@ -67,47 +65,53 @@
                       @endphp
 
                       @foreach ($groupedLogistics as $key => $group)
-                        <!-- Cabeçalho do Grupo -->
-                        <tr>
+                      <!-- Cabeçalho do Grupo -->
+                        <tr class="td_tour">
                           <td colspan="18" style="background: #000; color: #fff; text-align: left; padding: 10px;">
                             {{ $key }}
                           </td>
                         </tr>
-                        <tr>
-                          <td>#</td>
-                          <td>Fecha</td>
-                          <td>Hora</td>
-                          <td>ID</td>
-                          <td>Nombre</td>
-                          <td>Pax</td>
-                          <td>Dirección</td>
-                          <td>Conductor</td>
-                          <td>Guía</td>
-                          <td>Valor</td>
-                          <td>Pendiente</td>
-                          <td>Hotel</td>
-                          <td>Teléfono</td>
-                          <td>Vendedor</td>
-                          <td>Voucher</td>
-                          <td>Verificado</td>
-                          <td>Acciones</td>
-                      </tr>
+                        <tr class="td_head">
+                          <td colspan="18" class="p-0 border-0">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Hora</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Pax</th>
+                                <th scope="col">Dirección</th>
+                                <th scope="col">Guía</th>
+                                <th scope="col">Conductor</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Pendiente</th>
+                                <th scope="col">Hotel</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Vendedor</th>
+                                <th scope="col">Voucher</th>
+                                <th scope="col">Verificado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                          </thead>
+                          </td>
+                        </tr>
                         <!-- Linhas de Dados -->
                         @foreach ($group as $logistica)
                           <tr id="logistica-{{ $logistica->id }}" class="logistics-row" data-logistica-date="{{ \Carbon\Carbon::parse($logistica->data)->format('Y-m-d') }}">
-                            <td><input type="checkbox" name="logistics_ids[]" value="{{ $logistica->id }}"></td>
-                            <td>{{ \Carbon\Carbon::parse($logistica->data)->format('d/m/Y') }}</td>
-                            <td>
+                            <td data-label="#"><input type="checkbox" class="check" name="logistics_ids[]" value="{{ $logistica->id }}"></td>
+                            <td data-label="Fecha">{{ \Carbon\Carbon::parse($logistica->data)->format('d/m/Y') }}</td>
+                            <td data-label="Hora">
                                 <div style="width: 50px; cursor: pointer;" 
                                     onclick="openModal('{{ $logistica->id }}', '{{ \Carbon\Carbon::parse($logistica->hora)->format('H:i') }}')">
                                     <i class="bi bi-alarm"></i> {{ \Carbon\Carbon::parse($logistica->hora)->format('H:i') }}
                                 </div>
                             </td>
-                            <td><div style="width: 70px">ALF-{{ $logistica->venda_id }}</div></td>
-                            <td>{{ $logistica->nome }}</td>
-                            <td style="text-align: center">{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
-                            <td>{{ $logistica->venda->direcao_hotel }}</td>
-                            <td class="guia-cell">
+                            <td data-label="ID"><div style="width: 50px">ALF-{{ $logistica->venda_id }}</div></td>
+                            <td data-label="Nombre">{{ $logistica->nome }}</td>
+                            <td data-label="Pax" style="text-align: center">{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
+                            <td data-label="Dirección">{{ $logistica->venda->direcao_hotel }}</td>
+                            <td data-label="Guia" class="guia-cell">
                                 @if(empty($logistica->guia))
                                     Asignar
                                 @else
@@ -115,33 +119,31 @@
                                 @endif
                             </td>
 
-                            <td class="condutor-cell">
+                            <td data-label="Condutor" class="condutor-cell">
                                 @if(empty($logistica->condutor))
                                     Asignar
                                 @else
                                     {{ \App\Models\User::find($logistica->condutor)->name ?? 'Asignar' }}
                                 @endif
                             </td>
-                            <td>{{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
-                            <td>{{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
-                            <td>{{ $logistica->hotel }}</td>
-                            <td>{{ $logistica->telefone }}</td>
-                            <td>{{ $logistica->vendedor }}</td>
-                            <td style="text-align: center"><i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i></td>
-                            <td style="text-align: center">{!! $logistica->conferido ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' : '<i style="font-size: 1.2rem; color: red;" class="bi bi-hand-thumbs-down-fill"></i>' !!}</td>
-                            <td style="text-align: center">
+                            <td data-label="Valor">${{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
+                            <td data-label="Pendiente">${{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
+                            <td data-label="Hotel">{{ $logistica->hotel }}</td>
+                            <td data-label="Teléfono">{{ $logistica->telefone }}</td>
+                            <td data-label="Vendedor">{{ $logistica->vendedor }}</td>
+                            <td data-label="Voucher" style="text-align: center"><i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i></td>
+                            <td data-label="Verificado" style="text-align: center">{!! $logistica->conferido ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' : '<i style="font-size: 1.2rem; color: red;" class="bi bi-hand-thumbs-down-fill"></i>' !!}</td>
+                            <td data-label="Acciones" style="text-align: center">
                               <a href="{{ route('logistics.edit', $logistica->id) }}">
                                 <i class="bi bi-pen-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i>
                               </a>
                             </td>
                           </tr>
                         @endforeach
-                        <tr>
-                          <td colspan="3" class="border-right-0">Exportar</td>
-                          <td style="background-color: #81E979;" class="border-right-0"></td>
-                          <td style="background-color: #81E979; color: #fff; font-weight: bold" class="border-left-0 border-right-0"><div style="width: 70px">PAX TOTAL</div></td>
-                          <td style="background-color: #81E979; color: #fff; font-weight: bold; text-align:center" class="border-left-0">{{ $group->sum('pax_total') }}</td>
-                          <td colspan="12" style="text-align: left; padding: 10px;"></td>
+                        <tr class="td_pax">
+                          <td colspan="3">Exportar</td>
+                          <td colspan="3" style="background-color: #81E979; color: #fff; font-weight: bold;"><div style="float: left;">PAX TOTAL</div><div style="float: right; width: 15px">{{ $group->sum('pax_total') }}</div></td>
+                          <td colspan="12" class="td_ultima" style="text-align: left;"></td>
                         </tr>
                       @endforeach
                     </tbody>
@@ -157,7 +159,7 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="updateModalLabel">Atualizar Logística</h5>
+              <h5 class="modal-title" id="updateModalLabel">Asignar GUIA y Fijar Hora de Retiro en Hotel</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -221,18 +223,30 @@
 
         // Validação - Verificar se pelo menos um checkbox foi selecionado
         if (selectedLogistics.length === 0) {
-            alert('Por favor, selecione pelo menos uma logística.');
-            return;
+          Swal.fire({
+            title: "Por favor!",
+            text: "Seleccione al menos una logística.",
+            icon: "error"
+          });
+          return;
         }
 
         // Verificar se os campos Guia e Condutor estão selecionados
         if (!guiaId) {
-            alert('Por favor, selecione um Guia.');
+            Swal.fire({
+              title: "Por favor!",
+              text: "Seleccione una guía.",
+              icon: "error"
+            });
             return;
         }
 
         if (!condutorId) {
-            alert('Por favor, selecione um Condutor.');
+            Swal.fire({
+              title: "Por favor!",
+              text: "Seleccione un controlador.",
+              icon: "error"
+            });
             return;
         }
 
@@ -248,16 +262,24 @@
             },
             success: function (response) {
                 if (response.success) {
-                    alert('Guia e Condutor atribuídos com sucesso!');
 
-                    // Atualizar a tabela dinamicamente
-                    $.each(selectedLogistics, function (index, id) {
-                        var row = $('input[value="' + id + '"]').closest('tr');
-                        
-                        // Atualiza Guia e Condutor
-                        // row.find('.guia-cell').text(response.guia_name || 'Atribuir');
-                        // row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
-                        location.reload();
+                  Swal.fire({
+                      title: "¡Guía y conductor asignados exitosamente!",
+                      showDenyButton: false,
+                      showCancelButton: false,
+                      confirmButtonText: "Ok",
+                      icon: "success"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $("#guia").val("").trigger("change");
+                        $("#condutor").val("").trigger("change");
+                        $(".check").prop('checked', false); 
+                        $.each(selectedLogistics, function (index, id) {
+                            var row = $('input[value="' + id + '"]').closest('tr');
+                            row.find('.guia-cell').text(response.guia_name || 'Atribuir');
+                            row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
+                        });
+                      }
                     });
                 } else {
                     alert('Erro: ' + response.message);

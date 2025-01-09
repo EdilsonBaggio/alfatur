@@ -1038,4 +1038,88 @@ th {
   font-size: 12px;
 }
 
+@media screen and (max-width: 1024px) {
+  .table .logistica {
+    border: 0;
+  }
+  .table .logistica caption {
+    font-size: 1.3em;
+  }
+  .table .logistica thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  .table .logistica thead th {
+    border: 0;
+  }
+  .table .logistica tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+  .table .logistica td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    text-align: right;
+  }
+}
+@media screen and (max-width: 1024px) and (max-width: 1024px) {
+  .table .logistica td {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .table .logistica td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+  }
+  .table .logistica td:last-child {
+    border-bottom: 0;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .content-atribuir .col-md-2 {
+    flex: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  .content-atribuir .col-md-2 i {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .logistica tbody .td_tour {
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+  .logistica tbody .td_head {
+    display: none;
+  }
+  .logistica tbody .logistics-row {
+    border-bottom: 0;
+  }
+}
+.logistica tbody .td_pax {
+  margin: 0;
+  padding: 0;
+}
+@media screen and (max-width: 1024px) {
+  .logistica tbody .td_pax {
+    display: none;
+  }
+  .logistica tbody .td_pax .td_ultima {
+    border: 0;
+  }
+}
+
 /*# sourceMappingURL=app.css.map */

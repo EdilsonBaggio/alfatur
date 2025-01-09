@@ -92,14 +92,6 @@ class LogisticaController extends Controller
         ]);
     }
 
-    public function exportExcel(Request $request)
-    {
-        $logisticsIds = $request->logistics_ids;
-        $logistics = Logistics::whereIn('id', $logisticsIds)->get();
-        
-        return Excel::download(new LogisticsExport($logistics), 'logistics.xlsx');
-    }
-
     public function exportPdf(Request $request)
     {
         $logisticsIds = $request->logistics_ids;
