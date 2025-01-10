@@ -47,7 +47,7 @@
         </div>
     </div> 
 </nav>
-<div class="content-lateral-menu">
+{{-- <div class="content-lateral-menu">
     <div class=" container menu">
         <ul>
             <li class="mobile">
@@ -58,51 +58,26 @@
                 <a href="{{ route("usuarios.create") }}" class="{{ request()->routeIs(['usuarios.create']) ? 'current' : '' }}">
                     Usuarios
                 </a>
-            </li>  
-            @endif
-            <li>
-                <a href="{{ route("vendas.create") }}" class="{{ request()->routeIs(['vendas.create']) ? 'current' : '' }}">
-                    Vender
-                </a>
             </li> 
-            <li>
-                <a href="{{ route("vendas.list") }}" class="{{ request()->routeIs(['vendas.list']) ? 'current' : '' }}">
-                    Mis Vendas
-                </a>
-            </li>
-            @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="" class="{{ request()->routeIs(['viajes']) ? 'current' : '' }}">
                     Viajes/Vendedor
                 </a>
             </li>
             @endif
+            @if(Auth::user()->role == "Administrador" || Auth::user()->role == "Logística")
             <li>
                 <a href="{{ route("logistica.index") }}" class="{{ request()->routeIs(['logistica.index']) ? 'current' : '' }}">
                     Logística
                 </a>
             </li>
-            <li>
-                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
-                    Confirmados
-                </a>
-            </li>
-            <li>
-                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
-                    Mis Liquidaciones
-                </a>
-            </li> 
+            @endif
             @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="" class="{{ request()->routeIs(['realizadas-por-pagar']) ? 'current' : '' }}">
                     Realizadas Por Pagar
                 </a>
             </li> 
-            <li>
-                <a href="" class="{{ request()->routeIs(['liquidaciones']) ? 'current' : '' }}">
-                    Liquidaciones
-                </a>
-            </li>
             <li>
                 <a href="" class="{{ request()->routeIs(['viajes-full']) ? 'current' : '' }}">
                     Viajes FULL
@@ -114,19 +89,165 @@
                 </a>
             </li> 
             @endif
+            @if(Auth::user()->role == "Administrador" || Auth::user()->role == "Vendedor")
+            <li>
+                <a href="{{ route("vendas.create") }}" class="{{ request()->routeIs(['vendas.create']) ? 'current' : '' }}">
+                    Vender
+                </a>
+            </li> 
+            <li>
+                <a href="{{ route("vendas.list") }}" class="{{ request()->routeIs(['vendas.list']) ? 'current' : '' }}">
+                    Mis Vendas
+                </a>
+            </li>
+            <li>
+                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
+                    Confirmados
+                </a>
+            </li>
             <li>
                 <a href="{{ route("estimativo.index") }}" class="{{ request()->routeIs(['estimativo.index']) ? 'current' : '' }}">
                     Estimativo
                 </a>
             </li> 
-            @if(Auth::user()->role == "Administrador")
             <li>
                 <a href="{{ route("tours.create") }}" class="{{ request()->routeIs(['tours.create']) ? 'current' : '' }}">
                     Tours
                 </a>
             </li>  
+            <li>
+                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
+                    Mis Liquidaciones
+                </a>
+            </li> 
+            <li>
+                <a href="{{ route("logistica.index") }}" class="{{ request()->routeIs(['logistica.index']) ? 'current' : '' }}">
+                    Logística
+                </a>
+            </li>
+            <li>
+                <a href="" class="{{ request()->routeIs(['liquidaciones']) ? 'current' : '' }}">
+                    Liquidaciones
+                </a>
+            </li>
             @endif       
         </ul>
         <br style="clear: both">
     </div>
+</div> --}}
+<div class="content-lateral-menu">
+    <div class="container menu">
+        <ul>
+            <li class="mobile">
+                <a href="{{ route('home') }}" class="{{ request()->routeIs(['home']) ? 'current' : '' }}">Mi cuenta</a>
+            </li>
+            
+            @if(in_array('usuarios.create', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="{{ route('usuarios.create') }}" class="{{ request()->routeIs(['usuarios.create']) ? 'current' : '' }}">
+                    Usuarios
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('viajes.vendedor', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['viajes']) ? 'current' : '' }}">
+                    Viajes/Vendedor
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('logistica.index', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="{{ route('logistica.index') }}" class="{{ request()->routeIs(['logistica.index']) ? 'current' : '' }}">
+                    Logística
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('realizadas_por_pagar', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['realizadas-por-pagar']) ? 'current' : '' }}">
+                    Realizadas Por Pagar
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('viajes.full', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['viajes-full']) ? 'current' : '' }}">
+                    Viajes FULL
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('pagos.full', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['pagos-full']) ? 'current' : '' }}">
+                    Pagos FULL
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('vendas.create', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="{{ route('vendas.create') }}" class="{{ request()->routeIs(['vendas.create']) ? 'current' : '' }}">
+                    Vender
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('vendas.list', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="{{ route('vendas.list') }}" class="{{ request()->routeIs(['vendas.list']) ? 'current' : '' }}">
+                    Mis Vendas
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('confirmados', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
+                    Confirmados
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('estimativo.index', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="{{ route('estimativo.index') }}" class="{{ request()->routeIs(['estimativo.index']) ? 'current' : '' }}">
+                    Estimativo
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('tours.create', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="{{ route('tours.create') }}" class="{{ request()->routeIs(['tours.create']) ? 'current' : '' }}">
+                    Tours
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('mis_liquidaciones', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['mis-liquidaciones']) ? 'current' : '' }}">
+                    Mis Liquidaciones
+                </a>
+            </li>
+            @endif
+
+            @if(in_array('liquidaciones', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            <li>
+                <a href="" class="{{ request()->routeIs(['liquidaciones']) ? 'current' : '' }}">
+                    Liquidaciones
+                </a>
+            </li>
+            @endif
+        </ul>
+        <br style="clear: both">
+    </div>
 </div>
+
+

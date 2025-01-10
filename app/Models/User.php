@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,9 +17,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'rut', 'whatsapp', 'commission_percentage'
+        'name',
+        'email',
+        'password',
+        'role',
+        'rut',
+        'whatsapp',
+        'commission_percentage',
+        'permissions', // Adicionando o campo de permissões
     ];
-    
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -39,5 +45,24 @@ class User extends Authenticatable
     protected $casts = [
         'verificacao_email' => 'datetime',
         'password' => 'hashed',
+        'permissions' => 'array', // Cast para tratar permissões como array
     ];
+
+    /**
+     * Verifica se o usuário tem uma permissão específica.
+     *
+     * @param string $permission
+     * @return bool
+     */
+    public function hasPermission($permission)
+    {
+        // Administradores têm acesso a tudo
+        if ($this->role === 'Administrador') {
+            return true;
+        }
+
+        // Verifica se a permissão existe na lista de permissões do usuário
+        $permissions = $this->permissions ?? [];
+        return in_array($permission, $permissions);
+    }
 }

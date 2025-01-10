@@ -81,6 +81,68 @@
                     <label for="commission_percentage" class="form-label">Porcentagem Comissão (%)</label>
                     <input type="number" id="commission_percentage" name="commission_percentage" class="form-control" min="0" max="100">
                 </div>
+
+                <!-- Permissões -->
+                <div class="mb-3">
+                    <label for="permissions" class="form-label">Permissões de Acesso</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Mi conta" id="mi_conta">
+                        <label class="form-check-label" for="mi_conta">Mi conta</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Usuarios" id="usuarios">
+                        <label class="form-check-label" for="usuarios">Usuarios</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Viajes/Vendedor" id="viajes">
+                        <label class="form-check-label" for="viajes">Viajes/Vendedor</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Logística" id="logistica">
+                        <label class="form-check-label" for="logistica">Logística</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Realizadas Por Pagar" id="realizadas_por_pagar">
+                        <label class="form-check-label" for="realizadas_por_pagar">Realizadas Por Pagar</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Viajes FULL" id="viajes_full">
+                        <label class="form-check-label" for="viajes_full">Viajes FULL</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Pagos FULL" id="pagos_full">
+                        <label class="form-check-label" for="pagos_full">Pagos FULL</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Vender" id="vender">
+                        <label class="form-check-label" for="vender">Vender</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Mis Vendas" id="mis_vendas">
+                        <label class="form-check-label" for="mis_vendas">Mis Vendas</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Confirmados" id="confirmados">
+                        <label class="form-check-label" for="confirmados">Confirmados</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Estimativo" id="estimativo">
+                        <label class="form-check-label" for="estimativo">Estimativo</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Tours" id="tours">
+                        <label class="form-check-label" for="tours">Tours</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Mis Liquidaciones" id="mis_liquidaciones">
+                        <label class="form-check-label" for="mis_liquidaciones">Mis Liquidaciones</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="permissions[]" value="Liquidaciones" id="liquidaciones">
+                        <label class="form-check-label" for="liquidaciones">Liquidaciones</label>
+                    </div>
+                </div>
+
         
                 <!-- Botão Criar -->
                 <button type="submit" class="btn btn-outline-primary">Crear Usuário</button>

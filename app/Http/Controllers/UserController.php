@@ -13,9 +13,43 @@ class UserController extends Controller
         return view('users.create');
     }
 
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users',
+    //         'password' => 'required|string|min:8',
+    //         'role' => 'required|string',
+    //         'rut' => 'required|string|max:20|unique:users',
+    //         'whatsapp' => 'required|string|max:20',
+    //         'commission_percentage' => 'nullable|numeric|min:0|max:100',
+    //     ]);
+
+    //     if (User::where('email', $request->input('email'))->exists()) {
+    //         return redirect()->back()->with('error', 'O e-mail já está em uso!');
+    //     }
+        
+    //     if (User::where('rut', $request->input('rut'))->exists()) {
+    //         return redirect()->back()->with('error', 'O RUT já está em uso!');
+    //     }
+        
+    //     User::create([
+    //         'name' => $request->input('name'),
+    //         'email' => $request->input('email'),
+    //         'password' => Hash::make($request->input('password')),
+    //         'role' => $request->input('role'),
+    //         'rut' => $request->input('rut'),
+    //         'whatsapp' => $request->input('whatsapp'),
+    //         'commission_percentage' => $request->input('commission_percentage'),
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Usuário criado com sucesso!');
+    // }
+
     public function store(Request $request)
     {
-        $request->validate([
+        // Validação dos dados do formulário
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
@@ -23,17 +57,37 @@ class UserController extends Controller
             'rut' => 'required|string|max:20|unique:users',
             'whatsapp' => 'required|string|max:20',
             'commission_percentage' => 'nullable|numeric|min:0|max:100',
+            'permissions' => 'nullable|array', // Permissões devem ser um array, mas podem ser nulas
+            'permissions.*' => 'string', // Cada permissão dentro do array deve ser uma string
         ]);
 
-        if (User::where('email', $request->input('email'))->exists()) {
-            return redirect()->back()->with('error', 'O e-mail já está em uso!');
-        }
-        
-        if (User::where('rut', $request->input('rut'))->exists()) {
-            return redirect()->back()->with('error', 'O RUT já está em uso!');
-        }
-        
-        User::create([
+        // Lista de permissões esperadas para padronizar
+        $permissionsMapping = [
+            'Mi conta' => 'home',
+            'Usuarios' => 'usuarios.create',
+            'Viajes/Vendedor' => 'viajes.vendedor',
+            'Logística' => 'logistica.index',
+            'Realizadas Por Pagar' => 'realizadas.pagar',
+            'Viajes FULL' => 'viajes.full',
+            'Pagos FULL' => 'pagos.full',
+            'Vender' => 'vendas.create',
+            'Mis Vendas' => 'vendas.list',
+            'Confirmados' => 'confirmados',
+            'Estimativo' => 'estimativo.index',
+            'Tours' => 'tours.create',
+            'Mis Liquidaciones' => 'mis.liquidaciones',
+            'Liquidaciones' => 'liquidaciones'
+        ];
+
+        // Mapeando as permissões para os novos valores padronizados
+        $permissions = collect($request->input('permissions', []))
+                        ->map(function($permission) use ($permissionsMapping) {
+                            return $permissionsMapping[$permission] ?? $permission;
+                        })
+                        ->toArray();
+
+        // Criação do novo usuário
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
@@ -41,8 +95,10 @@ class UserController extends Controller
             'rut' => $request->input('rut'),
             'whatsapp' => $request->input('whatsapp'),
             'commission_percentage' => $request->input('commission_percentage'),
+            'permissions' => $permissions, // Armazenando como array puro
         ]);
 
+        // Redireciona com sucesso
         return redirect()->back()->with('success', 'Usuário criado com sucesso!');
     }
 

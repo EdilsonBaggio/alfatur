@@ -12,12 +12,20 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request) 
+    public function login(Request $request)
     {
+        // Verifica se o usuário já está logado
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('home');
+        }
+
         $credentials = $request->only('email', 'password');
+
+        // Tenta autenticar o usuário
         if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->intended('home');
         }
+
         return back()->withErrors(['email' => 'Os dados estão incorretos ou não existe usuário cadastrado.'])->withInput($request->only('email'));
     }
 

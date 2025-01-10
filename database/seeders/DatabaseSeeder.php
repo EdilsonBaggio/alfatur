@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,8 +12,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
+        // Criando um usuário administrador com todas as permissões
         \App\Models\User::factory()->create([
             'name' => 'Edilson',
             'email' => 'developer@symbster.com',
@@ -23,6 +21,22 @@ class DatabaseSeeder extends Seeder
             'rut' => '12345678901',
             'whatsapp' => '(99) 99999-9999',
             'commission_percentage' => 10.5,
+            'permissions' => [
+                'home',
+                'usuarios.create',
+                'viajes.vendedor',
+                'logistica.index',
+                'realizadas.pagar',
+                'viajes.full',
+                'pagos.full',
+                'vendas.create',
+                'vendas.list',
+                'confirmados',
+                'estimativo.index',
+                'tours.create',
+                'mis.liquidaciones',
+                'liquidaciones',
+            ],
         ]);
     }
 }
