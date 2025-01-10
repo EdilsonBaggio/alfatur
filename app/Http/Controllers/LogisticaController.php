@@ -100,4 +100,41 @@ class LogisticaController extends Controller
         $pdf = Pdf::loadView('logistics.pdf', compact('logistics'));
         return $pdf->download('logistics.pdf');
     }
+
+    public function update(Request $request, $id)
+    {
+        // Validação dos dados enviados
+        $request->validate([
+            'tour' => 'required|string|max:255',
+            // 'data' => 'required|date',
+            'hora' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
+            'pax_total' => 'required|integer',
+            'valor_total' => 'nullable|numeric',
+            'valor_a_pagar' => 'nullable|numeric',
+            'hotel' => 'nullable|string|max:255',
+            'telefone' => 'nullable|string|max:255',
+            'conferido' => 'nullable|boolean',
+        ]);
+
+        // Busca a logística pelo ID
+        $logistica = Logistica::findOrFail($id);
+
+        // Atualiza os dados
+        $logistica->update([
+            'tour' => $request->input('tour'),
+            // 'data' => $request->input('data'),
+            'hora' => $request->input('hora'),
+            'nome' => $request->input('nome'),
+            'pax_total' => $request->input('pax_total'),
+            'valor_total' => $request->input('valor_total'),
+            'valor_a_pagar' => $request->input('valor_a_pagar'),
+            'hotel' => $request->input('hotel'),
+            'telefone' => $request->input('telefone'),
+            'conferido' => $request->input('conferido', 0),
+        ]);
+
+        // Retorna resposta JSON ou mensagem de sucesso
+        return response()->json(['success' => true, 'message' => 'Logística atualizada com sucesso!']);
+    }
 }

@@ -51,14 +51,12 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/logistica', [LogisticaController::class, 'index'])->name('logistica.index');
     Route::get('logistics/{logistica}/edit', [LogisticaController::class, 'edit'])->name('logistics.edit');
-    Route::put('logistics/{logistica}', [LogisticaController::class, 'update'])->name('logistics.update');
 
     // Rota para atualizar múltiplas logísticas
     Route::post('/logistics/assign', [LogisticaController::class, 'assign'])->name('logistics.assign');
     Route::post('/logistics/hora', [LogisticaController::class, 'hora'])->name('logistics.hora');
-    Route::post('/logistics/export/excel', [LogisticsController::class, 'exportExcel'])->name('logistics.export.excel');
     Route::post('/logistics/export/pdf', [LogisticsController::class, 'exportPdf'])->name('logistics.export.pdf');
-
+    Route::post('/logistics/{id}/update', [LogisticaController::class, 'update'])->name('logistics.update');
 });
 
 Route::get('/esqueci', function () {

@@ -132,12 +132,19 @@
                             <td data-label="Teléfono">{{ $logistica->telefone }}</td>
                             <td data-label="Vendedor">{{ $logistica->vendedor }}</td>
                             <td data-label="Voucher" style="text-align: center"><i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i></td>
-                            <td data-label="Verificado" style="text-align: center">{!! $logistica->conferido ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' : '<i style="font-size: 1.2rem; color: red;" class="bi bi-hand-thumbs-down-fill"></i>' !!}</td>
+                            <td data-label="Verificado" style="text-align: center">
+                                {!! $logistica->conferido 
+                                    ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' 
+                                    : '<i style="font-size: 1.2rem; color: red;" class="bi bi-hand-thumbs-down-fill"></i>' !!}
+                            </td>                          
                             <td data-label="Acciones" style="text-align: center">
-                              <a href="{{ route('logistics.edit', $logistica->id) }}">
-                                <i class="bi bi-pen-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i>
-                              </a>
-                            </td>
+                                <a href="#" 
+                                  data-bs-toggle="modal" 
+                                  data-bs-target="#updateModalEditar" 
+                                  onclick="populateModal({{ json_encode($logistica) }})">
+                                    <i class="bi bi-pen-fill" style="font-size: 1.2rem; color: cornflowerblue;"></i>
+                                </a>
+                            </td>                            
                           </tr>
                         @endforeach
                         <tr class="td_pax">
@@ -169,13 +176,25 @@
                   <!-- Campo Guia -->
                   <div class="mb-3">
                       <label for="guia" class="form-label">Guia</label>
-                      <input type="text" class="form-control" id="guia_text" required>
+                      {{-- <input type="text" class="form-control" id="guia_text" required> --}}
+                      <select id="guia_text" class="form-select">
+                          <option value="" selected>Selecione o Guia</option>
+                          @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
+                              <option value="{{ $guia->id }}">{{ $guia->name }}</option>
+                          @endforeach
+                      </select>
                   </div>
-
+                  
                   <!-- Campo Condutor -->
                   <div class="mb-3">
                       <label for="condutor" class="form-label">Condutor</label>
-                      <input type="text" class="form-control" id="condutor_text" required>
+                      {{-- <input type="text" class="form-control" id="condutor_text" required> --}}
+                      <select id="condutor_text" class="form-select">
+                        <option value="" selected>Selecione o Condutor</option>
+                        @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
+                            <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
+                        @endforeach
+                    </select>
                   </div>
 
                   <!-- Campo Hora -->
@@ -190,6 +209,89 @@
       </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="updateModalEditar" tabindex="-1" aria-labelledby="updateModalEditarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="updateModalEditarLabel">Editar Logística</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="updateForm">
+                  <input type="hidden" id="logistica_id">
+
+                  <!-- Campo Tour -->
+                  <div class="mb-3">
+                      <label for="tour" class="form-label">Tour</label>
+                      <input type="text" class="form-control" id="tour" placeholder="Digite o nome do tour" required>
+                  </div>
+
+                  <!-- Campo Data -->
+                  {{-- <div class="mb-3">
+                      <label for="data" class="form-label">Data</label>
+                      <input type="date" class="form-control" id="data_editar" required>
+                  </div> --}}
+
+                  <!-- Campo Hora -->
+                  <div class="mb-3">
+                      <label for="hora" class="form-label">Hora</label>
+                      <input type="time" class="form-control" id="hora_editar" required>
+                  </div>
+
+                  <!-- Campo Nome -->
+                  <div class="mb-3">
+                      <label for="nome" class="form-label">Nome</label>
+                      <input type="text" class="form-control" id="nome" placeholder="Digite o nome" required>
+                  </div>
+
+                  <!-- Campo Pax -->
+                  <div class="mb-3">
+                      <label for="pax_total" class="form-label">Pax Total</label>
+                      <input type="number" class="form-control" id="pax_total" placeholder="Quantidade de Pax" required>
+                  </div>
+
+                  <!-- Campo Valor Total -->
+                  <div class="mb-3">
+                      <label for="valor_total" class="form-label">Valor Total</label>
+                      <input type="number" step="0.01" class="form-control" id="valor_total" placeholder="Digite o valor total" required>
+                  </div>
+
+                  <!-- Campo Valor Pendiente -->
+                  <div class="mb-3">
+                      <label for="valor_a_pagar" class="form-label">Valor Pendiente</label>
+                      <input type="number" step="0.01" class="form-control" id="valor_a_pagar" placeholder="Digite o valor pendente" required>
+                  </div>
+
+                  <!-- Campo Hotel -->
+                  <div class="mb-3">
+                      <label for="hotel" class="form-label">Hotel</label>
+                      <input type="text" class="form-control" id="hotel" placeholder="Digite o nome do hotel" required>
+                  </div>
+
+                  <!-- Campo Telefone -->
+                  <div class="mb-3">
+                      <label for="telefone" class="form-label">Telefone</label>
+                      <input type="text" class="form-control" id="telefone" placeholder="Digite o telefone" required>
+                  </div>
+
+                  <!-- Campo Verificado -->
+                  <div class="mb-3">
+                      <label for="conferido" class="form-label">Verificado</label>
+                      <select class="form-select" id="conferido">
+                          <option value="1">Sim</option>
+                          <option value="0">Não</option>
+                      </select>
+                  </div>
+
+                  <button type="button" class="btn btn-primary" id="editarModal">Salvar Alterações</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
 @endsection
 
 @section('script')
@@ -262,7 +364,6 @@
             },
             success: function (response) {
                 if (response.success) {
-
                   Swal.fire({
                       title: "¡Guía y conductor asignados exitosamente!",
                       showDenyButton: false,
@@ -280,7 +381,7 @@
                             row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
                         });
                       }
-                    });
+                  });
                 } else {
                     alert('Erro: ' + response.message);
                 }
@@ -288,7 +389,7 @@
             error: function (xhr) {
                 alert('Erro ao processar a requisição. Tente novamente.');
             }
-        });
+        }); 
     });
 
 
@@ -305,8 +406,8 @@
 
         // Preenche os campos do modal com os IDs corretos
         $('#logistica_id').val(id);
-        $('#guia_text').val(guia);             // Guia
-        $('#condutor_text').val(condutor);     // Condutor
+        // $('#guia_text').val(guia);             
+        // $('#condutor_text').val(condutor);     
         $('#hora').val(hora);                  // Hora
 
         // Exibe o modal
@@ -344,6 +445,79 @@
         });
     });
   });
+
+
+  // Função para preencher o modal com os dados da logística
+  function populateModal(logistica) {
+      // Preenche os campos do modal com os dados do objeto `logistica`
+      $('#logistica_id').val(logistica.id);
+      $('#tour').val(logistica.tour);
+      $('#nome').val(logistica.nome);
+      $('#pax_total').val(logistica.pax_total);
+      $('#valor_total').val(logistica.valor_total);
+      $('#valor_a_pagar').val(logistica.valor_a_pagar);
+      $('#hotel').val(logistica.hotel);
+      $('#telefone').val(logistica.telefone);
+      $('#vendedor').val(logistica.vendedor);
+      $('#conferido').val(logistica.conferido); // 1 ou 0
+      $('#hora_editar').val(logistica.hora);
+
+      // Exibe o modal
+      $('#updateModalEditar').modal('show');
+  };
+
+  // Salva as alterações ao clicar no botão
+  $('#editarModal').click(function () {
+      let id = $('#logistica_id').val();
+      let tour = $('#tour').val();
+      let nome = $('#nome').val();
+      let pax_total = $('#pax_total').val();
+      let valor_total = $('#valor_total').val();
+      let valor_a_pagar = $('#valor_a_pagar').val();
+      let hotel = $('#hotel').val();
+      let telefone = $('#telefone').val();
+      let conferido = $('#conferido').val();
+      // let data = $('#data_editar').val();
+      let hora = $('#hora_editar').val(); // Captura o valor do campo hora
+
+      // Verificação simples para garantir que os campos obrigatórios não estão vazios
+      if (!hora) {
+          alert('Os campos Data e Hora são obrigatórios!');
+          return; // Não envia o AJAX se os campos estiverem vazios
+      }
+
+      $.ajax({
+          url: "{{ route('logistics.update', ':id') }}".replace(':id', id), // URL da rota Laravel
+          type: 'POST',
+          data: {
+              _token: $('meta[name="csrf-token"]').attr('content'),
+              tour: tour,
+              nome: nome,
+              pax_total: pax_total,
+              valor_total: valor_total,
+              valor_a_pagar: valor_a_pagar,
+              hotel: hotel,
+              telefone: telefone,
+              conferido: conferido,
+              // data: data,
+              hora: hora  // Envia o valor do campo hora
+          },
+          success: function (response) {
+              if (response.success) {
+                  alert('Logística atualizada com sucesso!');
+                  $('#updateModalEditar').modal('hide'); // Fecha o modal
+                  location.reload();
+                  // Atualize a lista ou tabela aqui, se necessário
+              } else {
+                  alert('Erro ao atualizar a logística!');
+              }
+          },
+          error: function () {
+              alert('Erro ao processar a requisição!');
+          }
+      });
+  });
+
 </script>
 
 @endsection
