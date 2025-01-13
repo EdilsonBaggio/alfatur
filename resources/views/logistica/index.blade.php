@@ -127,7 +127,7 @@
                                 @endif
                             </td>
                             <td data-label="Valor">${{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
-                            <td data-label="Pendiente">${{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
+                            <td data-label="Pendiente" class="valor_a_pagar">{{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
                             <td data-label="Hotel">{{ $logistica->hotel }}</td>
                             <td data-label="Teléfono">{{ $logistica->telefone }}</td>
                             <td data-label="Vendedor">{{ $logistica->vendedor }}</td>
@@ -298,6 +298,18 @@
 <script>
   window.addEventListener('load', function () {
       document.getElementById('loading').style.display = 'none';
+
+      $('.valor_a_pagar').each(function () {
+            console.log('Processando valor:', $(this).text()); // Debug
+            let valor = parseFloat($(this).text().replace(',', '.')); // Converte texto para número
+            console.log('Valor convertido:', valor); // Debug
+            if (valor > 0) { // Verifica se o valor é maior que 0
+                let tr = $(this).closest('tr'); // Seleciona a linha (tr) mais próxima
+                console.log('Linha correspondente:', tr); // Debug
+                tr.addClass('danger-row'); // Adiciona a classe
+            }
+        });
+
   });
 
   // Filtrar por data

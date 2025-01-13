@@ -143,15 +143,20 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="valor_total">Valor Total:</label>
-                        <input type="number" step="0.01" name="valor_total" class="form-control" required>
+                        <input type="number" step="0.01" name="valor_total" id="valor_total" class="form-control" required>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="valor_pago">Valor Pagado:</label>
-                        <input type="number" step="0.01" name="valor_pago" class="form-control">
+                        <label for="percentage">Valor Pago (%):</label>
+                        <select name="valor_pago" id="percentage" class="form-select" required>
+                            <option value="" disabled selected>Selecione um percentual</option>
+                            <?php for ($i = 1; $i <= 100; $i++): ?>
+                                <option value="<?= $i ?>"><?= $i ?>%</option>
+                            <?php endfor; ?>
+                        </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="valor_a_pagar">Valor a Pagar:</label>
-                        <input type="number" step="0.01" name="valor_a_pagar" class="form-control">
+                        <input type="number" step="0.01" name="valor_a_pagar" id="valor_a_pagar" class="form-control" readonly>
                     </div>
                 </div>
 
@@ -201,6 +206,20 @@
             $(this).closest('.tour-item').remove();
         });
         $('#telefone').mask('+00 00900000000');
+
+        $('#percentage, #valor_total').on('input change', function () {
+            let valorTotal = parseFloat($('#valor_total').val()) || 0;
+            let percentage = parseInt($('#percentage').val()) || 0;
+
+            if (valorTotal > 0 && percentage > 0) {
+                let valorPago = (valorTotal * percentage) / 100;
+                let valorAPagar = valorTotal - valorPago;
+
+                $('#valor_a_pagar').val(valorAPagar.toFixed(2));
+            } else {
+                $('#valor_a_pagar').val('');
+            }
+        });
     });
 </script>
 @endsection
