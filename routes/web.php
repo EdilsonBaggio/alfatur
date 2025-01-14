@@ -5,7 +5,6 @@ use App\Http\Controllers\ContatoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
-use App\Http\Controllers\TiigoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VendasController;
@@ -54,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Rota para atualizar múltiplas logísticas
     Route::post('/logistics/assign', [LogisticaController::class, 'assign'])->name('logistics.assign');
+    Route::post('/logistics/assignagencia', [LogisticaController::class, 'assignagencia'])->name('logistics.assignagencia');
     Route::post('/logistics/hora', [LogisticaController::class, 'hora'])->name('logistics.hora');
     Route::post('/logistics/export/pdf', [LogisticsController::class, 'exportPdf'])->name('logistics.export.pdf');
     Route::post('/logistics/{id}/update', [LogisticaController::class, 'update'])->name('logistics.update');

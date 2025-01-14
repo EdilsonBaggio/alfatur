@@ -9,6 +9,11 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
+
+        if (Auth::guard('web')->check()) {
+            return redirect()->route('home');
+        }
+        
         return view('auth.login');
     }
 

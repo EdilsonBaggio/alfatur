@@ -21,39 +21,67 @@
                 </div>
               </div>
               <div class="table">
-                  <div>
-                      <form id="assignForm" method="POST">
-                        @csrf
-                        <!-- Restante do conteúdo do formulário -->
-                        <div class="row mt-3 content-atribuir">
-                            <div class="col-md-2">
-                                <div class="input-group input-group-sm d-flex">
-                                    <i class="bi bi-arrow-90deg-down p-2"></i>
-                                    <select id="guia" class="form-select">
-                                        <option value="">Selecione o Guia</option>
-                                        @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
-                                            <option value="{{ $guia->id }}">{{ $guia->name }}</option>
-                                        @endforeach
-                                    </select>
+                  <div class="row">
+                    {{-- Condutor e guia --}}
+                    <div class="col-md-8">
+                        <form id="assignForm" method="POST">
+                            @csrf
+                            <!-- Restante do conteúdo do formulário -->
+                            <div class="row mt-3 content-atribuir">
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-sm d-flex">
+                                        <i class="bi bi-arrow-90deg-down p-2"></i>
+                                        <select id="guia" class="form-select">
+                                            <option value="">Selecione o Guia</option>
+                                            @foreach ($users->filter(fn($user) => $user->role === 'Guia') as $guia)
+                                                <option value="{{ $guia->id }}">{{ $guia->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-sm">
+                                        <select id="condutor" class="form-select">
+                                            <option value="">Selecione o Condutor</option>
+                                            @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
+                                                <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group input-group-sm">
+                                        <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="input-group input-group-sm">
-                                    <select id="condutor" class="form-select">
-                                        <option value="">Selecione o Condutor</option>
-                                        @foreach ($users->filter(fn($user) => $user->role === 'Condutor') as $condutor)
-                                            <option value="{{ $condutor->id }}">{{ $condutor->name }}</option>
-                                        @endforeach
-                                    </select>
+                        </form>
+                    </div>
+                    {{-- Agencia externa --}}
+                    <div class="col-md-4">
+                        <form id="assignFormAgencia" method="POST">
+                            @csrf
+                            <!-- Restante do conteúdo do formulário -->
+                            <div class="row mt-3 content-atribuir">
+                                <div class="col-md-6">   
+                                    <div class="input-group input-group-sm">
+                                        <select id="agencia" class="form-select">
+                                            <option value="">Selecione a agencia</option>
+                                            @foreach ($users->filter(fn($user) => $user->role === 'Agencia Externa') as $agencia)
+                                                <option value="{{ $agencia->id }}">{{ $agencia->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-sm">
+                                        <button type="button" class="btn btn-primary btn-assign-agencia">Asignar Agencia Externa</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="input-group input-group-sm">
-                                    <button type="button" class="btn btn-primary btn-assign">Asignar Guia y Condutor</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                            <span style="font-size: small; color:red;">*Controle interno</span>
+                        </form>
+                      </div>
                   </div>
                   <table class="table table-bordered table-striped logistica mt-4">
                     <tbody id="logisticsTableBody">
@@ -84,6 +112,7 @@
                                 <th scope="col">Dirección</th>
                                 <th scope="col">Guía</th>
                                 <th scope="col">Conductor</th>
+                                <th scope="col">Agencia</th>
                                 <th scope="col">Valor</th>
                                 <th scope="col">Pendiente</th>
                                 <th scope="col">Hotel</th>
@@ -124,6 +153,13 @@
                                     Asignar
                                 @else
                                     {{ \App\Models\User::find($logistica->condutor)->name ?? 'Asignar' }}
+                                @endif
+                            </td>
+                            <td data-label="Agencia" class="agencia-cell">
+                                @if(empty($logistica->agencia))
+                                    Asignar
+                                @else
+                                    {{ \App\Models\User::find($logistica->agencia)->name ?? 'Asignar' }}
                                 @endif
                             </td>
                             <td data-label="Valor">${{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
@@ -196,7 +232,7 @@
                         @endforeach
                     </select>
                   </div>
-
+                  
                   <!-- Campo Hora -->
                   <div class="mb-3">
                       <label for="hora" class="form-label">Hora</label>
@@ -403,9 +439,74 @@
             }
         }); 
     });
-
-
     //modal
+
+    $('.btn-assign-agencia').click(function () {
+        // Obter os IDs das logísticas selecionadas
+        var selectedLogistics = [];
+        $('input[type="checkbox"]:checked').each(function () {
+            selectedLogistics.push($(this).val());
+        });
+
+        // Obter os valores selecionados dos selects
+        var agenciaId = $('#agencia').val();
+
+        // Validação - Verificar se pelo menos um checkbox foi selecionado
+        if (selectedLogistics.length === 0) {
+          Swal.fire({
+            title: "Por favor!",
+            text: "Seleccione al menos una logística.",
+            icon: "error"
+          });
+          return;
+        }
+
+        // Verificar se os campos Guia e Condutor estão selecionados
+        if (!agenciaId) {
+            Swal.fire({
+              title: "Por favor!",
+              text: "Seleccione una agencia.",
+              icon: "error"
+            });
+            return;
+        }
+
+        // Enviar via AJAX
+        $.ajax({
+            url: "{{ route('logistics.assignagencia') }}", // Rota para atribuir agencia e Condutor
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}', // CSRF token para proteção
+                logistics_ids: selectedLogistics, // Array de IDs selecionados
+                agencia_id: agenciaId,
+            },
+            success: function (response) {
+                if (response.success) {
+                  Swal.fire({
+                      title: "¡Guía y conductor asignados exitosamente!",
+                      showDenyButton: false,
+                      showCancelButton: false,
+                      confirmButtonText: "Ok",
+                      icon: "success"
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        $("#agencia").val("").trigger("change");
+                        $(".check").prop('checked', false); 
+                        $.each(selectedLogistics, function (index, id) {
+                            var row = $('input[value="' + id + '"]').closest('tr');
+                            row.find('.agencia-cell').text(response.agencia_name || 'Atribuir');
+                        });
+                      }
+                  });
+                } else {
+                    alert('Erro: ' + response.message);
+                }
+            },
+            error: function (xhr) {
+                alert('Erro ao processar a requisição. Tente novamente.');
+            }
+        }); 
+    });
 
     // Abre o modal ao clicar no ícone do relógio
     window.openModal = function (id, hora) {

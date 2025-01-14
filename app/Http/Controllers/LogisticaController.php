@@ -14,6 +14,11 @@ use Exception;
 
 class LogisticaController extends Controller
 {
+    public function getRoleAttribute($value)
+    {
+        return strtolower($value);
+    }
+
     public function index(Request $request)
     {
         // Definir a data padrão para amanhã
@@ -31,7 +36,7 @@ class LogisticaController extends Controller
             ->get();
 
         // Buscar usuários com papel de guia ou condutor
-        $users = User::whereIn('role', ['guia', 'condutor'])->get();
+        $users = User::whereIn('role', ['guia', 'condutor', 'Agencia Externa'])->get();
 
         // Obter todas as vendas
         $vendas = Venda::all();
@@ -65,7 +70,6 @@ class LogisticaController extends Controller
             'condutor_name' => User::find($request->condutor_id)->name
         ]);
     }
-
 
     public function hora(Request $request)
     {
@@ -136,5 +140,28 @@ class LogisticaController extends Controller
 
         // Retorna resposta JSON ou mensagem de sucesso
         return response()->json(['success' => true, 'message' => 'Logística atualizada com sucesso!']);
+    }
+
+    public function assignagencia(Request $request)
+    {
+        $request->validate([
+            'logistics_ids' => 'required|array|min:1',
+            'logistics_ids.*' => 'exists:logistics,id',
+            'agencia_id' => 'required|exists:users,id',
+        ]);
+
+        $logistics = Logistica::whereIn('id', $request->logistics_ids)->get();
+        
+        foreach ($logistics as $logistica) {
+            $logistica->agencia = User::find($request->agencia_id)->id;
+            $logistica->hora = Carbon::now()->format('H:i:s'); // Atualiza com a hora atual
+            $logistica->save();
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Atribuição realizada com sucesso!',
+            'agencia_name' => User::find($request->agencia_id)->name,
+        ]);
     }
 }
