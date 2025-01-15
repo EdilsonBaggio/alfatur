@@ -1,8 +1,12 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-ca7e6a94.css",
+    "file": "assets/app-cb1dbb08.css",
     "isEntry": true,
     "src": "resources/css/app.css"
+  },
+  "resources/images/TEC.pdf": {
+    "file": "assets/TEC-dac02a76.pdf",
+    "src": "resources/images/TEC.pdf"
   },
   "resources/images/avatar.png": {
     "file": "assets/avatar-54a1ebd3.png",
@@ -91,6 +95,10 @@
   "resources/images/top.png": {
     "file": "assets/top-ff4703bb.png",
     "src": "resources/images/top.png"
+  },
+  "resources/images/voucher_bg.png": {
+    "file": "assets/voucher_bg-c4654da3.png",
+    "src": "resources/images/voucher_bg.png"
   },
   "resources/js/app.js": {
     "file": "assets/app-7f0192a1.js",
