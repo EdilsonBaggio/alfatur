@@ -140,7 +140,7 @@
                             <td data-label="Nombre">{{ $logistica->nome }}</td>
                             <td data-label="Pax" style="text-align: center">{{ number_format($logistica->pax_total, 0, ',', '.') }}</td>
                             <td data-label="Dirección">{{ $logistica->venda->direcao_hotel }}</td>
-                            <td data-label="Guia" class="guia-cell">
+                            <td data-label="Guia" class="guia-cell" id="guia-{{ $logistica->id }}">
                                 @if(empty($logistica->guia))
                                     Asignar
                                 @else
@@ -167,7 +167,14 @@
                             <td data-label="Hotel">{{ $logistica->hotel }}</td>
                             <td data-label="Teléfono">{{ $logistica->telefone }}</td>
                             <td data-label="Vendedor">{{ $logistica->vendedor }}</td>
-                            <td data-label="Voucher" style="text-align: center"><i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i></td>
+                            <td data-label="Voucher" style="text-align: center">
+                                <a href="#" 
+                                   data-bs-toggle="modal" 
+                                   data-bs-target="#updateModalVoucher" 
+                                   onclick="populateModalVoucher({!! htmlspecialchars(json_encode($logistica), ENT_QUOTES, 'UTF-8') !!})">
+                                    <i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i>
+                                </a>
+                            </td>                            
                             <td data-label="Verificado" style="text-align: center">
                                 {!! $logistica->conferido 
                                     ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' 
@@ -328,308 +335,400 @@
   </div>
 </div>
 
+<div class="modal fade" id="updateModalVoucher" tabindex="-1" aria-labelledby="updateModalVoucherLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modal-voucher">
+            <div class="modal-header b-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- O conteúdo será preenchido dinamicamente -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 
 @section('script')
 <script>
-  window.addEventListener('load', function () {
-      document.getElementById('loading').style.display = 'none';
+window.addEventListener('load', function () {
+    document.getElementById('loading').style.display = 'none';
 
-      $('.valor_a_pagar').each(function () {
-            console.log('Processando valor:', $(this).text()); // Debug
-            let valor = parseFloat($(this).text().replace(',', '.')); // Converte texto para número
-            console.log('Valor convertido:', valor); // Debug
-            if (valor > 0) { // Verifica se o valor é maior que 0
-                let tr = $(this).closest('tr'); // Seleciona a linha (tr) mais próxima
-                console.log('Linha correspondente:', tr); // Debug
-                tr.addClass('danger-row'); // Adiciona a classe
-            }
+    $('.valor_a_pagar').each(function () {
+        console.log('Processando valor:', $(this).text()); // Debug
+        let valor = parseFloat($(this).text().replace(',', '.')); // Converte texto para número
+        console.log('Valor convertido:', valor); // Debug
+        if (valor > 0) { // Verifica se o valor é maior que 0
+            let tr = $(this).closest('tr'); // Seleciona a linha (tr) mais próxima
+            console.log('Linha correspondente:', tr); // Debug
+            tr.addClass('danger-row'); // Adiciona a classe
+        }
+    });
+
+});
+
+// Filtrar por data
+document.getElementById('dateFilter').addEventListener('change', function() {
+var selectedDates = this.value.split(',').map(function(date) {
+    return date.trim();
+}).join(',');
+
+// Redirecionar para a rota com as datas selecionadas
+window.location.href = "{{ route('logistica.index') }}?dateFilter=" + selectedDates;
+});
+
+$(document).ready(function () {
+// Clique no botão para atribuir Guia e Condutor
+$('.btn-assign').click(function () {
+    // Obter os IDs das logísticas selecionadas
+    var selectedLogistics = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        selectedLogistics.push($(this).val());
+    });
+
+    // Obter os valores selecionados dos selects
+    var guiaId = $('#guia').val();
+    var condutorId = $('#condutor').val();
+
+    // Validação - Verificar se pelo menos um checkbox foi selecionado
+    if (selectedLogistics.length === 0) {
+        Swal.fire({
+        title: "Por favor!",
+        text: "Seleccione al menos una logística.",
+        icon: "error"
         });
+        return;
+    }
 
-  });
-
-  // Filtrar por data
-  document.getElementById('dateFilter').addEventListener('change', function() {
-    var selectedDates = this.value.split(',').map(function(date) {
-      return date.trim();
-    }).join(',');
-
-    // Redirecionar para a rota com as datas selecionadas
-    window.location.href = "{{ route('logistica.index') }}?dateFilter=" + selectedDates;
-  });
-
-  $(document).ready(function () {
-    // Clique no botão para atribuir Guia e Condutor
-    $('.btn-assign').click(function () {
-        // Obter os IDs das logísticas selecionadas
-        var selectedLogistics = [];
-        $('input[type="checkbox"]:checked').each(function () {
-            selectedLogistics.push($(this).val());
-        });
-
-        // Obter os valores selecionados dos selects
-        var guiaId = $('#guia').val();
-        var condutorId = $('#condutor').val();
-
-        // Validação - Verificar se pelo menos um checkbox foi selecionado
-        if (selectedLogistics.length === 0) {
-          Swal.fire({
+    // Verificar se os campos Guia e Condutor estão selecionados
+    if (!guiaId) {
+        Swal.fire({
             title: "Por favor!",
-            text: "Seleccione al menos una logística.",
+            text: "Seleccione una guía.",
             icon: "error"
-          });
-          return;
-        }
-
-        // Verificar se os campos Guia e Condutor estão selecionados
-        if (!guiaId) {
-            Swal.fire({
-              title: "Por favor!",
-              text: "Seleccione una guía.",
-              icon: "error"
-            });
-            return;
-        }
-
-        if (!condutorId) {
-            Swal.fire({
-              title: "Por favor!",
-              text: "Seleccione un controlador.",
-              icon: "error"
-            });
-            return;
-        }
-
-        // Enviar via AJAX
-        $.ajax({
-            url: "{{ route('logistics.assign') }}", // Rota para atribuir Guia e Condutor
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}', // CSRF token para proteção
-                logistics_ids: selectedLogistics, // Array de IDs selecionados
-                guia_id: guiaId,
-                condutor_id: condutorId
-            },
-            success: function (response) {
-                if (response.success) {
-                  Swal.fire({
-                      title: "¡Guía y conductor asignados exitosamente!",
-                      showDenyButton: false,
-                      showCancelButton: false,
-                      confirmButtonText: "Ok",
-                      icon: "success"
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        $("#guia").val("").trigger("change");
-                        $("#condutor").val("").trigger("change");
-                        $(".check").prop('checked', false); 
-                        $.each(selectedLogistics, function (index, id) {
-                            var row = $('input[value="' + id + '"]').closest('tr');
-                            row.find('.guia-cell').text(response.guia_name || 'Atribuir');
-                            row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
-                        });
-                      }
-                  });
-                } else {
-                    alert('Erro: ' + response.message);
-                }
-            },
-            error: function (xhr) {
-                alert('Erro ao processar a requisição. Tente novamente.');
-            }
-        }); 
-    });
-    //modal
-
-    $('.btn-assign-agencia').click(function () {
-        // Obter os IDs das logísticas selecionadas
-        var selectedLogistics = [];
-        $('input[type="checkbox"]:checked').each(function () {
-            selectedLogistics.push($(this).val());
         });
+        return;
+    }
 
-        // Obter os valores selecionados dos selects
-        var agenciaId = $('#agencia').val();
-
-        // Validação - Verificar se pelo menos um checkbox foi selecionado
-        if (selectedLogistics.length === 0) {
-          Swal.fire({
+    if (!condutorId) {
+        Swal.fire({
             title: "Por favor!",
-            text: "Seleccione al menos una logística.",
+            text: "Seleccione un controlador.",
             icon: "error"
-          });
-          return;
-        }
-
-        // Verificar se os campos Guia e Condutor estão selecionados
-        if (!agenciaId) {
-            Swal.fire({
-              title: "Por favor!",
-              text: "Seleccione una agencia.",
-              icon: "error"
-            });
-            return;
-        }
-
-        // Enviar via AJAX
-        $.ajax({
-            url: "{{ route('logistics.assignagencia') }}", // Rota para atribuir agencia e Condutor
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}', // CSRF token para proteção
-                logistics_ids: selectedLogistics, // Array de IDs selecionados
-                agencia_id: agenciaId,
-            },
-            success: function (response) {
-                if (response.success) {
-                  Swal.fire({
-                      title: "¡Guía y conductor asignados exitosamente!",
-                      showDenyButton: false,
-                      showCancelButton: false,
-                      confirmButtonText: "Ok",
-                      icon: "success"
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        $("#agencia").val("").trigger("change");
-                        $(".check").prop('checked', false); 
-                        $.each(selectedLogistics, function (index, id) {
-                            var row = $('input[value="' + id + '"]').closest('tr');
-                            row.find('.agencia-cell').text(response.agencia_name || 'Atribuir');
-                        });
-                      }
-                  });
-                } else {
-                    alert('Erro: ' + response.message);
-                }
-            },
-            error: function (xhr) {
-                alert('Erro ao processar a requisição. Tente novamente.');
-            }
-        }); 
-    });
-
-    // Abre o modal ao clicar no ícone do relógio
-    window.openModal = function (id, hora) {
-        // Busca a linha (tr) correspondente pelo ID
-        let row = $('#logistica-' + id);
-
-        // Obtém os valores do guia e condutor pelas classes
-        let guia = row.find('.guia-cell').text().trim();
-        let condutor = row.find('.condutor-cell').text().trim();
-
-        // Preenche os campos do modal com os IDs corretos
-        $('#logistica_id').val(id);
-        // $('#guia_text').val(guia);             
-        // $('#condutor_text').val(condutor);     
-        $('#hora').val(hora);                  // Hora
-
-        // Exibe o modal
-        $('#updateModal').modal('show');
-    };
-
-    // Salva as alterações ao clicar no botão
-    $('#saveChanges').click(function () {
-        let id = $('#logistica_id').val();
-        let guia = $('#guia_text').val();       // Corrigido para guia_text
-        let condutor = $('#condutor_text').val(); // Corrigido para condutor_text
-        let hora = $('#hora').val();           // Hora mantida
-
-        $.ajax({
-            url: "{{ route('logistics.hora') }}", // URL da rota Laravel
-            type: 'POST',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                logistics_ids: [id], // Envia ID como array
-                guia_id: guia,
-                condutor_id: condutor,
-                hora: hora
-            },
-            success: function (response) {
-                if (response.success) {
-                    alert('Atualizado com sucesso!');
-                    location.reload(); // Atualiza a página
-                } else {
-                    alert('Erro ao atualizar!');
-                }
-            },
-            error: function () {
-                alert('Erro ao processar a requisição!');
-            }
         });
+        return;
+    }
+
+    // Enviar via AJAX
+    $.ajax({
+        url: "{{ route('logistics.assign') }}", // Rota para atribuir Guia e Condutor
+        type: "POST",
+        data: {
+            _token: '{{ csrf_token() }}', // CSRF token para proteção
+            logistics_ids: selectedLogistics, // Array de IDs selecionados
+            guia_id: guiaId,
+            condutor_id: condutorId
+        },
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    title: "¡Guía y conductor asignados exitosamente!",
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: "Ok",
+                    icon: "success"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    $("#guia").val("").trigger("change");
+                    $("#condutor").val("").trigger("change");
+                    $(".check").prop('checked', false); 
+                    $.each(selectedLogistics, function (index, id) {
+                        var row = $('input[value="' + id + '"]').closest('tr');
+                        row.find('.guia-cell').text(response.guia_name || 'Atribuir');
+                        row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
+                    });
+                    }
+                });
+            } else {
+                alert('Erro: ' + response.message);
+            }
+        },
+        error: function (xhr) {
+            alert('Erro ao processar a requisição. Tente novamente.');
+        }
+    }); 
+});
+//modal
+
+$('.btn-assign-agencia').click(function () {
+    // Obter os IDs das logísticas selecionadas
+    var selectedLogistics = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        selectedLogistics.push($(this).val());
     });
-  });
+
+    // Obter os valores selecionados dos selects
+    var agenciaId = $('#agencia').val();
+
+    // Validação - Verificar se pelo menos um checkbox foi selecionado
+    if (selectedLogistics.length === 0) {
+        Swal.fire({
+        title: "Por favor!",
+        text: "Seleccione al menos una logística.",
+        icon: "error"
+        });
+        return;
+    }
+
+    // Verificar se os campos Guia e Condutor estão selecionados
+    if (!agenciaId) {
+        Swal.fire({
+            title: "Por favor!",
+            text: "Seleccione una agencia.",
+            icon: "error"
+        });
+        return;
+    }
+
+    // Enviar via AJAX
+    $.ajax({
+        url: "{{ route('logistics.assignagencia') }}", // Rota para atribuir agencia e Condutor
+        type: "POST",
+        data: {
+            _token: '{{ csrf_token() }}', // CSRF token para proteção
+            logistics_ids: selectedLogistics, // Array de IDs selecionados
+            agencia_id: agenciaId,
+        },
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    title: "¡Guía y conductor asignados exitosamente!",
+                    showDenyButton: false,
+                    showCancelButton: false,
+                    confirmButtonText: "Ok",
+                    icon: "success"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    $("#agencia").val("").trigger("change");
+                    $(".check").prop('checked', false); 
+                    $.each(selectedLogistics, function (index, id) {
+                        var row = $('input[value="' + id + '"]').closest('tr');
+                        row.find('.agencia-cell').text(response.agencia_name || 'Atribuir');
+                    });
+                    }
+                });
+            } else {
+                alert('Erro: ' + response.message);
+            }
+        },
+        error: function (xhr) {
+            alert('Erro ao processar a requisição. Tente novamente.');
+        }
+    }); 
+});
+
+// Abre o modal ao clicar no ícone do relógio
+window.openModal = function (id, hora) {
+    // Busca a linha (tr) correspondente pelo ID
+    let row = $('#logistica-' + id);
+
+    // Obtém os valores do guia e condutor pelas classes
+    let guia = row.find('.guia-cell').text().trim();
+    let condutor = row.find('.condutor-cell').text().trim();
+
+    // Preenche os campos do modal com os IDs corretos
+    $('#logistica_id').val(id);
+    // $('#guia_text').val(guia);             
+    // $('#condutor_text').val(condutor);     
+    $('#hora').val(hora);                  // Hora
+
+    // Exibe o modal
+    $('#updateModal').modal('show');
+};
+
+// Salva as alterações ao clicar no botão
+$('#saveChanges').click(function () {
+    let id = $('#logistica_id').val();
+    let guia = $('#guia_text').val();       // Corrigido para guia_text
+    let condutor = $('#condutor_text').val(); // Corrigido para condutor_text
+    let hora = $('#hora').val();           // Hora mantida
+
+    $.ajax({
+        url: "{{ route('logistics.hora') }}", // URL da rota Laravel
+        type: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            logistics_ids: [id], // Envia ID como array
+            guia_id: guia,
+            condutor_id: condutor,
+            hora: hora
+        },
+        success: function (response) {
+            if (response.success) {
+                alert('Atualizado com sucesso!');
+                location.reload(); // Atualiza a página
+            } else {
+                alert('Erro ao atualizar!');
+            }
+        },
+        error: function () {
+            alert('Erro ao processar a requisição!');
+        }
+    });
+});
+});
 
 
-  // Função para preencher o modal com os dados da logística
-  function populateModal(logistica) {
-      // Preenche os campos do modal com os dados do objeto `logistica`
-      $('#logistica_id').val(logistica.id);
-      $('#tour').val(logistica.tour);
-      $('#nome').val(logistica.nome);
-      $('#pax_total').val(logistica.pax_total);
-      $('#valor_total').val(logistica.valor_total);
-      $('#valor_a_pagar').val(logistica.valor_a_pagar);
-      $('#hotel').val(logistica.hotel);
-      $('#telefone').val(logistica.telefone);
-      $('#vendedor').val(logistica.vendedor);
-      $('#conferido').val(logistica.conferido); // 1 ou 0
-      $('#hora_editar').val(logistica.hora);
+// Função para preencher o modal com os dados da logística
+function populateModal(logistica) {
+    console.log(logistica);
+    // Preenche os campos do modal com os dados do objeto `logistica`
+    $('#logistica_id').val(logistica.id);
+    $('#tour').val(logistica.tour);
+    $('#nome').val(logistica.nome);
+    $('#pax_total').val(logistica.pax_total);
+    $('#valor_total').val(logistica.valor_total);
+    $('#valor_a_pagar').val(logistica.valor_a_pagar);
+    $('#hotel').val(logistica.hotel);
+    $('#telefone').val(logistica.telefone);
+    $('#vendedor').val(logistica.vendedor);
+    $('#conferido').val(logistica.conferido); // 1 ou 0
+    $('#hora_editar').val(logistica.hora);
 
-      // Exibe o modal
-      $('#updateModalEditar').modal('show');
-  };
+    // Exibe o modal
+    $('#updateModalEditar').modal('show');
+};
 
-  // Salva as alterações ao clicar no botão
-  $('#editarModal').click(function () {
-      let id = $('#logistica_id').val();
-      let tour = $('#tour').val();
-      let nome = $('#nome').val();
-      let pax_total = $('#pax_total').val();
-      let valor_total = $('#valor_total').val();
-      let valor_a_pagar = $('#valor_a_pagar').val();
-      let hotel = $('#hotel').val();
-      let telefone = $('#telefone').val();
-      let conferido = $('#conferido').val();
-      // let data = $('#data_editar').val();
-      let hora = $('#hora_editar').val(); // Captura o valor do campo hora
+// Salva as alterações ao clicar no botão
+$('#editarModal').click(function () {
+    let id = $('#logistica_id').val();
+    let tour = $('#tour').val();
+    let nome = $('#nome').val();
+    let pax_total = $('#pax_total').val();
+    let valor_total = $('#valor_total').val();
+    let valor_a_pagar = $('#valor_a_pagar').val();
+    let hotel = $('#hotel').val();
+    let telefone = $('#telefone').val();
+    let conferido = $('#conferido').val();
+    // let data = $('#data_editar').val();
+    let hora = $('#hora_editar').val(); // Captura o valor do campo hora
 
-      // Verificação simples para garantir que os campos obrigatórios não estão vazios
-      if (!hora) {
-          alert('Os campos Data e Hora são obrigatórios!');
-          return; // Não envia o AJAX se os campos estiverem vazios
-      }
+    // Verificação simples para garantir que os campos obrigatórios não estão vazios
+    if (!hora) {
+        alert('Os campos Data e Hora são obrigatórios!');
+        return; // Não envia o AJAX se os campos estiverem vazios
+    }
 
-      $.ajax({
-          url: "{{ route('logistics.update', ':id') }}".replace(':id', id), // URL da rota Laravel
-          type: 'POST',
-          data: {
-              _token: $('meta[name="csrf-token"]').attr('content'),
-              tour: tour,
-              nome: nome,
-              pax_total: pax_total,
-              valor_total: valor_total,
-              valor_a_pagar: valor_a_pagar,
-              hotel: hotel,
-              telefone: telefone,
-              conferido: conferido,
-              // data: data,
-              hora: hora  // Envia o valor do campo hora
-          },
-          success: function (response) {
-              if (response.success) {
-                  alert('Logística atualizada com sucesso!');
-                  $('#updateModalEditar').modal('hide'); // Fecha o modal
-                  location.reload();
-                  // Atualize a lista ou tabela aqui, se necessário
-              } else {
-                  alert('Erro ao atualizar a logística!');
-              }
-          },
-          error: function () {
-              alert('Erro ao processar a requisição!');
-          }
-      });
-  });
+    $.ajax({
+        url: "{{ route('logistics.update', ':id') }}".replace(':id', id), // URL da rota Laravel
+        type: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            tour: tour,
+            nome: nome,
+            pax_total: pax_total,
+            valor_total: valor_total,
+            valor_a_pagar: valor_a_pagar,
+            hotel: hotel,
+            telefone: telefone,
+            conferido: conferido,
+            // data: data,
+            hora: hora  // Envia o valor do campo hora
+        },
+        success: function (response) {
+            if (response.success) {
+                alert('Logística atualizada com sucesso!');
+                $('#updateModalEditar').modal('hide'); // Fecha o modal
+                location.reload();
+                // Atualize a lista ou tabela aqui, se necessário
+            } else {
+                alert('Erro ao atualizar a logística!');
+            }
+        },
+        error: function () {
+            alert('Erro ao processar a requisição!');
+        }
+    });
+});
+
+let logisticaData = {}; // Variável para armazenar os dados do logistica
+
+function populateModalVoucher(logistica) {
+    // Log dos dados da variável para inspeção
+    console.log("Dados da variável logistica:", logistica);
+
+    // Seleciona o corpo do modal onde os dados serão adicionados
+    const modalBody = $('#updateModalVoucher .modal-body');
+
+    // Limpa qualquer conteúdo anterior no modal
+    modalBody.empty();
+
+    // Constrói o conteúdo dinamicamente
+    modalBody.append(`
+    <div class="voucher">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <div class="menu-logo">
+                    <img style="height:120px" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 mt-4 text-right">
+                <p><strong>ID / Série:</strong> ${logistica.id || 'N/A'}</p>
+                <p><strong>Fecha:</strong> ${logistica.data || 'N/A'}</p>
+            </div>
+            <div class="col-md-12 mt-4 text-left">
+                <p><strong>Paseio / Tour</strong></p>
+                <p>${logistica.tour || 'N/A'}</p>
+            </div>
+            <div class="col-md-6 mt-4 text-left">
+                <p><strong>Hora da saida / salida</strong></p>
+                <p>${logistica.hora || 'N/A'}</p>
+            </div>
+            <div class="col-md-6 mt-4 text-right">
+                <p><strong>Guia:</strong></p>
+                <p>${logistica.guia || 'N/A'}</p>
+            </div>
+            <div class="col-md-6 mt-4 text-left">
+                <p><strong>Hotel:</strong></p>
+                <p>${logistica.hotel || 'N/A'}</p>
+            </div>
+            <div class="col-md-6 mt-4 text-right">
+                <p><strong>Endereco / Direction</strong></p>
+                <p>${logistica.venda.direcao_hotel || 'N/A'}</p>
+            </div>
+            <div class="col-md-12 mt-4 text-left">
+                <p><strong>Passageiro / pax</strong> ${logistica.nome || 'N/A'} <br/> ${logistica.telefone || 'N/A'}</p>
+            </div>
+            <div class="col-md-6 mt-4 text-left">
+                <p><strong>Número / total pax</strong></p>
+                <p>${logistica.pax_total || 'N/A'}</p>
+            </div>
+            <div class="col-md-6 mt-4 text-right">
+                <p><strong>Preço total / total</strong></p>
+                <p>CPL $${logistica.venda.valor_total || 'N/A'}</p>
+            </div>
+            <div class="col-md-12 mt-4 text-left">
+                <p><strong>Mais informações / Mais informacion</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 mt-4 text-center">
+                <p>
+                <span>* Consultas de horário, onde está a van, contato com a logística, enviar whatsapp para +56974909926</span>
+                <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong>
+                <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Visualizar PDF</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    `);
+
+    // Exibe o modal
+    $('#updateModalVoucher').modal('show');
+}
+
 
 </script>
 

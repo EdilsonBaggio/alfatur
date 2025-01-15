@@ -1115,3 +1115,24 @@ th {
         color: #fff;
     }
 }
+
+.modal-voucher{
+    max-width: 615px;
+    height: 900px;
+    margin: 0 auto;
+    background-image: url(../images/voucher_bg.png);
+    background-size: cover;
+    padding: 25px;
+    p{
+        font-size: 18px;
+    }
+    .voucher{
+        display: grid;
+        align-content: space-between;
+        height: 730px;
+    }
+    .modal-header{
+        border: 0;
+        padding: 35px 15px;
+    }
+}
