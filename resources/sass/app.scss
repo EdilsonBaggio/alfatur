@@ -1125,6 +1125,15 @@ th {
     padding: 25px;
     p{
         font-size: 18px;
+        color: #007bff;
+        strong{
+            color: $preto;
+            font-weight: 800;
+        }
+        span{
+            font-size: 16px;
+            color: $vermelho;
+        }
     }
     .voucher{
         display: grid;

@@ -656,16 +656,18 @@ $('#editarModal').click(function () {
 let logisticaData = {}; // Variável para armazenar os dados do logistica
 
 function populateModalVoucher(logistica) {
-    // Log dos dados da variável para inspeção
-    console.log("Dados da variável logistica:", logistica);
+    // Seleciona a linha clicada com base no ID de logística
+    const row = document.getElementById(`logistica-${logistica.id}`);
+    
+    // Extrai o nome do guia do atributo data-guia
+    const guiaCell = row.querySelector('.guia-cell');
+    const guiaName = guiaCell ? guiaCell.textContent.trim() : 'Asignar';
 
-    // Seleciona o corpo do modal onde os dados serão adicionados
+    console.log("Nome do Guia:", guiaName, row); // Para depuração
+
     const modalBody = $('#updateModalVoucher .modal-body');
-
-    // Limpa qualquer conteúdo anterior no modal
     modalBody.empty();
 
-    // Constrói o conteúdo dinamicamente
     modalBody.append(`
     <div class="voucher">
         <div class="row">
@@ -675,27 +677,29 @@ function populateModalVoucher(logistica) {
                 </div>
             </div>
             <div class="col-md-6 mt-4 text-right">
-                <p><strong>ID / Série:</strong> ${logistica.id || 'N/A'}</p>
-                <p><strong>Fecha:</strong> ${logistica.data || 'N/A'}</p>
+                <p><strong>ID / Série</strong></p>
+                <p>${logistica.id || 'N/A'}</p>
+                <p><strong>Fecha</strong></p>
+                <p>${logistica.data || 'N/A'}</p>
             </div>
             <div class="col-md-12 mt-4 text-left">
                 <p><strong>Paseio / Tour</strong></p>
                 <p>${logistica.tour || 'N/A'}</p>
             </div>
             <div class="col-md-6 mt-4 text-left">
-                <p><strong>Hora da saida / salida</strong></p>
+                <p><strong>Hora da saída / salida</strong></p>
                 <p>${logistica.hora || 'N/A'}</p>
             </div>
             <div class="col-md-6 mt-4 text-right">
-                <p><strong>Guia:</strong></p>
-                <p>${logistica.guia || 'N/A'}</p>
+                <p><strong>Guia</strong></p>
+                <p>${guiaName}</p>
             </div>
             <div class="col-md-6 mt-4 text-left">
                 <p><strong>Hotel:</strong></p>
                 <p>${logistica.hotel || 'N/A'}</p>
             </div>
             <div class="col-md-6 mt-4 text-right">
-                <p><strong>Endereco / Direction</strong></p>
+                <p><strong>Endereço / Dirección</strong></p>
                 <p>${logistica.venda.direcao_hotel || 'N/A'}</p>
             </div>
             <div class="col-md-12 mt-4 text-left">
@@ -710,22 +714,21 @@ function populateModalVoucher(logistica) {
                 <p>CPL $${logistica.venda.valor_total || 'N/A'}</p>
             </div>
             <div class="col-md-12 mt-4 text-left">
-                <p><strong>Mais informações / Mais informacion</strong></p>
+                <p><strong>Mais informações / Más información</strong></p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12 mt-4 text-center">
                 <p>
-                <span>* Consultas de horário, onde está a van, contato com a logística, enviar whatsapp para +56974909926</span>
-                <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong>
-                <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Visualizar PDF</a>
+                <span>* Consultas de horário, onde está a van, contato com a logística, enviar whatsapp para +56974909926</span><br />
+                <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong><br />
+                <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Haga clic para ver</a>
                 </p>
             </div>
         </div>
     </div>
     `);
 
-    // Exibe o modal
     $('#updateModalVoucher').modal('show');
 }
 

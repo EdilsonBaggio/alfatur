@@ -1137,6 +1137,15 @@ th {
 }
 .modal-voucher p {
   font-size: 18px;
+  color: #007bff;
+}
+.modal-voucher p strong {
+  color: #000000;
+  font-weight: 800;
+}
+.modal-voucher p span {
+  font-size: 16px;
+  color: #fd0000;
 }
 .modal-voucher .voucher {
   display: grid;
