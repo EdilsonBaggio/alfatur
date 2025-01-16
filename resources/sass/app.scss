@@ -1110,8 +1110,9 @@ th {
     }
 }
 .danger-row {
+    background-color: $vermelho!important; 
     td{
-        background-color: #cd3939 !important; 
+        background-color: $vermelho; 
         color: #fff;
     }
 }
@@ -1124,11 +1125,12 @@ th {
     background-size: cover;
     padding: 25px;
     p{
+        text-transform: uppercase;
         font-size: 18px;
         color: #007bff;
+        font-weight: 700;
         strong{
             color: $preto;
-            font-weight: 800;
         }
         span{
             font-size: 16px;

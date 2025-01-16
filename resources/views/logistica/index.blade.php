@@ -144,10 +144,10 @@
                                 @if(empty($logistica->guia))
                                     Asignar
                                 @else
-                                    {{ \App\Models\User::find($logistica->guia)->name ?? 'Asignar' }}
+                                    <div class="guia-name">{{ \App\Models\User::find($logistica->guia)->name ?? 'Asignar' }}</div>
+                                    <div class="guia-whatsapp" style="display: none;">{{ \App\Models\User::find($logistica->guia)->whatsapp ?? 'Asignar' }}</div>
                                 @endif
-                            </td>
-
+                            </td>                            
                             <td data-label="Condutor" class="condutor-cell">
                                 @if(empty($logistica->condutor))
                                     Asignar
@@ -172,13 +172,13 @@
                                    data-bs-toggle="modal" 
                                    data-bs-target="#updateModalVoucher" 
                                    onclick="populateModalVoucher({!! htmlspecialchars(json_encode($logistica), ENT_QUOTES, 'UTF-8') !!})">
-                                    <i style="font-size: 1.2rem; color: cornflowerblue;" class="bi bi-ticket-detailed"></i>
+                                    <i style="font-size: 1.2rem; color: black;" class="bi bi-ticket-perforated-fill"></i>
                                 </a>
                             </td>                            
                             <td data-label="Verificado" style="text-align: center">
                                 {!! $logistica->conferido 
                                     ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' 
-                                    : '<i style="font-size: 1.2rem; color: red;" class="bi bi-hand-thumbs-down-fill"></i>' !!}
+                                    : '<i style="font-size: 1.2rem; color: orange;" class="bi bi-hand-thumbs-down-fill"></i>' !!}
                             </td>                          
                             <td data-label="Acciones" style="text-align: center">
                                 <a href="#" 
@@ -657,13 +657,19 @@ let logisticaData = {}; // Variável para armazenar os dados do logistica
 
 function populateModalVoucher(logistica) {
     // Seleciona a linha clicada com base no ID de logística
-    const row = document.getElementById(`logistica-${logistica.id}`);
+    var row = document.getElementById(`logistica-${logistica.id}`);
     
     // Extrai o nome do guia do atributo data-guia
-    const guiaCell = row.querySelector('.guia-cell');
-    const guiaName = guiaCell ? guiaCell.textContent.trim() : 'Asignar';
+    var guiaCell = document.getElementById(`guia-${logistica.id}`);
+    if (guiaCell) {
+        var guiaName = guiaCell.querySelector('.guia-name')?.textContent.trim() || 'Asignar';
+        var guiaWhatsapp = guiaCell.querySelector('.guia-whatsapp')?.textContent.trim() || 'Asignar';
 
-    console.log("Nome do Guia:", guiaName, row); // Para depuração
+        console.log(`Nome do Guia: ${guiaName}`);
+        console.log(`WhatsApp do Guia: ${guiaWhatsapp}`);
+    } else {
+        console.error('Célula do guia não encontrada!');
+    }
 
     const modalBody = $('#updateModalVoucher .modal-body');
     modalBody.empty();
@@ -692,7 +698,7 @@ function populateModalVoucher(logistica) {
             </div>
             <div class="col-md-6 mt-4 text-right">
                 <p><strong>Guia</strong></p>
-                <p>${guiaName}</p>
+                <p>${guiaName}<br>${guiaWhatsapp}</p>
             </div>
             <div class="col-md-6 mt-4 text-left">
                 <p><strong>Hotel:</strong></p>
@@ -703,7 +709,8 @@ function populateModalVoucher(logistica) {
                 <p>${logistica.venda.direcao_hotel || 'N/A'}</p>
             </div>
             <div class="col-md-12 mt-4 text-left">
-                <p><strong>Passageiro / pax</strong> ${logistica.nome || 'N/A'} <br/> ${logistica.telefone || 'N/A'}</p>
+                <p><strong>Passageiro / pax</strong></p>
+                <p>${logistica.nome || 'N/A'} <br/> ${logistica.telefone || 'N/A'}</p>
             </div>
             <div class="col-md-6 mt-4 text-left">
                 <p><strong>Número / total pax</strong></p>

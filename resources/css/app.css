@@ -1122,8 +1122,11 @@ th {
   }
 }
 
+.danger-row {
+  background-color: #fd0000 !important;
+}
 .danger-row td {
-  background-color: #cd3939 !important;
+  background-color: #fd0000;
   color: #fff;
 }
 
@@ -1136,12 +1139,13 @@ th {
   padding: 25px;
 }
 .modal-voucher p {
+  text-transform: uppercase;
   font-size: 18px;
   color: #007bff;
+  font-weight: 700;
 }
 .modal-voucher p strong {
   color: #000000;
-  font-weight: 800;
 }
 .modal-voucher p span {
   font-size: 16px;
