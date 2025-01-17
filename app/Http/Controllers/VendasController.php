@@ -26,7 +26,13 @@ class VendasController extends Controller
         return view('vendas.create', compact('tourPlaces'));
     }
 
-
+    // Define o método normalizeCurrency como privado
+    private function normalizeCurrency($value) 
+    {
+        // Remove pontos e vírgulas, e converte o valor para string sem separadores
+        return str_replace(['.', ','], '', $value);
+    }
+    
     public function store(Request $request)
     {
         // Validação dos campos
@@ -94,9 +100,9 @@ class VendasController extends Controller
             'estado_pagamento' => $request->estado_pagamento,
             'forma_pagamento' => $request->forma_pagamento,
             'data_pagamento' => $request->data_pagamento,
-            'valor_total' => $request->valor_total,
-            'valor_pago' => $request->valor_pago,
-            'valor_a_pagar' => $request->valor_a_pagar,
+            'valor_total' => $this->normalizeCurrency($request->valor_total),
+            'valor_pago' => $this->normalizeCurrency($request->valor_pago),
+            'valor_a_pagar' => $this->normalizeCurrency($request->valor_a_pagar),
 
             // Observações e comprovante
             'observacoes' => $request->observacoes,
@@ -113,6 +119,7 @@ class VendasController extends Controller
                 'pax_infantil' => $request->pax_infantil[$index] ?? null,
                 'preco_infantil' => $request->preco_infantil[$index] ?? null,
             ]);
+            // dd($createdTour->preco_adulto, $createdTour->pax_adulto, $createdTour->preco_infantil, $createdTour->pax_infantil);
 
             // Criar registros na tabela logística para cada tour relacionado
             Logistica::create([
@@ -127,17 +134,15 @@ class VendasController extends Controller
                 'estado_pagamento' => $venda->estado_pagamento, // Estado do pagamento
                 'telefone' => $venda->telefone, // Telefone
                 'vendedor' => $venda->vendedor ?? auth()->user()->name, // Vendedor (padrão: usuário autenticado)
-                'valor_total' => $createdTour->preco_adulto * $createdTour->pax_adulto + 
-                                ($createdTour->preco_infantil * ($createdTour->pax_infantil ?? 0)), // Valor total
+                'valor_total' => $venda->valor_total,
                 'condutor' => $createdTour->motorista ?? null, // Motorista (opcional)
                 'guia' => $createdTour->guia ?? null, // Guia (opcional)
-                'valor_pago' => $venda->valor_pago ?? 0, // Valor pago
-                'valor_a_pagar' => $venda->valor_a_pagar ?? 0, // Valor a pagar
+                'valor_pago' => $venda->valor_pago, // Valor pago
+                'valor_a_pagar' => $venda->valor_a_pagar, // Valor a pagar
                 'voucher' => $venda->id ?? 'N/A', // Voucher (padrão: N/A)
                 'observacao' => $venda->observacao ?? null, // Observação (opcional)
                 'conferido' => $request->conferido ?? null, // Conferido (opcional)
-            ]);
-                       
+            ]);     
         }
 
         // Redireciona com mensagem de sucesso

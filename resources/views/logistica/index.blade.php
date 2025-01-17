@@ -162,8 +162,8 @@
                                     {{ \App\Models\User::find($logistica->agencia)->name ?? 'Asignar' }}
                                 @endif
                             </td>
-                            <td data-label="Valor">${{ number_format($logistica->valor_total, 2, ',', '.') }}</td>
-                            <td data-label="Pendiente" class="valor_a_pagar">{{ number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
+                            <td data-label="Valor">{{ '$' . number_format($logistica->valor_total, 2, ',', '.') }}</td>
+                            <td data-label="Pendiente" class="valor_a_pagar">{{ '$' . number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
                             <td data-label="Hotel">{{ $logistica->hotel }}</td>
                             <td data-label="Teléfono">{{ $logistica->telefone }}</td>
                             <td data-label="Vendedor">{{ $logistica->vendedor }}</td>
@@ -358,15 +358,20 @@ window.addEventListener('load', function () {
 
     $('.valor_a_pagar').each(function () {
         console.log('Processando valor:', $(this).text()); // Debug
-        let valor = parseFloat($(this).text().replace(',', '.')); // Converte texto para número
+        // Remove caracteres indesejados e ajusta o formato do número
+        let valor = parseFloat(
+            $(this).text()
+                .replace(/[^0-9,.-]+/g, '') // Remove tudo que não é número, vírgula, ponto ou hífen
+                .replace(/\./g, '')        // Remove pontos (separadores de milhar)
+                .replace(',', '.')         // Substitui vírgula por ponto (separador decimal)
+        );
         console.log('Valor convertido:', valor); // Debug
-        if (valor > 0) { // Verifica se o valor é maior que 0
+        if (!isNaN(valor) && valor > 0) { // Verifica se o valor é um número válido e maior que 0
             let tr = $(this).closest('tr'); // Seleciona a linha (tr) mais próxima
             console.log('Linha correspondente:', tr); // Debug
             tr.addClass('danger-row'); // Adiciona a classe
         }
     });
-
 });
 
 // Filtrar por data

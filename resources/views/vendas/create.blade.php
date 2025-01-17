@@ -215,7 +215,9 @@
                 let valorPago = (valorTotal * percentage) / 100;
                 let valorAPagar = valorTotal - valorPago;
 
-                $('#valor_a_pagar').val(valorAPagar.toFixed(2));
+                $('#valor_a_pagar').val(new Intl.NumberFormat('es-CL', {
+                    minimumFractionDigits: 0
+                }).format(valorAPagar));
             } else {
                 $('#valor_a_pagar').val('');
             }
