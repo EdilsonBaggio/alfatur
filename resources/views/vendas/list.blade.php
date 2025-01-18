@@ -53,7 +53,7 @@
                             <td>{{ $tour->tour }}</td>
                             <td>{{ $venda->hotel }}</td>
                             <td>{{ '$' . number_format($venda->valor_total, 0, ',', '.') }}</td>
-                            <td>{{ '$' . number_format($venda->valor_pago, 0, ',', '.') }}</td>
+                            <td>{{ '%' . number_format($venda->valor_pago, 0, ',', '.') }}</td>
                             <td>{{ '$' . number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
                             <td>{{ $venda->estado_pagamento }}</td>
                             <td>{{ $venda->forma_pagamento }}</td>
