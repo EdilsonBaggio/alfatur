@@ -49,6 +49,46 @@
                     <input type="number" name="commission_percentage" value="{{ $user->commission_percentage }}" class="form-control">
                 </div>
 
+                <div class="mb-3">
+                    <label for="permissions" class="form-label">Permissões de Acesso</label>
+                    @php
+                        // Mapeamento das permissões para os valores visíveis no formulário
+                        $permissionsMapping = [
+                            'Mi conta' => 'home',
+                            'Usuarios' => 'usuarios.create',
+                            'Viajes/Vendedor' => 'viajes.vendedor',
+                            'Logística' => 'logistica.index',
+                            'Realizadas Por Pagar' => 'realizadas.pagar',
+                            'Viajes FULL' => 'viajes.full',
+                            'Pagos FULL' => 'pagos.full',
+                            'Vender' => 'vendas.create',
+                            'Mis Vendas' => 'vendas.list',
+                            'Confirmados' => 'confirmados',
+                            'Estimativo' => 'estimativo.index',
+                            'Tours' => 'tours.create',
+                            'Mis Liquidaciones' => 'mis.liquidaciones',
+                            'Liquidaciones' => 'liquidaciones'
+                        ];
+                
+                        $userPermissions = $user->permissions ?? []; // Obtém as permissões do banco
+                    @endphp
+                
+                    @foreach ($permissionsMapping as $key => $value)
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input" 
+                                type="checkbox" 
+                                name="permissions[]" 
+                                value="{{ $value }}" 
+                                id="{{ str_replace(' ', '_', strtolower($key)) }}" 
+                                {{ in_array($value, $userPermissions) ? 'checked' : '' }}
+                            >
+                            <label class="form-check-label" for="{{ str_replace(' ', '_', strtolower($key)) }}">{{ $key }}</label>
+                        </div>
+                    @endforeach
+                </div>
+                            
+
                 <button type="submit" class="btn btn-primary">Salvar</button>
                 <a href="{{ route('users.list') }}" class="btn btn-secondary">Cancelar</a>
             </form>
