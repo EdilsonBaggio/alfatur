@@ -162,8 +162,8 @@
                                     {{ \App\Models\User::find($logistica->agencia)->name ?? 'Asignar' }}
                                 @endif
                             </td>
-                            <td data-label="Valor">{{ '$' . number_format($logistica->valor_total, 2, ',', '.') }}</td>
-                            <td data-label="Pendiente" class="valor_a_pagar">{{ '$' . number_format($logistica->valor_a_pagar, 2, ',', '.') }}</td>
+                            <td data-label="Valor">{{ '$' . number_format($logistica->valor_total, 0, ',', '.') }}</td>
+                            <td data-label="Pendiente" class="valor_a_pagar">{{ '$' . number_format($logistica->valor_a_pagar, 0, ',', '.') }}</td>
                             <td data-label="Hotel">{{ $logistica->hotel }}</td>
                             <td data-label="Teléfono">{{ $logistica->telefone }}</td>
                             <td data-label="Vendedor">{{ $logistica->vendedor }}</td>

@@ -23,7 +23,7 @@
                       <tr>
                         <td>#{{ $tour->id }}</td>
                         <td>{{ $tour->name }}</td>
-                        <td>R$ {{ number_format($tour->price, 2, ',', '.') }}</td>
+                        <td>R$ {{ number_format($tour->price, 0, ',', '.') }}</td>
                         <td>{{ $tour->status ? '' : 'Ativo' }}</td>
                         <td>
                           <a href="{{ route('tours.edit', $tour->id) }}" class="btn btn-primary btn-sm">Editar</a>
@@ -61,7 +61,7 @@
                           </div>
                         </td>
                         <td>{{ $tour->name }}</td>
-                        <td>R$ {{ number_format($tour->price, 2, ',', '.') }}</td>
+                        <td>R$ {{ number_format($tour->price, 0, ',', '.') }}</td>
                         <td>{{ $tour->status ? 'Inativo' : '' }}</td>
                         <td>
                           <a href="{{ route('tours.edit', $tour->id) }}" class="btn btn-primary btn-sm">Editar</a>

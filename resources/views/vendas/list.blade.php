@@ -52,18 +52,18 @@
                             <td>{{ $venda->telefone }}</td>
                             <td>{{ $tour->tour }}</td>
                             <td>{{ $venda->hotel }}</td>
-                            <td>{{ '$' . number_format($venda->valor_total, 2, ',', '.') }}</td>
-                            <td>{{ '$' . number_format($venda->valor_pago, 2, ',', '.') }}</td>
-                            <td>{{ '$' . number_format($venda->valor_a_pagar, 2, ',', '.') }}</td>
+                            <td>{{ '$' . number_format($venda->valor_total, 0, ',', '.') }}</td>
+                            <td>{{ '$' . number_format($venda->valor_pago, 0, ',', '.') }}</td>
+                            <td>{{ '$' . number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
                             <td>{{ $venda->estado_pagamento }}</td>
                             <td>{{ $venda->forma_pagamento }}</td>
                             <td>{{ $venda->data_pagamento }}</td>
                             <td>{{ $venda->email }}</td>
                             <td>{{ $tour->data_tour }}</td>
                             <td>{{ $tour->pax_adulto }}</td>
-                            <td>{{ '$' . number_format($tour->preco_adulto, 2, ',', '.') }}</td>
+                            <td>{{ '$' . number_format($tour->preco_adulto, 0, ',', '.') }}</td>
                             <td>{{ $tour->pax_infantil }}</td>
-                            <td>{{ '$' . number_format($tour->preco_infantil, 2, ',', '.') }}</td>
+                            <td>{{ '$' . number_format($tour->preco_infantil, 0, ',', '.') }}</td>
                             <td>{{ $venda->observacoes }}</td>
                             <td>
                               @php
