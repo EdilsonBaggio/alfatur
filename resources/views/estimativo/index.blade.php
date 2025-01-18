@@ -32,7 +32,7 @@
                     @if (!request('filterDate') || request('filterDate') === $date) 
                     <div class="col-md-4">
                       <div class="day-group">
-                          <h5>{{ Carbon\Carbon::parse($date)->format('l') }} <br> <div class="date"><i class="bi bi-calendar3"></i> {{ Carbon\Carbon::parse($date)->format('d-m-Y') }}</div></h5> 
+                          <h5>{{ \Carbon\Carbon::parse($date)->translatedFormat('l') }} <br> <div class="date"><i class="bi bi-calendar3"></i> {{ Carbon\Carbon::parse($date)->format('d-m-Y') }}</div></h5> 
                           <ul>
                               @foreach($tours as $tour)
                                   <li class="d-flex">
