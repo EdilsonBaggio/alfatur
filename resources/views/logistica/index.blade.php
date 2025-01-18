@@ -594,8 +594,8 @@ function populateModal(logistica) {
     $('#tour').val(logistica.tour);
     $('#nome').val(logistica.nome);
     $('#pax_total').val(logistica.pax_total);
-    $('#valor_total').val(logistica.valor_total);
-    $('#valor_a_pagar').val(logistica.valor_a_pagar);
+    $('#valor_total').val(logistica.valor_a_pagar ? Number(logistica.valor_total).toLocaleString('es-CL', { minimumFractionDigits: 0 }) : 'N/A');
+    $('#valor_a_pagar').val(logistica.valor_a_pagar ? Number(logistica.valor_a_pagar).toLocaleString('es-CL', { minimumFractionDigits: 0 }) : 'N/A');
     $('#hotel').val(logistica.hotel);
     $('#telefone').val(logistica.telefone);
     $('#vendedor').val(logistica.vendedor);
@@ -723,7 +723,7 @@ function populateModalVoucher(logistica) {
             </div>
             <div class="col-md-6 mt-4 text-right">
                 <p><strong>Preço total / total</strong></p>
-                <p>CPL $${logistica.venda.valor_total || 'N/A'}</p>
+                <p>CPL $${logistica.venda.valor_total ? Number(logistica.venda.valor_total).toLocaleString('es-CL', { minimumFractionDigits: 0 }) : 'N/A'}</p>
             </div>
             <div class="col-md-12 mt-4 text-left">
                 <p><strong>Mais informações / Más información</strong></p>
