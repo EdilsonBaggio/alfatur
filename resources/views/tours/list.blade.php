@@ -21,7 +21,11 @@
                     <tbody>
                       @foreach($activeTours as $tour)
                       <tr>
-                        <td>#{{ $tour->id }}</td>
+                        <td>
+                          <div class="id_tours">
+                            #{{ $tour->id }}
+                          </div>
+                        </td>
                         <td>{{ $tour->name }}</td>
                         <td>{{ '$' . number_format($tour->price, 0, ',', '.') }}</td>
                         <td>{{ $tour->status ? '' : 'Ativo' }}</td>
@@ -56,7 +60,7 @@
                       @foreach($inactiveTours as $tour)
                       <tr>
                         <td>
-                          <div class="id_venda">
+                          <div class="id_tours">
                             #{{ $tour->id }}
                           </div>
                         </td>
@@ -78,6 +82,22 @@
 @endsection
 
 @section('script')
+
+<!-- JS do Bootstrap -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- JS do DataTables -->
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<!-- JS do DataTables para Bootstrap -->
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- JS do DataTables Responsivo -->
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+<!-- CSS do DataTables Responsivo -->
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+
 <script>
   $(document).ready(function(){
     $('#tabela-tours-ativos').DataTable({
@@ -93,7 +113,8 @@
                 "sNext": "Próximo",
                 "sPrevious": "Anterior"
             }
-        }
+        },
+        "responsive": true,
     });
 
     $('#tabela-tours-inativos').DataTable({
@@ -109,7 +130,8 @@
                 "sNext": "Próximo",
                 "sPrevious": "Anterior"
             }
-        }
+        },
+        "responsive": true,
     });
   });
 </script>

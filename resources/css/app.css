@@ -984,6 +984,28 @@ table.dataTable > tbody > tr.child ul.dtr-details {
   }
 }
 
+@media screen and (max-width: 500px) {
+  #tabela-tours-ativos .sorting_1 {
+    min-width: 260px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #tabela-tours-ativos .id_tours {
+    min-width: 260px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #tabela-tours-inativos .sorting_1 {
+    min-width: 260px;
+  }
+}
+@media screen and (max-width: 500px) {
+  #tabela-tours-inativos .id_tours {
+    min-width: 260px;
+  }
+}
+
 .estimativo .col-md-4 .day-group {
   background: #FEAC00;
   border-radius: 10px;
