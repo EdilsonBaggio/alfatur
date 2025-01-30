@@ -91,7 +91,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="pax_adulto">PAX Adulto:</label>
-                                <input type="number" name="pax_adulto[]" class="form-control" required>
+                                <input type="text" name="pax_adulto[]" class="form-control pax" maxlength="3" required>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="preco_adulto">Preço Adulto:</label>
@@ -99,7 +99,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="pax_infantil">PAX Infantil:</label>
-                                <input type="number" name="pax_infantil[]" class="form-control">
+                                <input type="text" name="pax_infantil[]" maxlength="3" class="pax form-control">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="preco_infantil">Preço Infantil:</label>
@@ -206,7 +206,7 @@
             $(this).closest('.tour-item').remove();
         });
         $('#telefone').mask('+00 00900000000');
-
+        $('.pax').mask('000');
         $('#percentage, #valor_total').on('input change', function () {
             // Remove possíveis separadores de milhares e converte para número
             let valorTotal = parseFloat($('#valor_total').val().replace(/\./g, '').replace(',', '.')) || 0;
