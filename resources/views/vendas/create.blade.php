@@ -208,15 +208,18 @@
         $('#telefone').mask('+00 00900000000');
 
         $('#percentage, #valor_total').on('input change', function () {
-            let valorTotal = parseFloat($('#valor_total').val()) || 0;
+            // Remove possíveis separadores de milhares e converte para número
+            let valorTotal = parseFloat($('#valor_total').val().replace(/\./g, '').replace(',', '.')) || 0;
             let percentage = parseInt($('#percentage').val()) || 0;
 
             if (valorTotal > 0 && percentage > 0) {
                 let valorPago = (valorTotal * percentage) / 100;
                 let valorAPagar = valorTotal - valorPago;
 
+                // Formata o resultado com separadores de milhares e sem decimais
                 $('#valor_a_pagar').val(new Intl.NumberFormat('es-CL', {
-                    minimumFractionDigits: 0
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
                 }).format(valorAPagar));
             } else {
                 $('#valor_a_pagar').val('');
