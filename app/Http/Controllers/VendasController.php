@@ -9,6 +9,8 @@ use App\Models\TourPlaces;
 use App\Models\Logistica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\VendaEmail;
+use Illuminate\Support\Facades\Mail;
 
 class VendasController extends Controller
 {
@@ -143,6 +145,14 @@ class VendasController extends Controller
                 'observacao' => $venda->observacao ?? null, // Observação (opcional)
                 'conferido' => $request->conferido ?? null, // Conferido (opcional)
             ]);     
+        }
+
+        // Obtenha os tours relacionados à venda
+        $tours = $venda->tours;
+
+        // Enviar o e-mail
+        if ($venda->email) {
+            Mail::to($venda->email)->send(new VendaEmail($venda, $tours));
         }
 
         // Redireciona com mensagem de sucesso
