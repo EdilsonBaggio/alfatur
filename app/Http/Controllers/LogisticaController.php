@@ -131,8 +131,8 @@ class LogisticaController extends Controller
             'hora' => $request->input('hora'),
             'nome' => $request->input('nome'),
             'pax_total' => $request->input('pax_total'),
-            'valor_total' => $request->input('valor_total'),
-            'valor_a_pagar' => $request->input('valor_a_pagar'),
+            'valor_total' => $this->normalizeCurrency($request->input('valor_total')),
+            'valor_a_pagar' => $this->normalizeCurrency($request->input('valor_a_pagar')),
             'hotel' => $request->input('hotel'),
             'telefone' => $request->input('telefone'),
             'conferido' => $request->input('conferido', 0),
@@ -140,6 +140,20 @@ class LogisticaController extends Controller
 
         // Retorna resposta JSON ou mensagem de sucesso
         return response()->json(['success' => true, 'message' => 'Logística atualizada com sucesso!']);
+    }
+
+    // Define o método normalizeCurrency como privado
+    private function normalizeCurrency($value) 
+    {
+        if (!$value) {
+            return 0; // Retorna 0 se não houver valor
+        }
+
+        // Remove apenas separadores de milhar e substitui a vírgula por ponto para decimais
+        $value = str_replace('.', '', $value); // Remove pontos (milhar)
+        $value = str_replace(',', '.', $value); // Converte vírgula decimal para ponto
+
+        return (float) $value; // Retorna um número float
     }
 
     public function assignagencia(Request $request)

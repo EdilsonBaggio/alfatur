@@ -298,13 +298,23 @@
                   <!-- Campo Valor Total -->
                   <div class="mb-3">
                       <label for="valor_total" class="form-label">Valor Total</label>
-                      <input type="number" step="0.01" class="form-control" id="valor_total" placeholder="Digite o valor total" required>
+                      <input type="text" class="form-control" id="valor_total" placeholder="Digite o valor total" disabled>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="percentage" class="form-label">Valor Pago (%):</label>
+                    <select name="valor_pago" id="percentage" class="form-select" required>
+                        <option value="" disabled selected>Selecione um percentual</option>
+                        <?php for ($i = 1; $i <= 100; $i++): ?>
+                            <option value="<?= $i ?>"><?= $i ?>%</option>
+                        <?php endfor; ?>
+                    </select>
                   </div>
 
                   <!-- Campo Valor Pendiente -->
                   <div class="mb-3">
                       <label for="valor_a_pagar" class="form-label">Valor Pendiente</label>
-                      <input type="number" step="0.01" class="form-control" id="valor_a_pagar" placeholder="Digite o valor pendente" required>
+                      <input type="number" step="0.01" class="form-control pendente" id="valor_a_pagar" placeholder="Digite o valor pendente" disabled>
                   </div>
 
                   <!-- Campo Hotel -->
@@ -385,204 +395,224 @@ window.location.href = "{{ route('logistica.index') }}?dateFilter=" + selectedDa
 });
 
 $(document).ready(function () {
-// Clique no botão para atribuir Guia e Condutor
-$('.btn-assign').click(function () {
-    // Obter os IDs das logísticas selecionadas
-    var selectedLogistics = [];
-    $('input[type="checkbox"]:checked').each(function () {
-        selectedLogistics.push($(this).val());
-    });
-
-    // Obter os valores selecionados dos selects
-    var guiaId = $('#guia').val();
-    var condutorId = $('#condutor').val();
-
-    // Validação - Verificar se pelo menos um checkbox foi selecionado
-    if (selectedLogistics.length === 0) {
-        Swal.fire({
-        title: "Por favor!",
-        text: "Seleccione al menos una logística.",
-        icon: "error"
+    // Clique no botão para atribuir Guia e Condutor
+    $('.btn-assign').click(function () {
+        // Obter os IDs das logísticas selecionadas
+        var selectedLogistics = [];
+        $('input[type="checkbox"]:checked').each(function () {
+            selectedLogistics.push($(this).val());
         });
-        return;
-    }
 
-    // Verificar se os campos Guia e Condutor estão selecionados
-    if (!guiaId) {
-        Swal.fire({
+        // Obter os valores selecionados dos selects
+        var guiaId = $('#guia').val();
+        var condutorId = $('#condutor').val();
+
+        // Validação - Verificar se pelo menos um checkbox foi selecionado
+        if (selectedLogistics.length === 0) {
+            Swal.fire({
             title: "Por favor!",
-            text: "Seleccione una guía.",
+            text: "Seleccione al menos una logística.",
             icon: "error"
-        });
-        return;
-    }
+            });
+            return;
+        }
 
-    if (!condutorId) {
-        Swal.fire({
-            title: "Por favor!",
-            text: "Seleccione un controlador.",
-            icon: "error"
-        });
-        return;
-    }
+        // Verificar se os campos Guia e Condutor estão selecionados
+        if (!guiaId) {
+            Swal.fire({
+                title: "Por favor!",
+                text: "Seleccione una guía.",
+                icon: "error"
+            });
+            return;
+        }
 
-    // Enviar via AJAX
-    $.ajax({
-        url: "{{ route('logistics.assign') }}", // Rota para atribuir Guia e Condutor
-        type: "POST",
-        data: {
-            _token: '{{ csrf_token() }}', // CSRF token para proteção
-            logistics_ids: selectedLogistics, // Array de IDs selecionados
-            guia_id: guiaId,
-            condutor_id: condutorId
-        },
-        success: function (response) {
-            if (response.success) {
-                Swal.fire({
-                    title: "¡Guía y conductor asignados exitosamente!",
-                    showDenyButton: false,
-                    showCancelButton: false,
-                    confirmButtonText: "Ok",
-                    icon: "success"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    $("#guia").val("").trigger("change");
-                    $("#condutor").val("").trigger("change");
-                    $(".check").prop('checked', false); 
-                    $.each(selectedLogistics, function (index, id) {
-                        var row = $('input[value="' + id + '"]').closest('tr');
-                        row.find('.guia-cell').text(response.guia_name || 'Atribuir');
-                        row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
+        if (!condutorId) {
+            Swal.fire({
+                title: "Por favor!",
+                text: "Seleccione un controlador.",
+                icon: "error"
+            });
+            return;
+        }
+
+        // Enviar via AJAX
+        $.ajax({
+            url: "{{ route('logistics.assign') }}", // Rota para atribuir Guia e Condutor
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}', // CSRF token para proteção
+                logistics_ids: selectedLogistics, // Array de IDs selecionados
+                guia_id: guiaId,
+                condutor_id: condutorId
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: "¡Guía y conductor asignados exitosamente!",
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: "Ok",
+                        icon: "success"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                        $("#guia").val("").trigger("change");
+                        $("#condutor").val("").trigger("change");
+                        $(".check").prop('checked', false); 
+                        $.each(selectedLogistics, function (index, id) {
+                            var row = $('input[value="' + id + '"]').closest('tr');
+                            row.find('.guia-cell').text(response.guia_name || 'Atribuir');
+                            row.find('.condutor-cell').text(response.condutor_name || 'Atribuir');
+                        });
+                        }
                     });
-                    }
-                });
-            } else {
-                alert('Erro: ' + response.message);
+                } else {
+                    alert('Erro: ' + response.message);
+                }
+            },
+            error: function (xhr) {
+                alert('Erro ao processar a requisição. Tente novamente.');
             }
-        },
-        error: function (xhr) {
-            alert('Erro ao processar a requisição. Tente novamente.');
-        }
-    }); 
-});
-//modal
-
-$('.btn-assign-agencia').click(function () {
-    // Obter os IDs das logísticas selecionadas
-    var selectedLogistics = [];
-    $('input[type="checkbox"]:checked').each(function () {
-        selectedLogistics.push($(this).val());
+        }); 
     });
+    //modal
 
-    // Obter os valores selecionados dos selects
-    var agenciaId = $('#agencia').val();
-
-    // Validação - Verificar se pelo menos um checkbox foi selecionado
-    if (selectedLogistics.length === 0) {
-        Swal.fire({
-        title: "Por favor!",
-        text: "Seleccione al menos una logística.",
-        icon: "error"
+    $('.btn-assign-agencia').click(function () {
+        // Obter os IDs das logísticas selecionadas
+        var selectedLogistics = [];
+        $('input[type="checkbox"]:checked').each(function () {
+            selectedLogistics.push($(this).val());
         });
-        return;
-    }
 
-    // Verificar se os campos Guia e Condutor estão selecionados
-    if (!agenciaId) {
-        Swal.fire({
+        // Obter os valores selecionados dos selects
+        var agenciaId = $('#agencia').val();
+
+        // Validação - Verificar se pelo menos um checkbox foi selecionado
+        if (selectedLogistics.length === 0) {
+            Swal.fire({
             title: "Por favor!",
-            text: "Seleccione una agencia.",
+            text: "Seleccione al menos una logística.",
             icon: "error"
-        });
-        return;
-    }
-
-    // Enviar via AJAX
-    $.ajax({
-        url: "{{ route('logistics.assignagencia') }}", // Rota para atribuir agencia e Condutor
-        type: "POST",
-        data: {
-            _token: '{{ csrf_token() }}', // CSRF token para proteção
-            logistics_ids: selectedLogistics, // Array de IDs selecionados
-            agencia_id: agenciaId,
-        },
-        success: function (response) {
-            if (response.success) {
-                Swal.fire({
-                    title: "¡Guía y conductor asignados exitosamente!",
-                    showDenyButton: false,
-                    showCancelButton: false,
-                    confirmButtonText: "Ok",
-                    icon: "success"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    $("#agencia").val("").trigger("change");
-                    $(".check").prop('checked', false); 
-                    $.each(selectedLogistics, function (index, id) {
-                        var row = $('input[value="' + id + '"]').closest('tr');
-                        row.find('.agencia-cell').text(response.agencia_name || 'Atribuir');
-                    });
-                    }
-                });
-            } else {
-                alert('Erro: ' + response.message);
-            }
-        },
-        error: function (xhr) {
-            alert('Erro ao processar a requisição. Tente novamente.');
+            });
+            return;
         }
-    }); 
-});
 
-// Abre o modal ao clicar no ícone do relógio
-window.openModal = function (id, hora) {
-    // Busca a linha (tr) correspondente pelo ID
-    let row = $('#logistica-' + id);
+        // Verificar se os campos Guia e Condutor estão selecionados
+        if (!agenciaId) {
+            Swal.fire({
+                title: "Por favor!",
+                text: "Seleccione una agencia.",
+                icon: "error"
+            });
+            return;
+        }
 
-    // Obtém os valores do guia e condutor pelas classes
-    let guia = row.find('.guia-cell').text().trim();
-    let condutor = row.find('.condutor-cell').text().trim();
-
-    // Preenche os campos do modal com os IDs corretos
-    $('#logistica_id').val(id);
-    // $('#guia_text').val(guia);             
-    // $('#condutor_text').val(condutor);     
-    $('#hora').val(hora);                  // Hora
-
-    // Exibe o modal
-    $('#updateModal').modal('show');
-};
-
-// Salva as alterações ao clicar no botão
-$('#saveChanges').click(function () {
-    let id = $('#logistica_id').val();
-    let guia = $('#guia_text').val();       // Corrigido para guia_text
-    let condutor = $('#condutor_text').val(); // Corrigido para condutor_text
-    let hora = $('#hora').val();           // Hora mantida
-
-    $.ajax({
-        url: "{{ route('logistics.hora') }}", // URL da rota Laravel
-        type: 'POST',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            logistics_ids: [id], // Envia ID como array
-            guia_id: guia,
-            condutor_id: condutor,
-            hora: hora
-        },
-        success: function (response) {
-            if (response.success) {
-                alert('Atualizado com sucesso!');
-                location.reload(); // Atualiza a página
-            } else {
-                alert('Erro ao atualizar!');
+        // Enviar via AJAX
+        $.ajax({
+            url: "{{ route('logistics.assignagencia') }}", // Rota para atribuir agencia e Condutor
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}', // CSRF token para proteção
+                logistics_ids: selectedLogistics, // Array de IDs selecionados
+                agencia_id: agenciaId,
+            },
+            success: function (response) {
+                if (response.success) {
+                    Swal.fire({
+                        title: "¡Guía y conductor asignados exitosamente!",
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: "Ok",
+                        icon: "success"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                        $("#agencia").val("").trigger("change");
+                        $(".check").prop('checked', false); 
+                        $.each(selectedLogistics, function (index, id) {
+                            var row = $('input[value="' + id + '"]').closest('tr');
+                            row.find('.agencia-cell').text(response.agencia_name || 'Atribuir');
+                        });
+                        }
+                    });
+                } else {
+                    alert('Erro: ' + response.message);
+                }
+            },
+            error: function (xhr) {
+                alert('Erro ao processar a requisição. Tente novamente.');
             }
-        },
-        error: function () {
-            alert('Erro ao processar a requisição!');
+        }); 
+    });
+
+    // Abre o modal ao clicar no ícone do relógio
+    window.openModal = function (id, hora) {
+        // Busca a linha (tr) correspondente pelo ID
+        let row = $('#logistica-' + id);
+
+        // Obtém os valores do guia e condutor pelas classes
+        let guia = row.find('.guia-cell').text().trim();
+        let condutor = row.find('.condutor-cell').text().trim();
+
+        // Preenche os campos do modal com os IDs corretos
+        $('#logistica_id').val(id);
+        // $('#guia_text').val(guia);             
+        // $('#condutor_text').val(condutor);     
+        $('#hora').val(hora);                  // Hora
+
+        // Exibe o modal
+        $('#updateModal').modal('show');
+    };
+
+    // Salva as alterações ao clicar no botão
+    $('#saveChanges').click(function () {
+        let id = $('#logistica_id').val();
+        let guia = $('#guia_text').val();       // Corrigido para guia_text
+        let condutor = $('#condutor_text').val(); // Corrigido para condutor_text
+        let hora = $('#hora').val();           // Hora mantida
+
+        $.ajax({
+            url: "{{ route('logistics.hora') }}", // URL da rota Laravel
+            type: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                logistics_ids: [id], // Envia ID como array
+                guia_id: guia,
+                condutor_id: condutor,
+                hora: hora
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Atualizado com sucesso!');
+                    location.reload(); // Atualiza a página
+                } else {
+                    alert('Erro ao atualizar!');
+                }
+            },
+            error: function () {
+                alert('Erro ao processar a requisição!');
+            }
+        });
+    });
+
+    $('#percentage, #valor_total').on('input change', function () {
+        // Remove possíveis separadores de milhares e converte para número
+        let valorTotal = parseFloat($('#valor_total').val().replace(/\./g, '').replace(',', '.')) || 0;
+        console.log(valorTotal);
+        let percentage = parseInt($('#percentage').val()) || 0;
+
+        if (valorTotal > 0 && percentage > 0) {
+            let valorPago = (valorTotal * percentage) / 100;
+            let valorAPagar = valorTotal - valorPago;
+
+            // Formata o resultado com separadores de milhares e sem decimais
+            $('.pendente').val(new Intl.NumberFormat('es-CL', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(valorAPagar));
+        } else {
+            $('.pendente').val('');
         }
     });
-});
 });
 
 
