@@ -96,7 +96,7 @@
 
             @if(in_array('pagos.full', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
             <li>
-                <a href="" class="{{ request()->routeIs(['pagos-full']) ? 'current' : '' }}">
+                <a href="{{ route('pagos.full') }}" class="{{ request()->routeIs(['pagos.full']) ? 'current' : '' }}">
                     Pagos FULL
                 </a>
             </li>

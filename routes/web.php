@@ -11,6 +11,7 @@ use App\Http\Controllers\VendasController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\EstimativoController;
 use App\Http\Controllers\LogisticaController;
+use App\Http\Controllers\PagoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logistics/hora', [LogisticaController::class, 'hora'])->name('logistics.hora');
     Route::post('/logistics/export/pdf', [LogisticsController::class, 'exportPdf'])->name('logistics.export.pdf');
     Route::post('/logistics/{id}/update', [LogisticaController::class, 'update'])->name('logistics.update');
+    Route::get('/pagos-full', [PagoController::class, 'index'])->name('pagos.full');
 });
 
 Route::get('/esqueci', function () {

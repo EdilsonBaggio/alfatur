@@ -1183,4 +1183,11 @@ th {
   padding: 35px 15px;
 }
 
+@media screen and (max-width: 769px) {
+  .button-filtros a {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
 /*# sourceMappingURL=app.css.map */

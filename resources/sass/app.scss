@@ -1140,7 +1140,6 @@ th {
         color: #fff;
     }
 }
-
 .modal-voucher{
     max-width: 615px;
     height: 900px;
@@ -1169,5 +1168,13 @@ th {
     .modal-header{
         border: 0;
         padding: 35px 15px;
+    }
+}
+.button-filtros{
+    a{
+        @media screen and (max-width: 769px) {
+            width: 100%;
+            margin-bottom: 10px;
+        }
     }
 }

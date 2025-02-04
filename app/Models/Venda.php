@@ -37,4 +37,10 @@ class Venda extends Model
     {
         return $this->hasMany(Tour::class);
     }
+
+    public function logistica()
+    {
+        return $this->hasOne(Logistica::class, 'venda_id');
+    }
+
 }
