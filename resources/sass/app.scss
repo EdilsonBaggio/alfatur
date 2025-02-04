@@ -1171,10 +1171,24 @@ th {
     }
 }
 .button-filtros{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    @media screen and (max-width: 769px) {
+        display: grid;
+        justify-items: center;
+    }
     a{
         @media screen and (max-width: 769px) {
             width: 100%;
             margin-bottom: 10px;
+        }
+    }
+    p{
+        margin-right: 15px;
+        @media screen and (max-width: 769px) {
+            margin-right: 0;
+            margin-bottom: 15px;
         }
     }
 }

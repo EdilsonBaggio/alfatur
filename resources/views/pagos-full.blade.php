@@ -7,19 +7,22 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                TODOS LOS VIAJES POR RECAUDACION
+                Todos los viajes por recaudación
             </div>
             <div class="card-body table">
                 <div class="mb-3 text-end button-filtros">
-                    <a href="{{ route('pagos.full') }}" class="btn btn-primary {{ request('estado') == '' ? 'active' : '' }}">
-                        Todos
-                    </a>
-                    <a href="{{ route('pagos.full', ['estado' => 'recaudado']) }}" class="btn btn-success {{ request('estado') == 'recaudado' ? 'active' : '' }}">
-                        Recaudado
-                    </a>
-                    <a href="{{ route('pagos.full', ['estado' => 'no-recaudado']) }}" class="btn btn-danger {{ request('estado') == 'no-recaudado' ? 'active' : '' }}">
-                        No Recaudado
-                    </a>
+                    <p>Filtrar por Estado de Pago:</p>
+                    <div>
+                        <a href="{{ route('pagos.full') }}" class="btn btn-primary {{ request('estado') == '' ? 'active' : '' }}">
+                            Todos
+                        </a>
+                        <a href="{{ route('pagos.full', ['estado' => 'recaudado']) }}" class="btn btn-success {{ request('estado') == 'recaudado' ? 'active' : '' }}">
+                            Recaudado
+                        </a>
+                        <a href="{{ route('pagos.full', ['estado' => 'no-recaudado']) }}" class="btn btn-danger {{ request('estado') == 'no-recaudado' ? 'active' : '' }}">
+                            No Recaudado
+                        </a>
+                    </div>
                 </div>
             
                 <table class="table table-striped logistica">
@@ -39,7 +42,11 @@
                         @foreach($pagos as $pago)
                         <tr>
                             <td data-label="ID">VF-{{ $pago->id }}</td>
-                            <td data-label="Reservas">{{ $pago->id }}</td>
+                            <td data-label="Reservas">
+                                MTT-@foreach($pago->tours as $tour)
+                                    {{ $tour->id }}
+                                @endforeach
+                            </td>
                             <td data-label="Nombre">{{ $pago->nome }}</td>
                             <td data-label="Fecha">{{ \Carbon\Carbon::parse($pago->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>
                             <td data-label="Total"  style="text-align: right">{{ '$' . number_format($pago->valor_total, 0, ',', '.') }}</td>

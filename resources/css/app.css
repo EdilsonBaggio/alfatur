@@ -1183,10 +1183,30 @@ th {
   padding: 35px 15px;
 }
 
+.button-filtros {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+@media screen and (max-width: 769px) {
+  .button-filtros {
+    display: grid;
+    justify-items: center;
+  }
+}
 @media screen and (max-width: 769px) {
   .button-filtros a {
     width: 100%;
     margin-bottom: 10px;
+  }
+}
+.button-filtros p {
+  margin-right: 15px;
+}
+@media screen and (max-width: 769px) {
+  .button-filtros p {
+    margin-right: 0;
+    margin-bottom: 15px;
   }
 }
 
