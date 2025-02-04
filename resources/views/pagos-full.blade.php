@@ -27,11 +27,11 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Reservas</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Data</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Fecha</th>
                             <th scope="col" style="text-align: right">Total</th>
                             <th scope="col" style="text-align: right">A Pagar</th>
-                            <th scope="col" style="text-align: center">Comprovante</th>
+                            <th scope="col" style="text-align: center">Ver</th>
                             <th scope="col" style="text-align: center">Estado</th>
                         </tr>
                     </thead>
@@ -40,11 +40,11 @@
                         <tr>
                             <td data-label="ID">VF-{{ $pago->id }}</td>
                             <td data-label="Reservas">{{ $pago->id }}</td>
-                            <td data-label="Nome">{{ $pago->nome }}</td>
-                            <td data-label="Data">{{ \Carbon\Carbon::parse($pago->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>
+                            <td data-label="Nombre">{{ $pago->nome }}</td>
+                            <td data-label="Fecha">{{ \Carbon\Carbon::parse($pago->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>
                             <td data-label="Total"  style="text-align: right">{{ '$' . number_format($pago->valor_total, 0, ',', '.') }}</td>
                             <td data-label="A Pagar" style="text-align: right">{{ '$' . number_format($pago->valor_a_pagar, 0, ',', '.') }}</td>
-                            <td data-label="Comprovante" style="text-align: center">
+                            <td data-label="Ver" style="text-align: center">
                                 @php
                                     $extensao = strtolower(pathinfo($pago->comprovante, PATHINFO_EXTENSION)); // Garantir comparação insensível a maiúsculas
                                 @endphp
