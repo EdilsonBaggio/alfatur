@@ -41,9 +41,9 @@
                             <td data-label="ID">VF-{{ $pago->id }}</td>
                             <td data-label="Reservas">{{ $pago->id }}</td>
                             <td data-label="Nome">{{ $pago->nome }}</td>
-                            <td data-label="Data">{{ \Carbon\Carbon::parse($pago->data_pagamento)->format('D d-m') }}</td>
-                            <td data-label="Total"  style="text-align: right">${{ number_format($pago->valor_total, 2) }}</td>
-                            <td data-label="A Pagar" style="text-align: right">${{ number_format($pago->valor_a_pagar, 2) }}</td>
+                            <td data-label="Data">{{ \Carbon\Carbon::parse($pago->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>
+                            <td data-label="Total"  style="text-align: right">{{ '$' . number_format($pago->valor_total, 0, ',', '.') }}</td>
+                            <td data-label="A Pagar" style="text-align: right">{{ '$' . number_format($pago->valor_a_pagar, 0, ',', '.') }}</td>
                             <td data-label="Comprovante" style="text-align: center">
                                 @php
                                     $extensao = strtolower(pathinfo($pago->comprovante, PATHINFO_EXTENSION)); // Garantir comparação insensível a maiúsculas
@@ -51,12 +51,12 @@
                                 @if(in_array($extensao, ['jpg', 'jpeg', 'png', 'gif']))
                                     @isset($pago->comprovante) <!-- Verifica se o usuário tem um comprovante -->
                                         <!-- Link com atributo 'data-lightbox' para Lightbox -->
-                                        <a style="color: green; font-size:22px" href="{{ asset($pago->comprovante) }}" data-lightbox="comprovante-{{$pago->id}}" data-title="Comprovante de Venda" target="_blank"><i class="bi bi-cash-coin"></i></a>
+                                        <a style="color: green; font-size:22px" href="{{ asset($pago->comprovante) }}" data-lightbox="comprovante-{{$pago->id}}" data-title="Comprovante de Venda" target="_blank"><i class="bi bi-images"></i></a>
                                     @else
                                         N/A
                                     @endisset
                                 @elseif($extensao === 'pdf')
-                                    <a style="color: green; font-size:22px" href="{{ asset($pago->comprovante) }}" target="_blank"><i class="bi bi-cash-coin"></i></a>
+                                    <a style="color: green; font-size:22px" href="{{ asset($pago->comprovante) }}" target="_blank"><i class="bi bi-filetype-pdf"></i></a>
                                 @else
                                     <span>Arquivo não suportado</span>
                                 @endif
