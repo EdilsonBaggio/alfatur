@@ -1160,6 +1160,19 @@ th {
   background-size: cover;
   padding: 25px;
 }
+.modal-voucher .menu-logo img {
+  height: 120px;
+}
+@media screen and (max-width: 769px) {
+  .modal-voucher {
+    height: 980px;
+    background-color: #fff;
+    background-image: none;
+  }
+  .modal-voucher .menu-logo img {
+    height: 70px;
+  }
+}
 .modal-voucher p {
   text-transform: uppercase;
   font-size: 18px;
@@ -1172,6 +1185,11 @@ th {
 .modal-voucher p span {
   font-size: 16px;
   color: #fd0000;
+}
+@media screen and (max-width: 769px) {
+  .modal-voucher p {
+    font-size: 14px;
+  }
 }
 .modal-voucher .voucher {
   display: grid;
@@ -1208,6 +1226,21 @@ th {
   .button-filtros p {
     margin-right: 0;
     margin-bottom: 15px;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .input-group.input-group-sm.d-flex {
+    margin-bottom: 15px;
+  }
+  i.bi.bi-arrow-90deg-down.p-2 {
+    display: none;
+  }
+  button.btn.btn-primary.btn-assign {
+    margin-top: 15px;
+  }
+  button.btn.btn-primary.btn-assign-agencia {
+    margin-top: 15px;
   }
 }
 

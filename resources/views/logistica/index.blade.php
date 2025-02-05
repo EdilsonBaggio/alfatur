@@ -714,7 +714,7 @@ function populateModalVoucher(logistica) {
         <div class="row">
             <div class="col-md-6 text-left">
                 <div class="menu-logo">
-                    <img style="height:120px" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+                    <img src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
                 </div>
             </div>
             <div class="col-md-6 mt-4 text-right">

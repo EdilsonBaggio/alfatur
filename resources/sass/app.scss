@@ -1147,6 +1147,17 @@ th {
     background-image: url(../images/voucher_bg.png);
     background-size: cover;
     padding: 25px;
+    .menu-logo img{
+        height: 120px;
+    }
+    @media screen and (max-width: 769px) {
+        height: 980px;
+        background-color: #fff;
+        background-image: none;
+        .menu-logo img{
+            height: 70px;
+        }
+    }
     p{
         text-transform: uppercase;
         font-size: 18px;
@@ -1158,6 +1169,9 @@ th {
         span{
             font-size: 16px;
             color: $vermelho;
+        }
+        @media screen and (max-width: 769px) {
+            font-size: 14px;
         }
     }
     .voucher{
@@ -1191,5 +1205,20 @@ th {
             margin-right: 0;
             margin-bottom: 15px;
         }
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .input-group.input-group-sm.d-flex {
+        margin-bottom: 15px;
+    }
+    i.bi.bi-arrow-90deg-down.p-2 {
+        display: none;
+    }
+    button.btn.btn-primary.btn-assign {
+        margin-top: 15px;
+    }
+    button.btn.btn-primary.btn-assign-agencia{
+        margin-top: 15px;
     }
 }
