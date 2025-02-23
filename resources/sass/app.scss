@@ -1042,9 +1042,17 @@ table.dataTable>tbody>tr.child ul.dtr-details{
 th {
     white-space: nowrap;
 }
-.table td, .table th{
-    font-size: 12px;
-}
+.table{
+    th{
+        font-size: 12px;
+        vertical-align: middle;
+    }
+    td{
+        font-size: 12px;
+        vertical-align: middle;
+        border-left: 1px solid #ffffff;
+    }
+} 
 @media screen and (max-width: 1024px) {
     .table .logistica {
         border: 0;
@@ -1220,5 +1228,91 @@ th {
     }
     button.btn.btn-primary.btn-assign-agencia{
         margin-top: 15px;
+    }
+}
+
+.modal-pagos-full{
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+        padding-left: 150px;
+        text-align:left;
+        line-height:22px;
+    }
+    .header img {
+        max-width: 150px;
+    }
+    .info-table, .tour-table, .payment-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .info-table td, .tour-table th, .tour-table td, .payment-table th, .payment-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .info-table td {
+        width: 50%;
+        vertical-align: middle;
+    }
+    .tour-table th {
+        background-color: #000000;
+        color:#ffffff;
+    }
+    .tour-table tr td {
+      color: #f15a76;
+      vertical-align: middle;
+    }
+    .payment-table th {
+        background: #7abda4;
+    }
+    .payment-table tr td {
+        background: #b9eedb;
+    }
+    .totals {
+        text-align: right;
+        font-weight: bold;
+        margin: 0px;
+    }
+    .totals .total-pendiente {
+        color: red;
+    }
+    .content_titulo{
+        padding: 20px;
+        background: #f15a76;
+        text-align:center
+    }
+    .content_titulo_pagos{
+        padding: 25px;
+        background: #fdf16373;
+        text-align:center
+    }
+
+    .total_clp{
+        padding: 15px;
+        background-color: #9eadff;
+        color: #fff
+    }
+
+    .total-pago{
+        padding: 15px;
+        background-color: #7abda4
+    }
+
+    .total-pendiente{
+        padding: 15px;
+        background-color: #eaee16
+    }
+    
+    .btn {
+        color: #000;
+        font-size: 16px;
+        font-weight: bold;
+        background: #fff;
+        border: 1px solid #cdcdcd;
+        padding: 15px;
+        border-radius: 5px;
+        text-decoration: none;
     }
 }

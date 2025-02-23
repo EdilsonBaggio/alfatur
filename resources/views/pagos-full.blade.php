@@ -43,9 +43,12 @@
                         <tr>
                             <td data-label="ID">VF-{{ $pago->id }}</td>
                             <td data-label="Reservas">
-                                MTT-@foreach($pago->tours as $tour)
-                                    {{ $tour->id }}
-                                @endforeach
+                                @php
+                                    $tours = $pago->tours->pluck('id')->unique()->toArray();
+                                @endphp
+                                @if (!empty($tours))
+                                    {{ 'MTT-' . implode(' / MTT-', $tours) }}
+                                @endif
                             </td>
                             <td data-label="Nombre">{{ $pago->nome }}</td>
                             <td data-label="Fecha">{{ \Carbon\Carbon::parse($pago->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>

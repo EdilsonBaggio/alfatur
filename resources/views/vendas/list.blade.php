@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="content-tabelas">
-    <div class="container">
+    <div class="container-fluid">
         <div class="card">
             <div class="card-header">
               Lista de Vendas
@@ -36,6 +36,7 @@
                         <th>Precio Infantil</th>
                         <th>Observaciones</th>
                         <th>Comprobantes</th>
+                        <th>Editar</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -63,9 +64,9 @@
                             <td>{{ '$' . number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
                             <td>{{ $venda->estado_pagamento }}</td>
                             <td>{{ $venda->forma_pagamento }}</td>
-                            <td>{{ $venda->data_pagamento }}</td>
+                            <td>{{ \Carbon\Carbon::parse($venda->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>
                             <td>{{ $venda->email }}</td>
-                            <td>{{ $tour->data_tour }}</td>
+                            <td>{{ \Carbon\Carbon::parse($tour->data_tour)->locale('es')->translatedFormat('l d-m') }}</td>
                             <td>{{ $tour->pax_adulto }}</td>
                             <td>{{ '$' . number_format($tour->preco_adulto, 0, ',', '.') }}</td>
                             <td>{{ $tour->pax_infantil }}</td>
@@ -88,7 +89,12 @@
                               @else
                                   <span>Arquivo não suportado</span>
                               @endif
-                          </td>                              
+                          </td> 
+                          <td>
+                                <a href="{{ route('vendas.editar', $venda->id) }}">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>                             
                           </tr>
                         @endforeach
                       @endforeach

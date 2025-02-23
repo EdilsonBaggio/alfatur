@@ -1056,8 +1056,14 @@ th {
   white-space: nowrap;
 }
 
-.table td, .table th {
+.table th {
   font-size: 12px;
+  vertical-align: middle;
+}
+.table td {
+  font-size: 12px;
+  vertical-align: middle;
+  border-left: 1px solid #ffffff;
 }
 
 @media screen and (max-width: 1024px) {
@@ -1242,6 +1248,85 @@ th {
   button.btn.btn-primary.btn-assign-agencia {
     margin-top: 15px;
   }
+}
+.modal-pagos-full .header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-left: 150px;
+  text-align: left;
+  line-height: 22px;
+}
+.modal-pagos-full .header img {
+  max-width: 150px;
+}
+.modal-pagos-full .info-table, .modal-pagos-full .tour-table, .modal-pagos-full .payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.modal-pagos-full .info-table td, .modal-pagos-full .tour-table th, .modal-pagos-full .tour-table td, .modal-pagos-full .payment-table th, .modal-pagos-full .payment-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+.modal-pagos-full .info-table td {
+  width: 50%;
+  vertical-align: middle;
+}
+.modal-pagos-full .tour-table th {
+  background-color: #000000;
+  color: #ffffff;
+}
+.modal-pagos-full .tour-table tr td {
+  color: #f15a76;
+  vertical-align: middle;
+}
+.modal-pagos-full .payment-table th {
+  background: #7abda4;
+}
+.modal-pagos-full .payment-table tr td {
+  background: #b9eedb;
+}
+.modal-pagos-full .totals {
+  text-align: right;
+  font-weight: bold;
+  margin: 0px;
+}
+.modal-pagos-full .totals .total-pendiente {
+  color: red;
+}
+.modal-pagos-full .content_titulo {
+  padding: 20px;
+  background: #f15a76;
+  text-align: center;
+}
+.modal-pagos-full .content_titulo_pagos {
+  padding: 25px;
+  background: rgba(253, 241, 99, 0.4509803922);
+  text-align: center;
+}
+.modal-pagos-full .total_clp {
+  padding: 15px;
+  background-color: #9eadff;
+  color: #fff;
+}
+.modal-pagos-full .total-pago {
+  padding: 15px;
+  background-color: #7abda4;
+}
+.modal-pagos-full .total-pendiente {
+  padding: 15px;
+  background-color: #eaee16;
+}
+.modal-pagos-full .btn {
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  background: #fff;
+  border: 1px solid #cdcdcd;
+  padding: 15px;
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 /*# sourceMappingURL=app.css.map */

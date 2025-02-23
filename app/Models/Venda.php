@@ -43,4 +43,9 @@ class Venda extends Model
         return $this->hasOne(Logistica::class, 'venda_id');
     }
 
+    public function pagamentos()
+    {
+        return $this->hasMany(Pagamento::class);
+    }
+
 }

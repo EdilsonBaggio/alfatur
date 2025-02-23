@@ -170,6 +170,9 @@
                     <input type="file" name="comprovante">
                 </div>
 
+                <input type="hidden" name="status" value="Reservado">
+                <input type="hidden" id="valor_recebido" name="valor_recebido" value="">
+
                 <!-- Botão -->
                 <button type="submit" class="btn btn-primary">Ingresar Venda</button>
             </form>
@@ -207,12 +210,14 @@
         });
         $('#telefone').mask('+00 00900000000');
         $('.pax').mask('000');
+        
         $('#percentage, #valor_total').on('input change', function () {
             // Remove possíveis separadores de milhares e converte para número
             let valorTotal = parseFloat($('#valor_total').val().replace(/\./g, '').replace(',', '.')) || 0;
             let percentage = parseInt($('#percentage').val()) || 0;
 
             if (valorTotal > 0 && percentage > 0) {
+                let valorRecebido = (valorTotal * percentage) / 100;
                 let valorPago = (valorTotal * percentage) / 100;
                 let valorAPagar = valorTotal - valorPago;
 
@@ -221,10 +226,47 @@
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0
                 }).format(valorAPagar));
+
+                $('#valor_recebido').val(new Intl.NumberFormat('es-CL', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(valorRecebido));
             } else {
                 $('#valor_a_pagar').val('');
+                $('#valor_recebido').val('');
             }
         });
+
+        function calcularValorTotal() {
+            let total = 0;
+
+            $('.tour-item').each(function () {
+                let paxAdulto = parseInt($(this).find('[name^="pax_adulto"]').val()) || 0;
+                let precoAdulto = parseFloat($(this).find('[name^="preco_adulto"]').val()) || 0;
+                let paxInfantil = parseInt($(this).find('[name^="pax_infantil"]').val()) || 0;
+                let precoInfantil = parseFloat($(this).find('[name^="preco_infantil"]').val()) || 0;
+
+                total += (paxAdulto * precoAdulto) + (paxInfantil * precoInfantil);
+            });
+
+            $('#valor_total').val(total); // Atualiza o campo com 2 casas decimais
+        }
+
+        // Atualizar o valor total quando os inputs forem alterados
+        $(document).on('input', '[name^="pax_adulto"], [name^="preco_adulto"], [name^="pax_infantil"], [name^="preco_infantil"]', function () {
+            calcularValorTotal();
+        });
+
+        // Também calcular ao adicionar ou remover tours
+        $('#add-tour').on('click', function () {
+            setTimeout(calcularValorTotal, 100); // Pequeno delay para garantir a atualização
+        });
+
+        $(document).on('click', '.remove-tour', function () {
+            setTimeout(calcularValorTotal, 100);
+        });
+
+        calcularValorTotal(); // Chamada inicial
     });
 </script>
 @endsection

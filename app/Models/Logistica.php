@@ -33,6 +33,7 @@ class Logistica extends Model
         'voucher',          // Voucher
         'observacao',       // Observações
         'conferido',        // Conferido
+        'status', 
     ];
 
     /**

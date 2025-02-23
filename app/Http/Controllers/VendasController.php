@@ -10,6 +10,7 @@ use App\Models\Logistica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\VendaEmail;
+use App\Models\Pagamento;
 use Illuminate\Support\Facades\Mail;
 
 class VendasController extends Controller
@@ -111,6 +112,16 @@ class VendasController extends Controller
             'comprovante' => $comprovantePath,
         ]);
 
+        $venda->pagamentos()->create([
+            'forma_pagamento' => $request->forma_pagamento,
+            'data_pagamento' => $request->data_pagamento,
+            'valor_pago' => $request->valor_pago,
+            'valor_a_pagar' => $request->valor_a_pagar,
+            'valor_recebido' => $request->valor_recebido,
+            'estado_pagamento' => $request->estado_pagamento,
+            'comprovante' => $comprovantePath,
+        ]);
+
         // Salva os tours associados
         foreach ($request->tour as $index => $tour) {
             $createdTour = $venda->tours()->create([
@@ -144,6 +155,7 @@ class VendasController extends Controller
                 'voucher' => $venda->id ?? 'N/A', // Voucher (padrão: N/A)
                 'observacao' => $venda->observacao ?? null, // Observação (opcional)
                 'conferido' => $request->conferido ?? null, // Conferido (opcional)
+                'status' => $request->status, // Pendente (opcional)
             ]);     
         }
 
@@ -158,4 +170,103 @@ class VendasController extends Controller
         // Redireciona com mensagem de sucesso
         return redirect()->back()->with('success', 'Venda adicionada com sucesso!');
     }
+
+
+    public function edit($id)
+    {
+        // Busca a venda pelo ID e carrega os tours relacionados
+        $venda = Venda::with('tours')->findOrFail($id);
+        
+        // Lista de locais disponíveis para tours
+        $tourPlaces = TourPlaces::where('status', '!=', 1)->pluck('name', 'id');
+
+        return view('vendas.editar', compact('venda', 'tourPlaces'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validação dos campos
+        $request->validate([
+            'vendedor' => 'required|string',
+            'nome' => 'required|string',
+            'telefone' => 'required|string',
+            'email' => 'nullable|email',
+            'hotel' => 'required|string',
+            'zona' => 'required|string',
+            'direcao_hotel' => 'required|string',
+            'habitacao' => 'required|string',
+            'pais_origem' => 'nullable|string',
+            'idioma' => 'nullable|string',
+
+            'tour.*' => 'required|string',
+            'data_tour.*' => 'required|date',
+            'pax_adulto.*' => 'required|integer',
+            'preco_adulto.*' => 'required|numeric',
+            'pax_infantil.*' => 'nullable|integer',
+            'preco_infantil.*' => 'nullable|numeric',
+
+            'estado_pagamento' => 'required|string',
+            'forma_pagamento' => 'required|string',
+            'data_pagamento' => 'required|date',
+            'valor_total' => 'required|numeric',
+            'valor_pago' => 'required|numeric',
+            'valor_a_pagar' => 'required|numeric',
+
+            'observacoes' => 'nullable|string',
+            'comprovante' => 'nullable|file|mimes:pdf,jpeg,png,jpg|max:2048',
+        ]);
+
+        $venda = Venda::findOrFail($id);
+
+        // Processa o upload do novo comprovante, se fornecido
+        if ($request->hasFile('comprovante')) {
+            $file = $request->file('comprovante');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads'), $fileName);
+            $comprovantePath = 'uploads/' . $fileName;
+        } else {
+            $comprovantePath = $venda->comprovante;
+        }
+
+        // Atualiza os dados da venda
+        $venda->update([
+            'vendedor' => $request->vendedor,
+            'nome' => $request->nome,
+            'telefone' => $request->telefone,
+            'email' => $request->email,
+            'hotel' => $request->hotel,
+            'zona' => $request->zona,
+            'direcao_hotel' => $request->direcao_hotel,
+            'habitacao' => $request->habitacao,
+            'pais_origem' => $request->pais_origem,
+            'idioma' => $request->idioma,
+
+            'estado_pagamento' => $request->estado_pagamento,
+            'forma_pagamento' => $request->forma_pagamento,
+            'data_pagamento' => $request->data_pagamento,
+            'valor_total' => $this->normalizeCurrency($request->valor_total),
+            'valor_pago' => $this->normalizeCurrency($request->valor_pago),
+            'valor_a_pagar' => $this->normalizeCurrency($request->valor_a_pagar),
+
+            'observacoes' => $request->observacoes,
+            'comprovante' => $comprovantePath,
+        ]);
+
+        // Atualiza os tours associados
+        $venda->tours()->delete(); // Remove os tours antigos
+
+        foreach ($request->tour as $index => $tour) {
+            $venda->tours()->create([
+                'tour' => $tour,
+                'data_tour' => $request->data_tour[$index],
+                'pax_adulto' => $request->pax_adulto[$index],
+                'preco_adulto' => $request->preco_adulto[$index],
+                'pax_infantil' => $request->pax_infantil[$index] ?? null,
+                'preco_infantil' => $request->preco_infantil[$index] ?? null,
+            ]);
+        }
+
+        return redirect()->route('vendas.list')->with('success', 'Venda atualizada com sucesso!');
+    }
+
 }

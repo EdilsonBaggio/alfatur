@@ -88,7 +88,7 @@
 
             @if(in_array('viajes.full', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
             <li>
-                <a href="" class="{{ request()->routeIs(['viajes-full']) ? 'current' : '' }}">
+                <a href="{{ route('viajes.full') }}" class="{{ request()->routeIs(['viajes.full']) ? 'current' : '' }}">
                     Viajes FULL
                 </a>
             </li>

@@ -12,6 +12,8 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\EstimativoController;
 use App\Http\Controllers\LogisticaController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ViajesController;
+use App\Http\Controllers\PagamentoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +61,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logistics/export/pdf', [LogisticsController::class, 'exportPdf'])->name('logistics.export.pdf');
     Route::post('/logistics/{id}/update', [LogisticaController::class, 'update'])->name('logistics.update');
     Route::get('/pagos-full', [PagoController::class, 'index'])->name('pagos.full');
+    Route::get('/viajes-full', [ViajesController::class, 'index'])->name('viajes.full');
+    Route::post('/viajes-full/update-status/{id}', [ViajesController::class, 'updateStatus']);
+
+    Route::get('/viajes-full/get-venda-details/{id}', [ViajesController::class, 'getVendaDetails'])
+        ->name('viajes.get-venda-details');
+    
+    Route::get('/vendas/{id}/edit', [VendasController::class, 'edit'])->name('vendas.editar');
+    Route::put('/vendas/{id}', [VendasController::class, 'update'])->name('vendas.update');
+    Route::post('/pagamento/store', [PagamentoController::class, 'store'])->name('pagamento.store');
+     
 });
 
 Route::get('/esqueci', function () {
