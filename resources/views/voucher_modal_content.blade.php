@@ -230,12 +230,7 @@
                                         Ingressar pago
                                     </a>
                                 </td>
-                                @php
-                                        $totalPagos = 0;
-                                    @endphp
-
-                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP ${{ number_format($pagamento->valor_a_pagar, 3, '.', '.') }}
-</p>
+                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP ${{ number_format($pagamento->valor_a_pagar, 3, '.', '.') }}</p>
                                 </td>
                             </tr>
                         </tbody>
