@@ -230,7 +230,7 @@
                                         Ingressar pago
                                     </a>
                                 </td>
-                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP ${{ number_format($pagamento->valor_a_pagar, 3, '.', '.') }}</p>
+                                <p class="totals total-pendiente"><strong>Total Pendiente:</strong> CLP ${{ number_format($viaje->total_pendiente / 100, 0, ',', '.') }}</p>
                                 </td>
                             </tr>
                         </tbody>
@@ -271,8 +271,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="valor_pago" class="form-label">Valor Atual (CLP $)</label>
-                        <input type="text" class="form-control" id="valor_atual" required value="{{ number_format($pagamento->valor_a_pagar, 3, '.', '.') }}
-" disabled>
+                        <input type="text" class="form-control" id="valor_atual" required value="{{ number_format($viaje->total_pendiente / 100, 0, ',', '.') }}" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="valor_pago" class="form-label">Valor Pago (CLP $)</label>

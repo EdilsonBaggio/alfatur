@@ -99,7 +99,7 @@
                                 <div class="form-group col-md-3">
                                     <label for="preco_adulto">Preço Adulto:</label>
                                     <input type="text" name="preco_adulto[]" class="form-control" 
-                                           value="{{ old("preco_adulto.$index", number_format($tour->preco_adulto, 0, ',', '.')) }}" required>
+                                           value="{{ old("preco_adulto.$index", number_format($tour->preco_adulto, 0, ',', '')) }}" required>
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="pax_infantil">PAX Infantil:</label>
@@ -108,7 +108,7 @@
                                 <div class="form-group col-md-3">
                                     <label for="preco_infantil">Preço Infantil:</label>
                                     <input type="text" name="preco_infantil[]" class="form-control" 
-                                           value="{{ old("preco_infantil.$index", number_format($tour->preco_infantil, 0, ',', '.')) }}">
+                                           value="{{ old("preco_infantil.$index", number_format($tour->preco_infantil, 0, ',', '')) }}">
                                 </div>
                             </div>
                             <button type="button" class="btn btn-danger mb-3 remove-tour">x</button>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="valor_total">Valor Total:</label>
-                        <input type="text" name="valor_total" id="valor_total" class="form-control" value="{{ number_format($venda->valor_total, 0, ',', '.') }}" required>
+                        <input type="text" name="valor_total" id="valor_total" class="form-control" value="{{ number_format($venda->valor_total, 0, ',', '') }}" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="valor_pago">Valor Pago (%):</label>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="valor_a_pagar">Valor a Pagar:</label>
-                        <input type="text" name="valor_a_pagar" id="valor_a_pagar" class="form-control" value="{{ old('valor_a_pagar', number_format($venda->valor_a_pagar, 0, ',', '.')) }}" readonly>
+                        <input type="text" name="valor_a_pagar" id="valor_a_pagar" class="form-control" value="{{ old('valor_a_pagar', number_format($venda->valor_a_pagar, 0, ',', '')) }}" readonly>
                     </div>
                 </div>
 
