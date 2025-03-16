@@ -152,7 +152,7 @@
                         <tbody>
                             <tr style="padding: 0">
                                 <td width="66%" style="border: 0;" target>
-                                    <a href="{{ route('vendas.editar', $viaje->id) }}" target="_blank" class="btn">
+                                    <a href="{{ route('vendas.create') }}" target="_blank" class="btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
                                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
                                         </svg>
@@ -178,8 +178,8 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th style="text-align: center"><i class="bi bi-pencil-square"></i></th>
-                <th style="text-align: center">Obs</th>
+                {{-- <th style="text-align: center"><i class="bi bi-pencil-square"></i></th> --}}
+                {{-- <th style="text-align: center">Obs</th> --}}
                 <th>Fecha</th>
                 <th>Operador</th>
                 <th>Forma de Pago</th>
@@ -191,12 +191,12 @@
             @foreach ($pagamentos as $pagamento)
                 <tr>
                     <td>PAG-{{ $pagamento->id }}</td>
-                    <td style="text-align: center">
+                    {{-- <td style="text-align: center">
                         <a href="{{ route('vendas.editar', $viaje->id) }}">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                    </td>
-                    <td style="text-align: center"><a href="#" title="{{ $pagamento->observacoes }}"><i class="bi bi-chat-text-fill"></i></a></td>
+                    </td> --}}
+                    {{-- <td style="text-align: center"><a href="#" title="{{ $pagamento->observacoes }}"><i class="bi bi-chat-text-fill"></i></a></td> --}}
                     <td>{{ \Carbon\Carbon::parse($pagamento->data_pagamento)->locale('pt_BR')->translatedFormat('l d/m/Y') }}</td>
                     <td>{{ $viaje->vendedor }}</td>
                     <td>{{ $pagamento->forma_pagamento }}</td>
@@ -240,7 +240,7 @@
                                                 $totalPagos += $valorCalculado;
                                             @endphp
                                         @endforeach
-                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP ${{ number_format($viaje->valor_total -$totalPagos, 0, ',', '.') }}</p>
+                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP $<span class="pendente">{{ number_format($viaje->valor_total - $totalPagos, 0, ',', '.') }}</span></p>
                                 </td>
                             </tr>
                         </tbody>
@@ -281,7 +281,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="valor_pago" class="form-label">Valor Atual (CLP $)</label>
-                        <input type="text" class="form-control" id="valor_atual" required value="{{ number_format($viaje->total_pendiente / 100, 0, ',', '.') }}" disabled>
+                        <input type="text" class="form-control" id="valor_atual" required value="" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="valor_pago" class="form-label">Valor Pago (CLP $)</label>
@@ -333,6 +333,10 @@
             // Ao clicar no botão, abrir o modal
             $('#openModalBtn').click(function() {
                 $('#addPaymentModal').modal('show');
+                var pendente =  $('.pendente').text();
+                console.log(pendente);
+                $("#valor_atual").val(pendente);
+
             });
         });
 
