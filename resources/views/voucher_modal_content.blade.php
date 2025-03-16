@@ -230,7 +230,17 @@
                                         Ingressar pago
                                     </a>
                                 </td>
-                                <p class="totals total-pendiente"><strong>Total Pendiente:</strong> CLP ${{ number_format($viaje->total_pendiente / 100, 0, ',', '.') }}</p>
+                                @php
+                                    $totalPagos = 0;
+                                @endphp
+                                @foreach ($viaje->pagamentos as $pagamento)
+                                            @php
+                                                $porcentagem = $pagamento->valor_pago;
+                                                $valorCalculado = ($viaje->valor_total * $porcentagem) / 100;
+                                                $totalPagos += $valorCalculado;
+                                            @endphp
+                                        @endforeach
+                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP ${{ number_format($viaje->valor_total -$totalPagos, 0, ',', '.') }}</p>
                                 </td>
                             </tr>
                         </tbody>
