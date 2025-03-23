@@ -232,15 +232,16 @@
                                 </td>
                                 @php
                                     $totalPagos = 0;
+
+                                    foreach ($pagamentos as $pagamento) { 
+                                        $valorPago = str_replace(['.', ','], ['', '.'], $pagamento->valor_recebido); // Remove pontos e troca vírgula por ponto
+                                        $totalPagos += floatval($valorPago);
+                                    }
+
+                                    $valor_total = floatval($viaje->valor_total);
+                                    $diferenca = $valor_total - $totalPagos;
                                 @endphp
-                                @foreach ($viaje->pagamentos as $pagamento)
-                                            @php
-                                                $porcentagem = $pagamento->valor_pago;
-                                                $valorCalculado = ($viaje->valor_total * $porcentagem) / 100;
-                                                $totalPagos += $valorCalculado;
-                                            @endphp
-                                        @endforeach
-                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP $<span class="pendente">{{ number_format($viaje->valor_total - $totalPagos, 0, ',', '.') }}</span></p>
+                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP $<span class="pendente">{{ number_format($valor_total - $totalPagos, 0, ',', '.') }}</span></p>
                                 </td>
                             </tr>
                         </tbody>
