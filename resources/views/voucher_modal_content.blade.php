@@ -250,6 +250,72 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- Informações de Pagamento -->
+    <div class="content_titulo_pagos">
+        <h3>Passajeros</h3>
+    </div>
+    <form id="passengerForm">
+        @csrf
+        <table class="payment-table mb-0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>RUT/PASSAPORTE</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Nacionalidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for($i = 0; $i < 2; $i++)
+                <tr>
+                    <td>PAX {{ $i + 1 }}</td>
+                    <td>
+                        <input type="text" name="passengers[{{ $i }}][passport]" 
+                               value="{{ old('passengers.' . $i . '.passport') }}" />
+                    </td>
+                    <td>
+                        <input type="text" name="passengers[{{ $i }}][name]" 
+                               value="{{ old('passengers.' . $i . '.name') }}" required />
+                    </td>
+                    <td>
+                        <input type="text" name="passengers[{{ $i }}][phone]" 
+                               value="{{ old('passengers.' . $i . '.phone') }}" />
+                    </td>
+                    <td>
+                        <select name="passengers[{{ $i }}][nationality]">
+                            <option value="Brasil" {{ old('passengers.' . $i . '.nationality') == 'Brasil' ? 'selected' : '' }}>Brasil</option>
+                            <option value="Argentina" {{ old('passengers.' . $i . '.nationality') == 'Argentina' ? 'selected' : '' }}>Argentina</option>
+                            <option value="Chile" {{ old('passengers.' . $i . '.nationality') == 'Chile' ? 'selected' : '' }}>Chile</option>
+                        </select>
+                    </td>
+                </tr>
+                @endfor
+                <tr>
+                    <td colspan="5">
+                        <!-- Campo 'venda_id' fora do loop -->
+                        <input type="hidden" name="venda_id" value="{{ $viaje->id ?? '' }}">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button class="btn" type="submit">Guardar Dados</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>      
+    <div class="row">
+        <div class="border-1 col-md-12 mt-3">
+            <h3>Lista de pasajeros</h3>
+        </div>
+        <div class="col-md-12 mt-3">
+            <ul class="passenger-list" id="passengerList">
+                <li>Carregando...</li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 
@@ -413,5 +479,93 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function () {
+        // Função para carregar passageiros
+        function loadPassengers() {
+            let vendaId = $('input[name="venda_id"]').val();
+
+            if (vendaId) {
+                $.ajax({
+                    url: `/passengers/${vendaId}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        let passengerList = $('#passengerList');
+                        passengerList.empty();
+
+                        if (response.length > 0) {
+                            response.forEach((passenger, index) => {
+                                passengerList.append(`
+                                    <li>
+                                        <div><i class="bi bi-person-badge-fill"></i>: ${passenger.name} - ${passenger.passport ?? 'Sem passaporte'} - ${passenger.phone}- ${passenger.nationality}</div>
+                                        <button class="removePassenger" data-id="${passenger.id}"><i class="bi bi-trash3"></i></button>
+                                    </li>
+                                `);
+                            });
+                        } else {
+                            passengerList.append('<li>Nenhum passageiro cadastrado.</li>');
+                        }
+                    },
+                    error: function(xhr) {
+                        alert("Erro ao carregar passageiros.");
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+        }
+
+        loadPassengers();
+
+        // Cadastro de passageiros
+        $("#passengerForm").on("submit", function (e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('passengers.store') }}",
+                type: "POST",
+                data: formData,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function () {
+                    alert("Passageiros cadastrados com sucesso!");
+                    $("#passengerForm")[0].reset(); // Limpa o formulário
+                    loadPassengers(); // Atualiza a lista após cadastrar
+                },
+                error: function (xhr) {
+                    alert("Erro ao cadastrar passageiros!");
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        // Remover passageiro
+        $(document).on("click", ".removePassenger", function () {
+            let passengerId = $(this).data("id");
+
+            if (confirm("Deseja remover este passageiro?")) {
+                $.ajax({
+                    url: `/passengers/${passengerId}`, // Agora a URL contém o ID correto
+                    type: 'DELETE',
+                    headers: {
+                        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                    },
+                    success: function (response) {
+                        alert(response.message);
+                        loadPassengers(); // Atualiza a lista após remoção
+                    },
+                    error: function () {
+                        alert("Erro ao remover passageiro.");
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 
 @endsection

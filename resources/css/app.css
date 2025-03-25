@@ -1249,6 +1249,10 @@ th {
     margin-top: 15px;
   }
 }
+.modal-pagos-full {
+  height: 1000px;
+  overflow: auto;
+}
 .modal-pagos-full .header {
   text-align: center;
   margin-bottom: 20px;
@@ -1320,13 +1324,25 @@ th {
 }
 .modal-pagos-full .btn {
   color: #000;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   background: #fff;
   border: 1px solid #cdcdcd;
-  padding: 15px;
+  padding: 7px 15px;
   border-radius: 5px;
   text-decoration: none;
+}
+
+.passenger-list li {
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.passenger-list .removePassenger {
+  padding: 2px;
+  border: 0;
+  background-color: #fff;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -14,6 +14,7 @@ use App\Http\Controllers\LogisticaController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ViajesController;
 use App\Http\Controllers\PagamentoController;
+use App\Http\Controllers\PassengerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,7 +71,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vendas/{id}/edit', [VendasController::class, 'edit'])->name('vendas.editar');
     Route::put('/vendas/{id}', [VendasController::class, 'update'])->name('vendas.update');
     Route::post('/pagamento/store', [PagamentoController::class, 'store'])->name('pagamento.store');
-     
+    Route::post('/passengers/store', [PassengerController::class, 'store'])->name('passengers.store');
+    Route::get('/passengers/{venda_id}', [PassengerController::class, 'getPassengers'])->name('passengers.get');
+    Route::delete('/passengers/{id}', [PassengerController::class, 'destroy'])->name('passengers.delete');
+
 });
 
 Route::get('/esqueci', function () {

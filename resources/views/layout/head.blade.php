@@ -45,6 +45,7 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     
+    
     @livewireStyles
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
