@@ -15,6 +15,7 @@ use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ViajesController;
 use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\PassengerController;
+use App\Http\Controllers\EmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -74,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/passengers/store', [PassengerController::class, 'store'])->name('passengers.store');
     Route::get('/passengers/{venda_id}', [PassengerController::class, 'getPassengers'])->name('passengers.get');
     Route::delete('/passengers/{id}', [PassengerController::class, 'destroy'])->name('passengers.delete');
+    Route::get('/email/enviar/{id}', [EmailController::class, 'enviarEmail'])->name('email.enviar');
 
 });
 

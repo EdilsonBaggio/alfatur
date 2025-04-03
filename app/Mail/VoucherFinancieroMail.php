@@ -5,8 +5,9 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class VendaEmail extends Mailable
+class VoucherFinancieroMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -14,7 +15,6 @@ class VendaEmail extends Mailable
     public $viaje;
     public $tours;
     public $pagamentos;
-
 
     public function __construct($venda, $viaje, $tours, $pagamentos)
     {

@@ -281,8 +281,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>PAG-{{ $venda->id }}</td>
+                {{-- <tr>
+                    <td>PAG-{{ $pagamentos->id }}</td>
                     <td>{{ \Carbon\Carbon::parse($venda->data_pagamento)->locale('pt_BR')->translatedFormat('l d/m/Y') }}</td>
                     <td>{{ $venda->vendedor }}</td>
                     <td>{{ $venda->forma_pagamento }}</td>
@@ -304,7 +304,28 @@
                         @endphp
                         {{ '$' . number_format($total , 0, ',', '.') }}
                     </td>
-                </tr>
+                </tr> --}}
+
+                @foreach ($pagamentos as $pagamento)
+                    <tr>
+                        <td>PAG-{{ $pagamento->id }}</td>
+                        <td>{{ \Carbon\Carbon::parse($pagamento->data_pagamento)->locale('pt_BR')->translatedFormat('l d/m/Y') }}</td>
+                        <td>{{ $viaje->vendedor }}</td>
+                        <td>{{ $pagamento->forma_pagamento }}</td>
+                        <td style="text-align: center;">
+                            @if ($pagamento->comprovante)
+                                <a href="{{ asset($pagamento->comprovante) }}" target="_blank" style="color: #000; text-decoration: underline; text-align:center;">
+                                    Ver comprobante
+                                </a>
+                            @else
+                                N/A
+                            @endif
+                        </td>                    
+                        <td>
+                            {{ '$' . $pagamento->valor_recebido  }}
+                        </td>
+                    </tr>
+                @endforeach
                 <tr>
                     <td colspan="6" style="padding:0">
                         <table style="width:100%; padding:0; background: #fff;">
@@ -314,17 +335,17 @@
                                     </td>
                                     <td width="33%" style="padding:0">
                                         @php
-                                            $totalPagos = 0;
-                                        @endphp
+                                        $totalPagos = 0;
 
-                                        @foreach ($venda->pagamentos as $pagamento)
-                                            @php
-                                                $porcentagem = $pagamento->valor_pago;
-                                                $valorCalculado = ($venda->valor_total * $porcentagem) / 100;
-                                                $totalPagos += $valorCalculado;
-                                            @endphp
-                                        @endforeach
-                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP ${{ number_format($venda->valor_total -$totalPagos, 0, ',', '.') }}</p>
+                                        foreach ($pagamentos as $pagamento) { 
+                                            $valorPago = str_replace(['.', ','], ['', '.'], $pagamento->valor_recebido); // Remove pontos e troca vírgula por ponto
+                                            $totalPagos += floatval($valorPago);
+                                        }
+
+                                        $valor_total = floatval($viaje->valor_total);
+                                        $diferenca = $valor_total - $totalPagos;
+                                    @endphp
+                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP $<span class="pendente">{{ number_format($valor_total - $totalPagos, 0, ',', '.') }}</span></p>
                                     </td>
                                 </tr>
                             </tbody>

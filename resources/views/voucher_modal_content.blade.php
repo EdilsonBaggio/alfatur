@@ -76,7 +76,15 @@
                      <tbody>
                            <tr>
                                <td width="50%" style="background: #d2d3db; text-align: end;"><strong>E-Mail:</strong> </td>
-                               <td width="50%">{{ $viaje->email }}</td>
+                               <!-- filepath: /home/edilsonsantos/Documentos/Projetos/alfatur/resources/views/voucher_modal_content.blade.php -->
+                            <td width="50%">
+                                <div class="d-flex">
+                                    {{ $viaje->email }}
+                                    <a href="{{ route('email.enviar', ['id' => $viaje->id]) }}" class="ms-5">
+                                        <i class="bi bi-envelope-arrow-up-fill" title="Enviar e-mail"></i>
+                                    </a>
+                                </div>
+                            </td>
                            </tr>
                      </tbody>
                 </table>
