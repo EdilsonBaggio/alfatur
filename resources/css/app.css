@@ -1291,6 +1291,34 @@ th {
 .modal-pagos-full .payment-table tr td {
   background: #b9eedb;
 }
+.modal-pagos-full .pasajeros-table th {
+  background: #9eadff;
+  color: #fff;
+}
+.modal-pagos-full .pasajeros-table tr td {
+  background: #9eadff;
+  color: #fff;
+}
+.modal-pagos-full .pasajeros-table tr td input {
+  border: 0;
+  border-radius: 3px;
+  padding: 5px;
+}
+.modal-pagos-full .pasajeros-table tr td select {
+  border: 0;
+  border-radius: 3px;
+  padding: 5px;
+}
+.modal-pagos-full .info-table, .modal-pagos-full .tour-table, .modal-pagos-full .pasajeros-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.modal-pagos-full .info-table td, .modal-pagos-full .tour-table th, .modal-pagos-full .tour-table td, .modal-pagos-full .pasajeros-table th, .modal-pagos-full .pasajeros-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
 .modal-pagos-full .totals {
   text-align: right;
   font-weight: bold;
@@ -1306,7 +1334,15 @@ th {
 }
 .modal-pagos-full .content_titulo_pagos {
   padding: 25px;
-  background: rgba(253, 241, 99, 0.4509803922);
+  background: #7abda4;
+  text-align: center;
+}
+.modal-pagos-full .content_titulo_pasajeros {
+  padding: 25px;
+  background: #9eadff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
   text-align: center;
 }
 .modal-pagos-full .total_clp {

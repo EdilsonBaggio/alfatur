@@ -249,6 +249,7 @@
                                     $valor_total = floatval($viaje->valor_total);
                                     $diferenca = $valor_total - $totalPagos;
                                 @endphp
+                                    <p class="totals total-pago">TOTAL PAGOS: CLP $<span class="pagos">{{ number_format($totalPagos, 0, ',', '.') }}</span></p>
                                     <p class="totals total-pendiente">TOTAL PENDIENTE: CLP $<span class="pendente">{{ number_format($valor_total - $totalPagos, 0, ',', '.') }}</span></p>
                                 </td>
                             </tr>
@@ -260,12 +261,12 @@
     </table>
 
     <!-- Informações de Pagamento -->
-    <div class="content_titulo_pagos">
+    <div class="content_titulo_pasajeros">
         <h3>Passajeros</h3>
     </div>
     <form id="passengerForm">
         @csrf
-        <table class="payment-table mb-0">
+        <table class="pasajeros-table mb-0">
             <thead>
                 <tr>
                     <th>#</th>

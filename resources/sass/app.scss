@@ -1270,6 +1270,34 @@ th {
     .payment-table tr td {
         background: #b9eedb;
     }
+    .pasajeros-table th {
+        background: #9eadff;
+        color: #fff;
+    }
+    .pasajeros-table tr td {
+        background: #9eadff;
+        color: #fff;
+        input{
+            border: 0;
+            border-radius: 3px;
+            padding: 5px;
+        }
+        select{
+            border: 0;
+            border-radius: 3px;
+            padding: 5px;
+        }
+    }
+    .info-table, .tour-table, .pasajeros-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    .info-table td, .tour-table th, .tour-table td, .pasajeros-table th, .pasajeros-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
     .totals {
         text-align: right;
         font-weight: bold;
@@ -1285,10 +1313,17 @@ th {
     }
     .content_titulo_pagos{
         padding: 25px;
-        background: #fdf16373;
+        background: #7abda4;
         text-align:center
     }
-
+    .content_titulo_pasajeros{
+        padding: 25px;
+        background: #9eadff;
+        color: #fff;
+        font-weight: 600;
+        font-size: 20px;
+        text-align:center
+    }
     .total_clp{
         padding: 15px;
         background-color: #9eadff;
