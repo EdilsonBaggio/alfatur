@@ -164,7 +164,7 @@ class VendasController extends Controller
 
         // Enviar o e-mail
         if ($venda->email) {
-            Mail::to($venda->email)->send(new VendaEmail($venda, $tours));
+            Mail::to($venda->email)->send(new VendaEmail($venda, $viaje, $tours, $pagamentos));
         }
 
         // Redireciona com mensagem de sucesso

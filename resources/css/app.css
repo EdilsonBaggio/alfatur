@@ -1331,10 +1331,16 @@ th {
   padding: 20px;
   background: #f15a76;
   text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
 }
 .modal-pagos-full .content_titulo_pagos {
   padding: 25px;
   background: #7abda4;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
   text-align: center;
 }
 .modal-pagos-full .content_titulo_pasajeros {
