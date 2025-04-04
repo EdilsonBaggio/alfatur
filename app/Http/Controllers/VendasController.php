@@ -162,6 +162,8 @@ class VendasController extends Controller
         // Obtenha os tours relacionados à venda
         $tours = $venda->tours;
 
+        $viaje = Venda::findOrFail($id);
+
         // Enviar o e-mail
         if ($venda->email) {
             Mail::to($venda->email)->send(new VendaEmail($venda, $viaje, $tours, $pagamentos));
