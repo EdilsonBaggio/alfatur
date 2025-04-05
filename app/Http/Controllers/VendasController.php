@@ -132,7 +132,6 @@ class VendasController extends Controller
                 'pax_infantil' => $request->pax_infantil[$index] ?? null,
                 'preco_infantil' => $request->preco_infantil[$index] ?? null,
             ]);
-            // dd($createdTour->preco_adulto, $createdTour->pax_adulto, $createdTour->preco_infantil, $createdTour->pax_infantil);
 
             // Criar registros na tabela logística para cada tour relacionado
             Logistica::create([
@@ -161,13 +160,6 @@ class VendasController extends Controller
 
         // Obtenha os tours relacionados à venda
         $tours = $venda->tours;
-
-        $viaje = Venda::findOrFail($request->id);
-
-        // Enviar o e-mail
-        if ($venda->email) {
-            Mail::to($venda->email)->send(new VendaEmail($venda, $viaje, $tours, $pagamentos));
-        }
 
         // Redireciona com mensagem de sucesso
         return redirect()->back()->with('success', 'Venda adicionada com sucesso!');
