@@ -87,7 +87,7 @@
                               @elseif($extensao === 'pdf')
                                   <a class="btn btn-primary btn-sm" href="{{ asset($venda->comprovante) }}" target="_blank">Ver Comprovante</a>
                               @else
-                                  <span>Arquivo não suportado</span>
+                                  <span>Sem comprobante</span>
                               @endif
                           </td> 
                           <td>
