@@ -277,9 +277,9 @@
                 <tr>
                     <th>#</th>
                     <th>RUT/PASSAPORTE</th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Nacionalidade</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Nacionalidad</th>
                 </tr>
             </thead>
             <tbody>
