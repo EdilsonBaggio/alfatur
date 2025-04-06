@@ -30,6 +30,6 @@ class EmailController extends Controller
         Mail::to($venda->email)->send(new VoucherFinancieroMail($venda, $viaje, $tours, $pagamentos));
 
         // Retornar com mensagem de sucesso
-        return redirect()->back()->with('success', 'Voucher enviado com sucesso!');
+        return redirect()->back()->with('success', '¡Cupón enviado exitosamente!');
     }
 }

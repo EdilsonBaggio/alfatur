@@ -162,7 +162,8 @@ class VendasController extends Controller
         $tours = $venda->tours;
 
         // Redireciona com mensagem de sucesso
-        return redirect()->back()->with('success', 'Venda adicionada com sucesso!');
+        return response()->json(['message' => 'Venda criada com sucesso']);
+        // return redirect()->route('vendas.list')->with('success', 'Venda criada com sucesso!');
     }
 
 

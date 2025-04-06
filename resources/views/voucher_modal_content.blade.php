@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container-fluid modal-pagos-full">
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" style="padding: 12px!important" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <table class="info-table">
         <tr>
            <td>
@@ -325,6 +331,16 @@
             </ul>
         </div>
     </div>
+
+    <div class="container-fluid text-center mt-5 p-0">
+        <div class="p-3" style="background-color: #dfede1">
+            <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong> <br>
+            <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Haga clic para ver</a>
+        </div>
+        <div class="p-3" style="background-color: #dee047">
+            <span style="color: red">En caso de emergencia, contactar a: +56974909926</span>
+        </div>
+    </div>
 </div>
 
 
@@ -514,7 +530,7 @@
                                 `);
                             });
                         } else {
-                            passengerList.append('<li>Nenhum passageiro cadastrado.</li>');
+                            passengerList.append('<li>No se registraron pasajeros.</li>');
                         }
                     },
                     error: function(xhr) {
@@ -542,8 +558,19 @@
                 },
                 success: function () {
                     alert("Passageiros cadastrados com sucesso!");
-                    $("#passengerForm")[0].reset(); // Limpa o formulário
-                    loadPassengers(); // Atualiza a lista após cadastrar
+                    Swal.fire({
+                        title: "Pasajeros registrados exitosamente",
+                        icon: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ok"
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            $("#passengerForm")[0].reset(); 
+                            loadPassengers(); 
+                        }
+                    });
                 },
                 error: function (xhr) {
                     alert("Erro ao cadastrar passageiros!");

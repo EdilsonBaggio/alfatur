@@ -330,6 +330,15 @@
                 </tr>
             </tbody>
         </table>
+        <div style="text-align: center; margin-top: 20px;">
+            <div style="background-color: #dfede1; padding: 10px;">
+                <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong> <br>
+                <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Haga clic para ver</a>
+            </div>
+            <div style="background-color: #dee047; padding: 10px;">
+                <span style="color: red">En caso de emergencia, contactar a: +56974909926</span>
+            </div>
+        </div>
     </div>
 </body>
 </html>

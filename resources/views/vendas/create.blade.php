@@ -7,7 +7,7 @@
           Vendas
         </div>
         <div class="card-body">
-            <form action="{{ route('vendas.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-venda" action="{{ route('vendas.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                 <input type="hidden" name="comissao" value="{{ Auth::user()->commission_percentage }}">
@@ -183,6 +183,55 @@
 @section('script')
 <script>
     $(document).ready(function () {
+        $('#form-venda').on('submit', function (e) {
+            e.preventDefault(); // Impede o envio tradicional
+
+            let form = $(this)[0];
+            let formData = new FormData(form);
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+                success: function (response) {
+                    // Sucesso
+                    Swal.fire({
+                        title: "¡Venta creada exitosamente!",
+                        text: "¿Quieres ver tus ventas?",
+                        showDenyButton: true,
+                        showCancelButton: false,
+                        confirmButtonText: "Ver ventas",
+                        denyButtonText: `Sigue vendiendo`
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            let url = "{{ route('vendas.list') }}";
+                            location.href = url;
+                        } else if (result.isDenied) {
+                            $('#form-venda')[0].reset();
+                        }
+                    }); 
+                },
+                error: function (xhr) {
+                    // Erro
+                    let errors = xhr.responseJSON?.errors;
+                    if (errors) {
+                        let msg = 'Erro ao enviar:\n';
+                        $.each(errors, function (key, value) {
+                            msg += '- ' + value[0] + '\n';
+                        });
+                        alert(msg);
+                    } else {
+                        alert('Erro inesperado. Tente novamente.');
+                    }
+                }
+            });
+        });
+
         let tourIndex = 1; // Índice inicial para IDs únicos nos tours
 
         $('#add-tour').on('click', function () {
