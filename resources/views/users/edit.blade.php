@@ -46,7 +46,7 @@
 
                 <div class="form-group">
                     <label>Porcentagem Comissão (%)</label>
-                    <input type="number" name="commission_percentage" value="{{ $user->commission_percentage }}" class="form-control">
+                    <input type="text" name="commission_percentage" value="{{ $user->commission_percentage }}" class="form-control">
                 </div>
 
                 <div class="mb-3">

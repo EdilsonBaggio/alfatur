@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Logistica;
 use App\Models\Venda;
 use App\Models\Pagamento;
 use App\Models\Tour;
+use Carbon\Carbon;
 
 class ViajesController extends Controller
 {
@@ -106,5 +108,56 @@ class ViajesController extends Controller
     
         return view('voucher_modal_content', compact('viaje', 'tours', 'pagamentos'));
     }
-    
+
+    public function listarViagens(Request $request)
+    {
+        $dataInicio = $request->input('data_inicio', Carbon::now()->startOfMonth()->format('Y-m-d'));
+        $dataFim = $request->input('data_fim', Carbon::now()->endOfMonth()->format('Y-m-d'));
+        $vendedorFiltro = $request->input('vendedor');
+        $tourFiltro = $request->input('tour'); // pode ser ID ou nome da tour
+
+
+        // Consulta base com relacionamento
+        $vendas = Venda::with(['tours', 'logistica'])
+            ->when($vendedorFiltro && $vendedorFiltro !== 'todos', function ($query) use ($vendedorFiltro) {
+                $query->where('vendedor', $vendedorFiltro);
+            })
+            ->whereBetween('created_at', [$dataInicio, $dataFim])
+            ->get();
+
+        // Pegando os IDs dos guias únicos de todas as vendas
+        $guiaIds = $vendas->pluck('logistica.guia')->filter()->unique();
+        $guias = User::whereIn('id', $guiaIds)->get()->keyBy('id');
+
+        // Pegando os IDs dos guias únicos de todas as vendas
+        $condutorIds = $vendas->pluck('logistica.condutor')->filter()->unique();
+        $condutores = User::whereIn('id', $condutorIds)->get()->keyBy('id');
+
+
+        // Filtro adicional para tours
+        if ($tourFiltro && $tourFiltro !== 'todos') {
+            $vendas = $vendas->filter(function ($venda) use ($tourFiltro) {
+                return $venda->tours->contains(function ($tour) use ($tourFiltro) {
+                    return $tour->id == $tourFiltro || $tour->nome == $tourFiltro;
+                });
+            });
+        }
+
+        $vendasReservadas = $vendas->filter(function ($venda) {
+            return optional($venda->logistica)->status === 'Reservado';
+        });
+        
+        $vendasRealizadas = $vendas->filter(function ($venda) {
+            return optional($venda->logistica)->status === 'Confirmado';
+        });
+        
+        return view('viajes.vendedor', [
+            'vendasReservadas' => $vendasReservadas,
+            'vendasRealizadas' => $vendasRealizadas,
+            'dataInicio' => $dataInicio,
+            'dataFim' => $dataFim,
+            'vendedorSelecionado' => $vendedorFiltro,
+            'tourSelecionado' => $tourFiltro,
+        ]);
+    }
 }
