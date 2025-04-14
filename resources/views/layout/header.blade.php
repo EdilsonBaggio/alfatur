@@ -118,13 +118,13 @@
             </li>
             @endif
 
-            @if(in_array('confirmados', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            {{-- @if(in_array('confirmados', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
             <li>
                 <a href="" class="{{ request()->routeIs(['confirmar-realizadas']) ? 'current' : '' }}">
                     Confirmados
                 </a>
             </li>
-            @endif
+            @endif --}}
 
             @if(in_array('estimativo.index', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
             <li>
@@ -142,21 +142,21 @@
             </li>
             @endif
 
-            @if(in_array('mis_liquidaciones', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            {{-- @if(in_array('mis_liquidaciones', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
             <li>
                 <a href="" class="{{ request()->routeIs(['mis-liquidaciones']) ? 'current' : '' }}">
                     Mis Liquidaciones
                 </a>
             </li>
-            @endif
+            @endif --}}
 
-            @if(in_array('liquidaciones', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
+            {{-- @if(in_array('liquidaciones', is_string(Auth::user()->permissions) ? json_decode(Auth::user()->permissions, true) : Auth::user()->permissions))
             <li>
                 <a href="" class="{{ request()->routeIs(['liquidaciones']) ? 'current' : '' }}">
                     Liquidaciones
                 </a>
             </li>
-            @endif
+            @endif --}}
         </ul>
         <br style="clear: both">
     </div>

@@ -63,11 +63,11 @@
                             'Pagos FULL' => 'pagos.full',
                             'Vender' => 'vendas.create',
                             'Mis Vendas' => 'vendas.list',
-                            'Confirmados' => 'confirmados',
+                            // 'Confirmados' => 'confirmados',
                             'Estimativo' => 'estimativo.index',
                             'Tours' => 'tours.create',
-                            'Mis Liquidaciones' => 'mis.liquidaciones',
-                            'Liquidaciones' => 'liquidaciones'
+                            // 'Mis Liquidaciones' => 'mis.liquidaciones',
+                            // 'Liquidaciones' => 'liquidaciones'
                         ];
                 
                         $userPermissions = $user->permissions ?? []; // Obtém as permissões do banco
