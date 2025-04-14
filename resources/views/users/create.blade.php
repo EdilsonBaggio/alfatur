@@ -121,10 +121,10 @@
                         <input class="form-check-input" type="checkbox" name="permissions[]" value="Mis Vendas" id="mis_vendas">
                         <label class="form-check-label" for="mis_vendas">Mis Vendas</label>
                     </div>
-                    <div class="form-check">
+                    {{-- <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="permissions[]" value="Confirmados" id="confirmados">
                         <label class="form-check-label" for="confirmados">Confirmados</label>
-                    </div>
+                    </div> --}}
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="permissions[]" value="Estimativo" id="estimativo">
                         <label class="form-check-label" for="estimativo">Estimativo</label>
@@ -133,14 +133,14 @@
                         <input class="form-check-input" type="checkbox" name="permissions[]" value="Tours" id="tours">
                         <label class="form-check-label" for="tours">Tours</label>
                     </div>
-                    <div class="form-check">
+                    {{-- <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="permissions[]" value="Mis Liquidaciones" id="mis_liquidaciones">
                         <label class="form-check-label" for="mis_liquidaciones">Mis Liquidaciones</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="permissions[]" value="Liquidaciones" id="liquidaciones">
                         <label class="form-check-label" for="liquidaciones">Liquidaciones</label>
-                    </div>
+                    </div> --}}
                 </div>
 
         
