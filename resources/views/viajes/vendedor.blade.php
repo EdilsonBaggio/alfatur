@@ -8,8 +8,8 @@
                 Viagens por Vendedor!
             </div>
             <div class="card-body table">
-                <form class="row g-3 my-3" method="GET" action="{{ route('viagens') }}">
-                    <div class="col-md-3">
+                <form class="row g-3 my-3" method="GET" action="{{ route('viajes.vendedor') }}">
+                    <div class="col-md-2">
                         <label for="vendedor" class="form-label">Filtrar por Vendedor</label>
                         <select class="form-select" id="vendedor" name="vendedor">
                             <option value="todos" {{ request('vendedor') == 'todos' ? 'selected' : '' }}>Todos</option>
@@ -34,7 +34,7 @@
                     </div>
             
                     <div class="col-md-3">
-                        <label for="tour" class="form-label">TOUR</label>
+                        <label for="tour" class="form-label">Tour</label>
                         <select class="form-select" id="tour" name="tour">
                             <option value="">Selecione Tour</option>
                             @php
@@ -45,6 +45,10 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="col-md-1">
+                        <label class="form-label mb-3"></label>
+                        <button class="btn btn-primary">Buscar</button>
+                    </div>
                 </form>
             
                 <div class="alert alert-warning text-center">
@@ -52,7 +56,7 @@
                 </div>
             
                 {{-- VIAGENS REALIZADAS --}}
-                <h4 class="bg-info text-white p-2">Viagens Reservadas</h4>
+                <h4 class="bg-info text-white p-3">Viagens Reservadas</h4>
                 <table class="table table-bordered table-sm text-center logistica">
                     <thead class="table-primary">
                         <tr>
@@ -125,7 +129,7 @@
                 </table>
             
                 {{-- VIAGENS RESERVADAS --}}
-                <h4 class="bg-warning text-dark p-2 mt-4">Viagens Confirmadas</h4>
+                <h4 class="bg-warning text-dark p-3 mt-4">Viagens Confirmadas</h4>
                 <table class="table table-bordered table-sm text-center logistica">
                     <thead class="table-warning">
                         <tr>

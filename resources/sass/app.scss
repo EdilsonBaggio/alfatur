@@ -1050,7 +1050,6 @@ th {
     td{
         font-size: 12px;
         vertical-align: middle;
-        border-left: 1px solid #ffffff;
     }
 } 
 @media screen and (max-width: 1024px) {
@@ -1235,6 +1234,7 @@ th {
 }
 
 .modal-pagos-full{
+    width: 1080px;
     .header {
         text-align: center;
         margin-bottom: 20px;

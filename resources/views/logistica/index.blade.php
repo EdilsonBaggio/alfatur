@@ -191,7 +191,9 @@
                           </tr>
                         @endforeach
                         <tr class="td_pax">
-                          <td colspan="3">Exportar</td>
+                            <td colspan="3">
+                                <button onclick="window.print()" style="border: 0">🖨️ Imprimir</button>
+                            </td>
                           <td colspan="3" style="background-color: #81E979; color: #fff; font-weight: bold;"><div style="float: left;">PAX TOTAL</div><div style="float: right; width: 15px">{{ $group->sum('pax_total') }}</div></td>
                           <td colspan="12" class="td_ultima" style="text-align: left;"></td>
                         </tr>
