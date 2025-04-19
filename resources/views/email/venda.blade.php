@@ -101,6 +101,10 @@
             border-radius: 5px;
             text-decoration: none;
         }
+
+        @page {
+            margin: 0; /* Remove margens da página no PDF */
+        }
     </style>
 </head>
 <body>
