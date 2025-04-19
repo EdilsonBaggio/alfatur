@@ -114,7 +114,7 @@
             <tr>
                <td>
                   <div style="text-align: center; margin:10px">
-                    <img width="150" src="https://alfatur.symbster.com/logo-8944cde3.jpg" alt="Logo">
+                    <img width="150" src="{{ public_path('logo-8944cde3.jpg') }}" alt="Logo">
                   </div>
                </td>
                <td>
