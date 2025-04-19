@@ -103,8 +103,8 @@
         }
 
         @page {
-            margin: 0; /* Remove margens da página no PDF */
-            font-size: 14px
+            margin: 5px; /* Remove margens da página no PDF */
+            font-size: 13px;
         }
     </style>
 </head>
@@ -114,7 +114,7 @@
             <tr>
                <td>
                   <div style="text-align: center; margin:10px">
-                    <img width="150" class="img-fluid" src="{{ Vite::asset('resources/images/logo-8944cde3.jpg') }}" alt="">
+                    <img width="150" src="{{ asset('logo-8944cde3.jpg') }}" alt="Logo">
                   </div>
                </td>
                <td>
