@@ -78,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/email/enviar/{id}', [EmailController::class, 'enviarEmail'])->name('email.enviar');
 
     Route::get('/viajes-vendedor', [ViajesController::class, 'listarViagens'])->name('viajes.vendedor');
+    Route::get('/voucher/{id}/pdf', [EmailController::class, 'gerarVoucherPDF'])->name('voucher.pdf');
 });
 
 Route::get('/esqueci', function () {
