@@ -95,7 +95,7 @@
                       @foreach ($groupedLogistics as $key => $group)
                       <!-- Cabeçalho do Grupo -->
                         <tr class="td_tour">
-                          <td colspan="18" style="background: #000; color: #fff; text-align: left; padding: 10px;">
+                          <td colspan="18" style="text-transform: uppercase; background: #000; color: #fff; text-align: left; padding: 10px;">
                             {{ $key }}
                           </td>
                         </tr>

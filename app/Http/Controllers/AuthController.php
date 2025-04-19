@@ -24,7 +24,7 @@ class AuthController extends Controller
             return redirect()->route('home');
         }
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('name', 'password');
 
         // Tenta autenticar o usuário
         if (Auth::guard('web')->attempt($credentials)) {

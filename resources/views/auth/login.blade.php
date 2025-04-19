@@ -14,9 +14,9 @@
 
                   <div class="form-group"> 
                      <div>
-                        <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" placeholder="Usuario" required autofocus> 
+                        <input id="name" class="form-control @error('name') is-invalid @enderror" type="name" name="name" value="{{ old('name') }}" placeholder="Usuario" required autofocus> 
                      </div>
-                     @error('email') 
+                     @error('name') 
                         <span class="invalid-feedback" role="alert"> 
                            <strong>{{ $message }}</strong> 
                         </span>

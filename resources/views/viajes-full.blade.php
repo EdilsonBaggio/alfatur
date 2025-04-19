@@ -49,11 +49,12 @@
                                 <td data-label="Telefone">{{ $viaje->telefone }}</td>
                                 <td data-label="Vendedor">{{ $viaje->vendedor }}</td>
                                 <td data-label="Valor">${{ number_format($viaje->valor_total, 0, ',', '.') }}</td>
-                                <td data-label="Editar Valor" style="text-align: center; font-size:18px">
+                                <td data-label="Editar Valor" style="text-align: center; font-size:16px">
                                     <!-- Botão para abrir o modal -->
-                                    <button type="button" class="border-0" data-id="{{ $viaje->venda_id }}" data-bs-toggle="modal" data-bs-target="#voucherModal">
+                                    <button type="button" class="border-0 desktop_viajes" data-id="{{ $viaje->venda_id }}" data-bs-toggle="modal" data-bs-target="#voucherModal">
                                         <i class="bi bi-cash-stack"></i>
                                     </button>
+                                    {{-- <a href="/viajes-full/get-venda-details/{{ $viaje->venda_id }}" class="mobile_viajes" target="_blank"> <i class="bi bi-cash-stack"></i></a> --}}
                                 </td>
                                 <td data-label="Guia" style="text-align: center">
                                     @if(empty($viaje->guia))

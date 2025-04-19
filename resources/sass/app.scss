@@ -1232,7 +1232,16 @@ th {
         margin-top: 15px;
     }
 }
-
+.desktop_viajes{
+    @media screen and (max-width: 769px) {
+        display: none;
+    }
+}
+.mobile_viajes{
+    @media screen and (min-width: 769px) {
+        display: block;
+    }
+}
 .modal-pagos-full{
     width: 1080px;
     .header {
