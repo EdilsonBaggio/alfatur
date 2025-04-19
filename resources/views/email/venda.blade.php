@@ -13,12 +13,13 @@
             color: #333;
         }
         .container {
-            width: 90%;
+            width: 100%;
             margin: auto;
             background: #fff;
-            padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            padding: 0;
+            margin: 0;
         }
         .header {
             text-align: center;
@@ -103,7 +104,19 @@
         }
 
         @page {
-            margin: 0; /* Remove margens da página no PDF */
+            margin: 0;
+            font-size: 16px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -113,7 +126,7 @@
             <tr>
                <td>
                   <div style="text-align: center; margin:10px">
-                    <img width="150" class="img-fluid" src="{{ Vite::asset('resources/images/logo-8944cde3.jpg') }}" alt="">
+                    <img width="150" class="img-fluid" src="{{ asset('logo-8944cde3.jpg') }}" alt="">
                   </div>
                </td>
                <td>
