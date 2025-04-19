@@ -109,7 +109,7 @@
             <tr>
                <td>
                   <div style="text-align: center; margin:10px">
-                      <img width="150" class="img-fluid" src="{{ Vite::asset('resources/images/logo-8944cde3.jpg') }}" alt="">
+                    <img width="150" class="img-fluid" src="{{ Vite::asset('resources/images/logo-8944cde3.jpg') }}" alt="">
                   </div>
                </td>
                <td>

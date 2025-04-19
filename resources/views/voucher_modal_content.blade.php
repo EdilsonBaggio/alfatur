@@ -86,7 +86,7 @@
                             <td width="50%">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     {{ $viaje->email }}
-                                    <a href="{{ route('email.enviar', ['id' => $viaje->id]) }}" class="ms-5">
+                                    <a href="{{ route('voucher.pdf', ['id' => $viaje->id]) }}" class="ms-5">
                                         <i class="bi bi-envelope-arrow-up-fill" title="Enviar e-mail"></i>
                                     </a>
                                 </div>

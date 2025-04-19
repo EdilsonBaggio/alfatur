@@ -8,6 +8,7 @@ use App\Models\Pagamento;
 use Illuminate\Http\Request;
 use App\Mail\VoucherFinancieroMail;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EmailController extends Controller
 {
@@ -32,4 +33,21 @@ class EmailController extends Controller
         // Retornar com mensagem de sucesso
         return redirect()->back()->with('success', '¡Cupón enviado exitosamente!');
     }
+
+    public function gerarVoucherPDF($id)
+    {
+        $venda = Venda::findOrFail($id);
+        $viaje = $venda;
+        $tours = Tour::where('venda_id', $venda->id)->get();
+        $pagamentos = Pagamento::where('venda_id', $venda->id)->get();
+
+        // Gerar o conteúdo do PDF em memória
+        $pdf = Pdf::loadView('email.venda', compact('venda', 'viaje', 'tours', 'pagamentos'))->output();
+
+        // Enviar e-mail com o PDF anexado
+        Mail::to($venda->email)->send(new VoucherFinancieroMail($venda, $viaje, $tours, $pagamentos, $pdf));
+
+        return back()->with('success', '¡Cupón generado y enviado exitosamente!');
+    }
+    
 }
