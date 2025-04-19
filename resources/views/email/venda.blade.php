@@ -16,10 +16,9 @@
             width: 100%;
             margin: auto;
             background: #fff;
+            padding: 5px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 0;
-            margin: 0;
         }
         .header {
             text-align: center;
@@ -104,19 +103,8 @@
         }
 
         @page {
-            margin: 0;
-            font-size: 16px;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; /* Remove margens da página no PDF */
+            font-size: 14px
         }
     </style>
 </head>
@@ -126,7 +114,7 @@
             <tr>
                <td>
                   <div style="text-align: center; margin:10px">
-                    <img width="150" class="img-fluid" src="{{ asset('logo-8944cde3.jpg') }}" alt="">
+                    <img width="150" class="img-fluid" src="{{ Vite::asset('resources/images/logo-8944cde3.jpg') }}" alt="">
                   </div>
                </td>
                <td>
@@ -272,7 +260,15 @@
                                     <td width="66%" style="border: 0;">
                                     </td>
                                     <td width="34%" style="border: 0;">
-                                        <p class="totals total_clp">TOTAL: CLP ${{ number_format($venda->valor_total, 0, ',', '.') }}</p>
+                                        @php
+                                            $cotacao = 0.006;
+                                            $valorTotalReais = number_format($venda->valor_total * $cotacao, 2, ',', '.');
+                                        @endphp
+
+                                        <p class="totals total_clp">
+                                            TOTAL: CLP ${{ number_format($venda->valor_total, 0, ',', '.') }}<br>
+                                            (R$ {{ $valorTotalReais }})
+                                        </p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -336,9 +332,27 @@
 
                                         $valor_total = floatval($viaje->valor_total);
                                         $diferenca = $valor_total - $totalPagos;
-                                    @endphp
-                                    <p class="totals total-pago">TOTAL PAGOS: CLP $<span class="pagos">{{ number_format($totalPagos, 0, ',', '.') }}</span></p>
-                                    <p class="totals total-pendiente">TOTAL PENDIENTE: CLP $<span class="pendente">{{ number_format($valor_total - $totalPagos, 0, ',', '.') }}</span></p>
+
+                                        @endphp
+                                            @php
+                                            $cotacao = 0.006;
+                                            $valorConvertido = number_format($totalPagos * $cotacao, 2, ',', '.');
+                                        @endphp
+                                        
+                                        <p class="totals total-pago">
+                                            TOTAL PAGOS: CLP ${{ number_format($totalPagos, 0, ',', '.') }}<br>
+                                            (R$ {{ $valorConvertido }})
+                                        </p>
+
+                                        @php
+                                            $valorPendente = $valor_total - $totalPagos;
+                                            $valorPendenteConvertido = number_format($valorPendente * $cotacao, 2, ',', '.');
+                                        @endphp
+
+                                        <p class="totals total-pendiente">
+                                            TOTAL PENDIENTE: CLP ${{ number_format($valorPendente, 0, ',', '.') }}<br>
+                                            (R$ {{ $valorPendenteConvertido }})
+                                        </p>
                                     </td>
                                 </tr>
                             </tbody>
