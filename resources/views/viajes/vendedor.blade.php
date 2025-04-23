@@ -9,8 +9,8 @@
             </div>
             <div class="card-body table">
                 <form class="row g-3 my-3" method="GET" action="{{ route('viajes.vendedor') }}">
-                    <div class="col-md-2">
-                        <label for="vendedor" class="form-label">Filtrar por Vendedor</label>
+                    <div class="col-md-3">
+                        {{-- <label for="vendedor" class="form-label">Filtrar por Vendedor</label>
                         <select class="form-select" id="vendedor" name="vendedor">
                             <option value="todos" {{ request('vendedor') == 'todos' ? 'selected' : '' }}>Todos</option>
                             @foreach ($vendasReservadas->pluck('vendedor')->unique() as $vendedor)
@@ -18,7 +18,7 @@
                                     {{ $vendedor }}
                                 </option>
                             @endforeach
-                        </select>
+                        </select> --}}
                     </div>
             
                     <div class="col-md-3">
@@ -33,7 +33,7 @@
                                value="{{ $dataFim }}">
                     </div>
             
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="tour" class="form-label">Tour</label>
                         <select class="form-select" id="tour" name="tour">
                             <option value="">Selecione Tour</option>
@@ -44,7 +44,7 @@
                                 <option value="{{ $tour }}" {{ request('tour') == $tour ? 'selected' : '' }}>{{ $tour }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col-md-1">
                         <label class="form-label mb-3"></label>
                         <button class="btn btn-primary">Buscar</button>
@@ -52,7 +52,7 @@
                 </form>
             
                 <div class="alert alert-warning text-center">
-                    Intervalo de tempo: <strong>{{ \Carbon\Carbon::parse($dataInicio)->format('d-m-Y') }} a {{ \Carbon\Carbon::parse($dataFim)->format('d-m-Y') }}</strong>
+                    Intervalo de tiempo: <strong>{{ \Carbon\Carbon::parse($dataInicio)->format('d-m-Y') }} a {{ \Carbon\Carbon::parse($dataFim)->format('d-m-Y') }}</strong>
                 </div>
             
                 {{-- VIAGENS REALIZADAS --}}

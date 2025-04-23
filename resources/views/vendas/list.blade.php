@@ -49,9 +49,20 @@
                               </div>
                             </td>
                             <td>{{ $venda->vendedor }}</td>
-                            <td>{{ $venda->nome }}</td>
-                            <td>{{ $venda->telefone }}</td>
-                            <td>{{ $tour->tour }}</td>
+                            <td>
+                                <div style="width:130px">
+                                    {{ $venda->nome }}</td>
+                                </div>
+                            <td>
+                                <div style="width:150px">
+                                    {{ $venda->telefone }}
+                                </div>
+                            </td>
+                            <td>
+                                <div style="width:200px">
+                                    {{ $tour->tour }}
+                                </div>
+                            </td>
                             <td>{{ $venda->hotel }}</td>
                             <td>{{ '$' . number_format($venda->valor_total, 0, ',', '.') }}</td>
                             <td>
@@ -64,7 +75,7 @@
                             <td>{{ '$' . number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
                             <td>{{ $venda->estado_pagamento }}</td>
                             <td>{{ $venda->forma_pagamento }}</td>
-                            <td>{{ \Carbon\Carbon::parse($venda->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</td>
+                            <td><div style="width:130px">{{ \Carbon\Carbon::parse($venda->data_pagamento)->locale('es')->translatedFormat('l d-m') }}</div></td>
                             <td>{{ $venda->email }}</td>
                             <td>{{ \Carbon\Carbon::parse($tour->data_tour)->locale('es')->translatedFormat('l d-m') }}</td>
                             <td>{{ $tour->pax_adulto }}</td>
