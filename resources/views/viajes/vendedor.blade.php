@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                Viagens por Vendedor!
+                Todos los viajes
             </div>
             <div class="card-body table">
                 <form class="row g-3 my-3 justify-content-md-center" method="GET" action="{{ route('viajes.vendedor') }}">
