@@ -122,6 +122,10 @@ class ViajesController extends Controller
         $vendedorFiltro = $request->input('vendedor');
         $tourFiltro = $request->input('tour'); // pode ser ID ou nome da tour
 
+        // Buscar todos os vendedores únicos diretamente da tabela de vendas
+        $todosVendedores = Venda::select('vendedor')->distinct()->pluck('vendedor');
+
+
 
         // Consulta base com relacionamento
         $vendas = Venda::with(['tours', 'logistica'])
@@ -164,6 +168,7 @@ class ViajesController extends Controller
             'dataFim' => $dataFim,
             'vendedorSelecionado' => $vendedorFiltro,
             'tourSelecionado' => $tourFiltro,
+            'todosVendedores' => $todosVendedores,
         ]);
     }
 }

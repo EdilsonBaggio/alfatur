@@ -8,17 +8,17 @@
                 Viagens por Vendedor!
             </div>
             <div class="card-body table">
-                <form class="row g-3 my-3" method="GET" action="{{ route('viajes.vendedor') }}">
+                <form class="row g-3 my-3 justify-content-md-center" method="GET" action="{{ route('viajes.vendedor') }}">
                     <div class="col-md-3">
-                        {{-- <label for="vendedor" class="form-label">Filtrar por Vendedor</label>
+                        <label for="vendedor" class="form-label">Filtrar por Vendedor</label>
                         <select class="form-select" id="vendedor" name="vendedor">
                             <option value="todos" {{ request('vendedor') == 'todos' ? 'selected' : '' }}>Todos</option>
-                            @foreach ($vendasReservadas->pluck('vendedor')->unique() as $vendedor)
+                            @foreach ($todosVendedores as $vendedor)
                                 <option value="{{ $vendedor }}" {{ request('vendedor') == $vendedor ? 'selected' : '' }}>
                                     {{ $vendedor }}
                                 </option>
                             @endforeach
-                        </select> --}}
+                        </select>                        
                     </div>
             
                     <div class="col-md-3">
@@ -72,7 +72,7 @@
                             <th scope="col">Preço</th>
                             <th scope="col">Descontos</th>
                             <th scope="col">Livre</th>
-                            <th scope="col">% Comissão</th>
+                            <th scope="col">% Comissão venda</th>
                             <th scope="col">Pago Com.</th>
                         </tr>
                     </thead>
@@ -112,7 +112,7 @@
                                     $percentual = $venda->user->commission_percentage ?? 0;
                                     $comissao = ($venda->valor_pago ?? 0) * ($percentual / 100);
                                 @endphp
-                                <td data-label="% Comissão">{{ $percentual }}%</td>
+                                <td data-label="% Comissão venda">{{ $percentual }}%</td>
                                 <td data-label="Pago Com.">${{ number_format($comissao, 0, ',', '.') }}</td>
                             </tr>
                         @endforeach
@@ -145,7 +145,7 @@
                             <th scope="col">Preço</th>
                             <th scope="col">Descontos</th>
                             <th scope="col">Livre</th>
-                            <th scope="col">% Comissão</th>
+                            <th scope="col">% Comissão venda</th>
                             <th scope="col">Pago Com.</th>
                         </tr>
                     </thead>
@@ -172,7 +172,7 @@
                                     $percentual = $venda->user->commission_percentage ?? 0;
                                     $comissao = ($venda->valor_pago ?? 0) * (floatval($percentual) / 100);
                                 @endphp
-                                <td data-label="% Comissão">{{ $percentual }}%</td>
+                                <td data-label="% Comissão venda">{{ $percentual }}%</td>
                                 <td data-label="Pago Com.">${{ number_format($comissao, 0, ',', '.') }}</td>
                             </tr>
                         @endforeach
