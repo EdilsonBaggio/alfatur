@@ -8,15 +8,36 @@
                 Todos los viajes
             </div>
             <div class="card-body table">
-                <div class="mb-3">
-                    <label for="estado" class="form-label">Filtrar por Estado:</label>
-                    <select id="estado" class="form-select" onchange="filtrarEstado()">
-                        <option value="Todos" {{ $estado == 'Todos' ? 'selected' : '' }}>Todos</option>
-                        <option value="Reservado" {{ $estado == 'Reservado' ? 'selected' : '' }}>Reservado</option>
-                        <option value="Confirmado" {{ $estado == 'Confirmado' ? 'selected' : '' }}>Confirmado</option>
-                        <option value="Cancelado" {{ $estado == 'Cancelado' ? 'selected' : '' }}>Cancelado</option>
-                    </select>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="estado" class="form-label">Filtrar por Estado:</label>
+                        <select id="estado" class="form-select">
+                            <option value="Todos" {{ $estado == 'Todos' ? 'selected' : '' }}>Todos</option>
+                            <option value="Reservado" {{ $estado == 'Reservado' ? 'selected' : '' }}>Reservado</option>
+                            <option value="Confirmado" {{ $estado == 'Confirmado' ? 'selected' : '' }}>Confirmado</option>
+                            <option value="Cancelado" {{ $estado == 'Cancelado' ? 'selected' : '' }}>Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="guia" class="form-label">Filtrar por Guia:</label>
+                        <select id="guia" class="form-select">
+                            <option value="Todos" {{ $guia == 'Todos' ? 'selected' : '' }}>Todos</option>
+                            @foreach(\App\Models\User::where('role', 'guia')->get() as $user)
+                                <option value="{{ $user->id }}" {{ $guia == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="condutor" class="form-label">Filtrar por Condutor:</label>
+                        <select id="condutor" class="form-select">
+                            <option value="Todos" {{ $condutor == 'Todos' ? 'selected' : '' }}>Todos</option>
+                            @foreach(\App\Models\User::where('role', 'condutor')->get() as $user)
+                                <option value="{{ $user->id }}" {{ $condutor == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
+                
                 <table class="table table-striped logistica">
                     <thead>
                         <tr>
@@ -32,7 +53,7 @@
                             <th scope="col">Valor</th>
                             <th scope="col" style="text-align: center; font-size:18px"><i class="bi bi-cash-stack"></i></th>
                             <th scope="col" style="text-align: center">Guia</th>
-                            {{-- <th style="text-align: center" scope="col">Voucher</th> --}}
+                            <th style="text-align: center" scope="col">Condutor</th>
                             <th style="text-align: center" scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -64,7 +85,14 @@
                                         <div class="guia-whatsapp" style="display: none;">{{ \App\Models\User::find($viaje->guia)->whatsapp ?? 'Asignar' }}</div>
                                     @endif
                                 </td>
-                                {{-- <td style="text-align: center" data-label="Voucher">{{ $viaje->id }}</td> --}}
+                                <td data-label="Condutor" style="text-align: center">
+                                    @if(empty($viaje->condutor))
+                                        <i style="font-size: 18px; color:red" class="bi bi-person-raised-hand"></i>
+                                    @else
+                                        <div class="condutor-name">{{ \App\Models\User::find($viaje->condutor)->name ?? 'Asignar' }}</div>
+                                        <div class="condutor-whatsapp" style="display: none;">{{ \App\Models\User::find($viaje->condutor)->whatsapp ?? 'Asignar' }}</div>
+                                    @endif
+                                </td>
                                 <td style="text-align: center">
                                     <a class="editar-status" style="cursor: pointer; font-size: 18px" data-id="{{ $viaje->id }}" data-status="{{ $viaje->status }}"><i class="bi bi-pencil-square"></i></a>
                                 </td>
@@ -129,10 +157,10 @@
 <script>
     $(document).ready(function() {
         // Filtragem por estado
-        $('#estado').change(function() {
-            var estado = $(this).val();
-            window.location.href = "{{ route('viajes.full') }}?estado=" + estado;
-        });
+        // $('#estado').change(function() {
+        //     var estado = $(this).val();
+        //     window.location.href = "{{ route('viajes.full') }}?estado=" + estado;
+        // });
 
         // Abrir o modal e carregar os dados
         $('.editar-status').click(function() {
@@ -176,25 +204,6 @@
             });
         });
 
-        // Abrir o modal de voucher e carregar os dados
-        // $('#voucherModal').on('show.bs.modal', function (event) {
-        //     var button = $(event.relatedTarget); // Botão que acionou o modal
-        //     var viajeId = button.data('id'); // Extrai o ID do botão
-
-        //     // Faz a requisição AJAX para buscar os detalhes da venda
-        //     $.ajax({
-        //         url: '/viajes-full/get-venda-details/' + viajeId,
-        //         type: 'GET',
-        //         success: function(response) {
-        //             // Preenche o modal com os dados retornados
-        //             $('#modal-body-content').html(response);
-        //         },
-        //         error: function() {
-        //             alert('Erro ao carregar os detalhes da venda.');
-        //         }
-        //     });
-        // });
-
         $(document).on('click', '[data-id]', function() {
             var viajeId = $(this).data('id'); // Obtém o ID do botão clicado
             var url = '/viajes-full/get-venda-details/' + viajeId; // URL da venda
@@ -203,5 +212,15 @@
             $('#vendaIframe').attr('src', url);
         });
     });
+
+    function aplicarFiltros() {
+        var estado = $('#estado').val();
+        var guia = $('#guia').val();
+        var condutor = $('#condutor').val();
+        window.location.href = "{{ route('viajes.full') }}" + "?estado=" + estado + "&guia=" + guia + "&condutor=" + condutor;
+    }
+
+    $('#estado, #guia, #condutor').change(aplicarFiltros);
+
 </script>
 @endsection
