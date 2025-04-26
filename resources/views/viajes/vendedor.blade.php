@@ -82,14 +82,28 @@
                             $totalPreco = 0;
                             $totalDescontos = 0;
                             $totalLivre = 0;
+                            $totalComissaoPaga = 0; // <-- ADICIONAR ESSA LINHA
                         @endphp
                         @foreach ($vendasReservadas as $venda)
-                            @php
-                                $pax = 1; // ou pegar de outro campo se tiver
+                        @php
+                                $pax_adulto = 0;
+                                $pax_infantil = 0;
+
+                                foreach ($venda->tours as $tour) {
+                                    $pax_adulto += $tour->pax_adulto ?? 0;
+                                    $pax_infantil += $tour->pax_infantil ?? 0;
+                                }
+
+                                $pax = $pax_adulto + $pax_infantil;
+
                                 $totalPaxRealizadas += $pax;
                                 $totalPreco += $venda->valor_total;
                                 $totalLivre += $venda->valor_pago;
                                 $totalDescontos += $venda->valor_a_pagar;
+
+                                $percentual = $venda->user->commission_percentage ?? 0;
+                                $comissao = ($venda->valor_pago ?? 0) * ($percentual / 100);
+                                $totalComissaoPaga += $comissao; 
                             @endphp
                             <tr>
                                 <td data-label="Data">{{ $venda->created_at->format('d-m-y') }}</td>
@@ -123,7 +137,7 @@
                             <td class="text-success">${{ number_format($totalPreco, 0, ',', '.') }}</td>
                             <td class="text-danger">${{ number_format($totalDescontos, 0, ',', '.') }}</td>
                             <td class="text-primary">${{ number_format($totalLivre, 0, ',', '.') }}</td>
-                            <td colspan="2">$0</td>
+                            <td colspan="2" class="text-success">${{ number_format($totalComissaoPaga, 0, ',', '.') }}</td>
                         </tr>
                     </tbody>
                 </table>
