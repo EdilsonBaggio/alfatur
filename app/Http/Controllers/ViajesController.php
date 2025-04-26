@@ -120,7 +120,7 @@ class ViajesController extends Controller
         $dataInicio = $request->input('data_inicio', Carbon::now()->startOfMonth()->format('Y-m-d'));
         $dataFim = $request->input('data_fim', Carbon::now()->endOfMonth()->format('Y-m-d'));
         $vendedorFiltro = $request->input('vendedor');
-        $tourFiltro = $request->input('tour'); // pode ser ID ou nome da tour
+        // $tourFiltro = $request->input('tour'); 
 
         // Buscar todos os vendedores únicos diretamente da tabela de vendas
         $todosVendedores = Venda::select('vendedor')->distinct()->pluck('vendedor');
@@ -145,29 +145,29 @@ class ViajesController extends Controller
 
 
         // Filtro adicional para tours
-        if ($tourFiltro && $tourFiltro !== 'todos') {
-            $vendas = $vendas->filter(function ($venda) use ($tourFiltro) {
-                return $venda->tours->contains(function ($tour) use ($tourFiltro) {
-                    return $tour->id == $tourFiltro || $tour->nome == $tourFiltro;
-                });
-            });
-        }
+        // if ($tourFiltro && $tourFiltro !== 'todos') {
+        //     $vendas = $vendas->filter(function ($venda) use ($tourFiltro) {
+        //         return $venda->tours->contains(function ($tour) use ($tourFiltro) {
+        //             return $tour->id == $tourFiltro || $tour->nome == $tourFiltro;
+        //         });
+        //     });
+        // }
 
         $vendasReservadas = $vendas->filter(function ($venda) {
             return optional($venda->logistica)->status === 'Reservado';
         });
         
-        $vendasRealizadas = $vendas->filter(function ($venda) {
+        $vendasConfirmadas = $vendas->filter(function ($venda) {
             return optional($venda->logistica)->status === 'Confirmado';
         });
         
         return view('viajes.vendedor', [
             'vendasReservadas' => $vendasReservadas,
-            'vendasRealizadas' => $vendasRealizadas,
+            'vendasConfirmadas' => $vendasConfirmadas,
             'dataInicio' => $dataInicio,
             'dataFim' => $dataFim,
             'vendedorSelecionado' => $vendedorFiltro,
-            'tourSelecionado' => $tourFiltro,
+            // 'tourSelecionado' => $tourFiltro,
             'todosVendedores' => $todosVendedores,
         ]);
     }

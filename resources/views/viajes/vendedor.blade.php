@@ -83,7 +83,7 @@
                             $totalDescontos = 0;
                             $totalLivre = 0;
                         @endphp
-                        @foreach ($vendasRealizadas as $venda)
+                        @foreach ($vendasReservadas as $venda)
                             @php
                                 $pax = 1; // ou pegar de outro campo se tiver
                                 $totalPaxRealizadas += $pax;
@@ -150,7 +150,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($vendasReservadas as $venda)
+                        @foreach ($vendasConfirmadas as $venda)
                             <tr>
                                 <td data-label="Data">{{ $venda->created_at->format('d-m-y') }}</td>
                                 <td data-label="ID">VAL-{{ $venda->logistica->venda_id ?? 'N/A' }}</td>
