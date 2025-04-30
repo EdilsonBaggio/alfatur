@@ -164,6 +164,11 @@
                     </thead>
                     <tbody>
                         @foreach ($vendasConfirmadas as $venda)
+                            @php
+                                $valorLivre = $venda->valor_total - $venda->valor_a_pagar;
+                                $percentual = $venda->user->commission_percentage ?? 0;
+                                $comissao = $valorLivre * ($percentual / 100);
+                            @endphp
                             <tr>
                                 <td data-label="Data">{{ $venda->created_at->format('d-m-y') }}</td>
                                 <td data-label="ID">VAL-{{ $venda->logistica->venda_id ?? 'N/A' }}</td>
@@ -181,11 +186,6 @@
                                 <td data-label="Preço" class="bg-success text-white">${{ number_format($venda->valor_total, 0, ',', '.') }}</td>
                                 <td data-label="Descontos" class="bg-danger text-white">${{ number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
                                 <td data-label="Livre" class="bg-primary text-white">${{ number_format($valorLivre, 0, ',', '.') }}</td>
-                                @php
-                                    $valorLivre = $venda->valor_total - $venda->valor_a_pagar;
-                                    $percentual = $venda->user->commission_percentage ?? 0;
-                                    $comissao = $valorLivre * ($percentual / 100);
-                                @endphp
                                 <td data-label="% Comissão venda">{{ number_format($percentual, 0, ',', '.') }}%</td>
                                 <td data-label="Pago Com.">${{ number_format($comissao, 0, ',', '.') }}</td>
                             </tr>
