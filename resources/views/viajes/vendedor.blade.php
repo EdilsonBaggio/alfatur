@@ -98,12 +98,14 @@
 
                                 $totalPaxRealizadas += $pax;
                                 $totalPreco += $venda->valor_total;
-                                $totalLivre += $venda->valor_pago;
+                                $valorLivre = $venda->valor_total - $venda->valor_a_pagar;
+                                $totalLivre += $valorLivre;
+
                                 $totalDescontos += $venda->valor_a_pagar;
 
                                 $percentual = $venda->user->commission_percentage ?? 0;
-                                $comissao = ($venda->valor_pago ?? 0) * ($percentual / 100);
-                                $totalComissaoPaga += $comissao; 
+                                $comissao = $valorLivre * ($percentual / 100);
+                                $totalComissaoPaga += $comissao;
                             @endphp
                             <tr>
                                 <td data-label="Data">{{ $venda->created_at->format('d-m-y') }}</td>
@@ -121,12 +123,10 @@
                                 <td data-label="Telefone">{{ $venda->telefone }}</td>
                                 <td class="bg-success text-white" data-label="Preço">${{ number_format($venda->valor_total, 0, ',', '.') }}</td>
                                 <td class="bg-danger text-white" data-label="Descontos">${{ number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
-                                <td class="bg-primary text-white" data-label="Livre">${{ number_format($venda->valor_pago, 0, ',', '.') }}</td>
-                                @php
-                                    $percentual = $venda->user->commission_percentage ?? 0;
-                                    $comissao = ($venda->valor_pago ?? 0) * ($percentual / 100);
-                                @endphp
-                                <td data-label="% Comissão venda">{{ $percentual }}%</td>
+                                <td class="bg-primary text-white" data-label="Livre">
+                                    ${{ number_format($valorLivre, 0, ',', '.') }}
+                                </td>
+                                <td data-label="% Comissão venda">{{ number_format($percentual, 0, ',', '.') }}%</td>
                                 <td data-label="Pago Com.">${{ number_format($comissao, 0, ',', '.') }}</td>
                             </tr>
                         @endforeach
@@ -142,7 +142,6 @@
                     </tbody>
                 </table>
             
-                {{-- VIAGENS RESERVADAS --}}
                 <h4 class="bg-warning text-dark p-3 mt-4">Viagens Confirmadas</h4>
                 <table class="table table-bordered table-sm text-center logistica">
                     <thead class="table-warning">
@@ -181,12 +180,13 @@
                                 <td data-label="Telefone">{{ $venda->telefone }}</td>
                                 <td data-label="Preço" class="bg-success text-white">${{ number_format($venda->valor_total, 0, ',', '.') }}</td>
                                 <td data-label="Descontos" class="bg-danger text-white">${{ number_format($venda->valor_a_pagar, 0, ',', '.') }}</td>
-                                <td data-label="Livre" class="bg-primary text-white">${{ number_format($venda->valor_pago, 0, ',', '.') }}</td>
+                                <td data-label="Livre" class="bg-primary text-white">${{ number_format($valorLivre, 0, ',', '.') }}</td>
                                 @php
+                                    $valorLivre = $venda->valor_total - $venda->valor_a_pagar;
                                     $percentual = $venda->user->commission_percentage ?? 0;
-                                    $comissao = ($venda->valor_pago ?? 0) * (floatval($percentual) / 100);
+                                    $comissao = $valorLivre * ($percentual / 100);
                                 @endphp
-                                <td data-label="% Comissão venda">{{ $percentual }}%</td>
+                                <td data-label="% Comissão venda">{{ number_format($percentual, 0, ',', '.') }}%</td>
                                 <td data-label="Pago Com.">${{ number_format($comissao, 0, ',', '.') }}</td>
                             </tr>
                         @endforeach
