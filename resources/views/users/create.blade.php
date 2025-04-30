@@ -79,7 +79,7 @@
                 <!-- Porcentagem Comissão -->
                 <div class="mb-3">
                     <label for="commission_percentage" class="form-label">Porcentagem Comissão (%)</label>
-                    <input type="number" id="commission_percentage" name="commission_percentage" class="form-control" min="0" max="100">
+                    <input type="text" id="commission_percentage" name="commission_percentage" class="form-control">
                 </div>
 
                 <!-- Permissões -->
@@ -157,6 +157,7 @@
     $(document).ready(function(){
         $('#rut').mask('00.000.000-0', {reverse: true});
         $('#whatsapp').mask('+00 00900000000');
+        $('#commission_percentage').mask('00');
     });
 </script>
 @endsection

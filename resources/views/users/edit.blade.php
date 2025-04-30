@@ -101,6 +101,7 @@
     $(document).ready(function(){
         $('#rut').mask('00.000.000-0', {reverse: true});
         $('#whatsapp').mask('+00 90000-0000');
+        $('#commission_percentage').mask('00');
     });
 </script>
 @endsection
