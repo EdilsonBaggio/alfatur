@@ -29,6 +29,7 @@ class EmailController extends Controller
 
         // Enviar o e-mail com o voucher
         Mail::to($venda->email)->send(new VoucherFinancieroMail($venda, $viaje, $tours, $pagamentos));
+        
 
         // Retornar com mensagem de sucesso
         return redirect()->back()->with('success', '¡Cupón enviado exitosamente!');
@@ -46,8 +47,25 @@ class EmailController extends Controller
 
         // Enviar e-mail com o PDF anexado
         Mail::to($venda->email)->send(new VoucherFinancieroMail($venda, $viaje, $tours, $pagamentos, $pdf));
+        
 
         return back()->with('success', '¡Cupón generado y enviado exitosamente!');
     }
-    
+
+    public function reenviarDadosLogin($id)
+    {
+        $venda = Venda::findOrFail($id);
+
+        // Reconstruir o login conforme sua regra: ID + primeiro nome
+        $primeiroNome = explode(' ', trim($venda->nome))[0];
+        $usuario = 'ALF-' . $venda->id . strtolower($primeiroNome); // ou só $venda->id . $primeiroNome
+        $senha = 'senha123'; // recupere de onde salvou originalmente
+
+        if ($venda->email) {
+            \Mail::to($venda->email)->send(new \App\Mail\VoucherConfirmadoMail($venda, $usuario, $senha));
+        }
+
+        return back()->with('success', 'Dados de login reenviados com sucesso!');
+    }
+
 }

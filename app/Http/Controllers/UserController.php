@@ -72,10 +72,11 @@ class UserController extends Controller
     public function lista()
     {
         // Buscar todos os usuários
-        $users = User::all();
+        $users = User::where('is_active', 1)->get();
+        $usersInactive = User::where('is_active', 0)->get();
     
         // Passar os usuários para a view
-        return view('users.list', compact('users'));
+        return view('users.list', compact('users', 'usersInactive'));
     }   
 
 
@@ -105,4 +106,21 @@ class UserController extends Controller
 
         return redirect()->route('users.list')->with('success', 'Usuário atualizado com sucesso!');
     }
+
+    public function deactivate(User $user)
+    {
+        $user->is_active = 0;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Usuário desativado com sucesso.');
+    }
+
+    public function activate(User $user)
+    {
+        $user->is_active = 1;
+        $user->save();
+
+        return redirect()->back()->with('message', 'Usuário ativado com sucesso.');
+    }
+
 }

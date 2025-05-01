@@ -10,8 +10,11 @@
     <p>Sigue abajo el link para tener acceso a tu voucher:</p>
 
     <p>
-        <a href="{{ url('/viajes-full/get-venda-details/' . $venda->id) }}">
+        {{-- <a href="{{ url('/viajes-full/get-venda-details/' . $venda->id) }}">
             {{ url('/viajes-full/get-venda-details/' . $venda->id) }}
+        </a> --}}
+        <a href="{{ url('/voucher-login') }}" target="_blank">
+            {{ url('/voucher-login') }}
         </a>
     </p>
     

@@ -23,16 +23,23 @@ class AuthController extends Controller
         if (Auth::guard('web')->check()) {
             return redirect()->route('home');
         }
-
+    
         $credentials = $request->only('name', 'password');
-
+    
         // Tenta autenticar o usuário
         if (Auth::guard('web')->attempt($credentials)) {
+            // Verifica se está ativo
+            if (Auth::user()->is_active == 0) {
+                Auth::logout();
+                return back()->withErrors(['name' => 'Sua conta está desativada.'])->withInput($request->only('name'));
+            }
+    
             return redirect()->intended('home');
         }
-
-        return back()->withErrors(['email' => 'Os dados estão incorretos ou não existe usuário cadastrado.'])->withInput($request->only('email'));
+    
+        return back()->withErrors(['name' => 'Os dados estão incorretos ou não existe usuário cadastrado.'])->withInput($request->only('name'));
     }
+    
 
     public function logout()
     {

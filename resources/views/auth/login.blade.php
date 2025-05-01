@@ -1,4 +1,15 @@
 @extends('layout.master') 
+<style>
+   .alert-danger {
+    color: #ffffff!important;
+    background-color: #f8d7da!important;;
+    border-color: #f5c6cb!important;;
+    font-size: 13px!important;;
+    background: transparent!important;;
+    padding: 0!important;;
+    border: 0!important;;
+}
+</style>
 
 @section('content')
 <div class="container content-login"> 
@@ -9,6 +20,13 @@
          </div>
          <div class="card"> 
             <div class="card-body contant-login-form">
+               @if ($errors->any())
+                  <div class="alert alert-danger">
+                     @foreach ($errors->all() as $error)
+                           <div s>{{ $error }}</div>
+                     @endforeach
+                  </div>
+               @endif
                <form method="POST" action="{{ route('login') }}">
                   @csrf 
 

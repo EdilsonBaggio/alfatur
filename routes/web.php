@@ -80,6 +80,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/viajes-vendedor', [ViajesController::class, 'listarViagens'])->name('viajes.vendedor');
     Route::get('/voucher/{id}/pdf', [EmailController::class, 'gerarVoucherPDF'])->name('voucher.pdf');
+    Route::patch('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
+    Route::patch('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
+    Route::get('/voucher/send-login/{id}', [EmailController::class, 'reenviarDadosLogin'])->name('voucher.sendLogin');
 });
 
 Route::get('/esqueci', function () {
@@ -106,5 +109,5 @@ Route::post('/voucher-login', [VoucherLoginController::class, 'doLogin'])->name(
 
 // Rota protegida por "autenticação de voucher"
 Route::middleware('voucher.auth')->group(function () {
-    Route::get('/viajes-full/get-venda-details/{id}', [VoucherLoginController::class, 'showVenda'])->name('voucher.show');
+    Route::get('/viajes-full/get-venda-details-cliente/{id}', [VoucherLoginController::class, 'showVenda'])->name('voucher.show');
 });

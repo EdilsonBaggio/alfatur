@@ -15,23 +15,23 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Precio Venta:</label>
-                    <input type="number" name="price" class="form-control" value="{{ $tour->price }}" required>
+                    <input type="text" name="price" class="form-control" value="{{ number_format($tour->price, 0, ',', '.') }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Precio Venta Mínimo:</label>
-                    <input type="number" name="min_price" class="form-control" value="{{ $tour->min_price }}" required>
+                    <input type="text" name="min_price" class="form-control" value="{{ number_format($tour->min_price, 0, ',', '.') }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Costo:</label>
-                    <input type="number" name="cost" class="form-control" value="{{ $tour->cost }}" required>
+                    <input type="text" name="cost" class="form-control" value="{{ number_format($tour->cost, 0, ',', '.') }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Precio Venta Infante:</label>
-                    <input type="number" name="child_price" class="form-control" value="{{ $tour->child_price }}" required>
+                    <input type="text" name="child_price" class="form-control" value="{{ number_format($tour->child_price, 0, ',', '.') }}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Costo Infante:</label>
-                    <input type="number" name="child_cost" class="form-control" value="{{ $tour->child_cost }}" required>
+                    <input type="text" name="child_cost" class="form-control" value="{{ number_format($tour->child_cost, 0, ',', '.') }}" required>
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" name="status" class="form-check-input" value="1" {{ $tour->status ? 'checked' : '' }}>
