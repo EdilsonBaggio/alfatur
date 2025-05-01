@@ -95,12 +95,12 @@
                       @foreach ($groupedLogistics as $key => $group)
                       <!-- Cabeçalho do Grupo -->
                         <tr class="td_tour">
-                          <td colspan="18" style="text-transform: uppercase; background: #000; color: #fff; text-align: left; padding: 10px;">
+                          <td colspan="19" style="text-transform: uppercase; background: #000; color: #fff; text-align: left; padding: 10px;">
                             {{ $key }}
                           </td>
                         </tr>
                         <tr class="td_head">
-                          <td colspan="18" class="p-0 border-0">
+                          <td colspan="19" class="p-0 border-0">
                             <thead>
                               <tr>
                                 <th scope="col">#</th>
@@ -114,6 +114,7 @@
                                 <th scope="col">Conductor</th>
                                 <th scope="col">Agencia</th>
                                 <th scope="col">Valor</th>
+                                <th scope="col"><i style="font-size: 1.2rem; color: black;" class="bi bi-cash-coin"></i></th>
                                 <th scope="col">Pendiente</th>
                                 <th scope="col">Hotel</th>
                                 <th scope="col">Teléfono</th>
@@ -163,6 +164,7 @@
                                 @endif
                             </td>
                             <td data-label="Valor">{{ '$' . number_format($logistica->valor_total, 0, ',', '.') }}</td>
+                            <td data-label="Pag." style="text-align: center;"><a href="/viajes-full/get-venda-details-logistica/{{ $logistica->venda_id }}" target="_blank" class="mobile_viajes" style="font-size: 1.2rem; color: black;" target="_blank"> <i class="bi bi-cash-coin"></i></a></td>
                             <td data-label="Pendiente" class="valor_a_pagar">{{ '$' . number_format($logistica->valor_a_pagar, 0, ',', '.') }}</td>
                             <td data-label="Hotel">{{ $logistica->hotel }}</td>
                             <td data-label="Teléfono">{{ $logistica->telefone }}</td>
@@ -174,7 +176,7 @@
                                    onclick="populateModalVoucher({!! htmlspecialchars(json_encode($logistica), ENT_QUOTES, 'UTF-8') !!})">
                                     <i style="font-size: 1.2rem; color: black;" class="bi bi-ticket-perforated-fill"></i>
                                 </a>
-                            </td>                            
+                            </td>                           
                             <td data-label="Verificado" style="text-align: center">
                                 {!! $logistica->conferido 
                                     ? '<i style="font-size: 1.2rem; color: green;" class="bi bi-hand-thumbs-up-fill"></i>' 
@@ -195,7 +197,7 @@
                                 <button onclick="window.print()" style="border: 0">🖨️ Imprimir</button>
                             </td>
                           <td colspan="3" style="background-color: #81E979; color: #fff; font-weight: bold;"><div style="float: left;">PAX TOTAL</div><div style="float: right; width: 15px">{{ $group->sum('pax_total') }}</div></td>
-                          <td colspan="12" class="td_ultima" style="text-align: left;"></td>
+                          <td colspan="13" class="td_ultima" style="text-align: left;"></td>
                         </tr>
                       @endforeach
                     </tbody>

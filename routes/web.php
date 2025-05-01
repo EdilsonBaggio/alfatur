@@ -83,6 +83,9 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
     Route::patch('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
     Route::get('/voucher/send-login/{id}', [EmailController::class, 'reenviarDadosLogin'])->name('voucher.sendLogin');
+
+    Route::get('/viajes-full/get-venda-details-logistica/{id}', [ViajesController::class, 'getVendaDetailsLogistica'])
+        ->name('viajes.get-venda-details-logistica');
 });
 
 Route::get('/esqueci', function () {

@@ -171,4 +171,33 @@ class ViajesController extends Controller
             'todosVendedores' => $todosVendedores,
         ]);
     }
+
+    public function getVendaDetailsLogistica($id)
+    {
+        $viaje = Venda::with(['tours', 'pagamentos'])->find($id);
+    
+        if (!$viaje) {
+            return response()->json(['error' => 'Venda não encontrada'], 404);
+        }
+    
+        // Busca todos os pagamentos vinculados à venda e soma os valores recebidos
+        $totalPago = Pagamento::where('venda_id', $viaje->id)->sum('valor_recebido');
+    
+        // Converte valores para float para evitar erros de precisão
+        $totalVoucher = isset($viaje->valor_total) ? floatval($viaje->valor_total) : 0.0;
+        $totalPago = floatval($totalPago);
+        $total = (int) str_replace('.', '', (string) $totalPago);
+    
+        // Calcula o total pendente corretamente
+        $viaje->total_pendiente = round(($totalVoucher - $total) * 100, 0); // Multiplica por 100 e arredonda
+        
+        // Depuração (remova depois de testar)
+        \Log::info("Total Voucher: {$totalVoucher}, Total Pago: {$total}, Total Pendiente: {$viaje->total_pendiente}");
+    
+        // Garante que os relacionamentos sempre sejam coleções
+        $pagamentos = $viaje->pagamentos ?? collect();
+        $tours = $viaje->tours ?? collect();
+    
+        return view('voucher_content_logistica', compact('viaje', 'tours', 'pagamentos'));
+    }
 }
