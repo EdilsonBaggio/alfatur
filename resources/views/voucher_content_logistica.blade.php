@@ -305,11 +305,58 @@
                                value="{{ old('passengers.' . $i . '.phone') }}" />
                     </td>
                     <td>
-                        <select name="passengers[{{ $i }}][nationality]">
-                            <option value="Brasil" {{ old('passengers.' . $i . '.nationality') == 'Brasil' ? 'selected' : '' }}>Brasil</option>
-                            <option value="Argentina" {{ old('passengers.' . $i . '.nationality') == 'Argentina' ? 'selected' : '' }}>Argentina</option>
-                            <option value="Chile" {{ old('passengers.' . $i . '.nationality') == 'Chile' ? 'selected' : '' }}>Chile</option>
-                        </select>
+                        <select name="passengers[{{ $i }}][nationality]" style="width: 190px">
+                            @php
+                                $prioritized = ['Brasil', 'Argentina', 'Chile'];
+                        
+                                $allCountries = [
+                                    'Afeganistão', 'África do Sul', 'Alemanha', 'Andorra', 'Angola', 'Antígua e Barbuda', 'Arábia Saudita',
+                                    'Argélia', 'Armênia', 'Austrália', 'Áustria', 'Azerbaijão', 'Bahamas', 'Bangladesh', 'Barbados',
+                                    'Bahrein', 'Bélgica', 'Belize', 'Benin', 'Bielorrússia', 'Bolívia', 'Bósnia e Herzegovina', 'Botsuana',
+                                    'Brunei', 'Bulgária', 'Burkina Faso', 'Burundi', 'Butão', 'Cabo Verde', 'Camarões', 'Camboja', 'Canadá',
+                                    'Catar', 'Cazaquistão', 'Chade', 'China', 'Chipre', 'Colômbia', 'Comores', 'Congo', 'Coreia do Norte',
+                                    'Coreia do Sul', 'Costa do Marfim', 'Costa Rica', 'Croácia', 'Cuba', 'Dinamarca', 'Djibuti', 'Dominica',
+                                    'Egito', 'El Salvador', 'Emirados Árabes Unidos', 'Equador', 'Eritreia', 'Eslováquia', 'Eslovênia',
+                                    'Espanha', 'Estados Unidos', 'Estônia', 'Eswatini', 'Etiópia', 'Fiji', 'Filipinas', 'Finlândia',
+                                    'França', 'Gabão', 'Gâmbia', 'Gana', 'Geórgia', 'Granada', 'Grécia', 'Guatemala', 'Guiana', 'Guiné',
+                                    'Guiné-Bissau', 'Guiné Equatorial', 'Haiti', 'Holanda', 'Honduras', 'Hungria', 'Iêmen', 'Ilhas Marshall',
+                                    'Ilhas Salomão', 'Índia', 'Indonésia', 'Irã', 'Iraque', 'Irlanda', 'Islândia', 'Israel', 'Itália',
+                                    'Jamaica', 'Japão', 'Jordânia', 'Kosovo', 'Kuwait', 'Laos', 'Lesoto', 'Letônia', 'Líbano', 'Libéria',
+                                    'Líbia', 'Liechtenstein', 'Lituânia', 'Luxemburgo', 'Macedônia do Norte', 'Madagascar', 'Malásia',
+                                    'Malawi', 'Maldivas', 'Mali', 'Malta', 'Marrocos', 'Maurício', 'Mauritânia', 'México', 'Micronésia',
+                                    'Moçambique', 'Moldávia', 'Mônaco', 'Mongólia', 'Montenegro', 'Myanmar', 'Namíbia', 'Nauru', 'Nepal',
+                                    'Nicarágua', 'Níger', 'Nigéria', 'Noruega', 'Nova Zelândia', 'Omã', 'País de Gales', 'Países Baixos',
+                                    'Palau', 'Panamá', 'Papua-Nova Guiné', 'Paquistão', 'Paraguai', 'Peru', 'Polônia', 'Portugal',
+                                    'Quênia', 'Quirguistão', 'Reino Unido', 'República Centro-Africana', 'República Checa',
+                                    'República Democrática do Congo', 'República Dominicana', 'Romênia', 'Ruanda', 'Rússia', 'Samoa',
+                                    'San Marino', 'Santa Lúcia', 'São Cristóvão e Névis', 'São Tomé e Príncipe', 'São Vicente e Granadinas',
+                                    'Seicheles', 'Senegal', 'Serra Leoa', 'Sérvia', 'Singapura', 'Síria', 'Somália', 'Sri Lanka', 'Sudão',
+                                    'Sudão do Sul', 'Suécia', 'Suíça', 'Suriname', 'Tailândia', 'Taiwan', 'Tajiquistão', 'Tanzânia',
+                                    'Timor-Leste', 'Togo', 'Tonga', 'Trindade e Tobago', 'Tunísia', 'Turcomenistão', 'Turquia', 'Tuvalu',
+                                    'Ucrânia', 'Uganda', 'Uruguai', 'Uzbequistão', 'Vanuatu', 'Vaticano', 'Venezuela', 'Vietnã', 'Zâmbia', 'Zimbábue'
+                                ];
+                        
+                                // Remover os países priorizados da lista principal para evitar duplicidade
+                                $remaining = array_diff($allCountries, $prioritized);
+                                sort($remaining); // Ordenar em ordem alfabética
+                            @endphp
+                        
+                            {{-- Países prioritários no topo --}}
+                            @foreach($prioritized as $country)
+                                <option value="{{ $country }}" {{ old('passengers.' . $i . '.nationality') == $country ? 'selected' : '' }}>
+                                    {{ $country }}
+                                </option>
+                            @endforeach
+                        
+                            <option disabled>──────────</option>
+                        
+                            {{-- Demais países em ordem alfabética --}}
+                            @foreach($remaining as $country)
+                                <option value="{{ $country }}" {{ old('passengers.' . $i . '.nationality') == $country ? 'selected' : '' }}>
+                                    {{ $country }}
+                                </option>
+                            @endforeach
+                        </select>                        
                     </td>
                 </tr>
                 @endfor
