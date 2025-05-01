@@ -16,6 +16,7 @@ use App\Http\Controllers\ViajesController;
 use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\VoucherLoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,3 +100,11 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('/voucher-login', [VoucherLoginController::class, 'showLogin'])->name('voucher.login');
+Route::post('/voucher-login', [VoucherLoginController::class, 'doLogin'])->name('voucher.login.submit');
+
+// Rota protegida por "autenticação de voucher"
+Route::middleware('voucher.auth')->group(function () {
+    Route::get('/viajes-full/get-venda-details/{id}', [VoucherLoginController::class, 'showVenda'])->name('voucher.show');
+});

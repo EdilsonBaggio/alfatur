@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // outros middlewares
         'auth' => \App\Http\Middleware\AuthenticateMiddleware::class,
+        'voucher.auth' => \App\Http\Middleware\VoucherAuth::class,
     ];
+    
 }

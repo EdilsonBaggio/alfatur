@@ -82,7 +82,6 @@
                      <tbody>
                            <tr>
                                <td width="50%" style="background: #d2d3db; text-align: end;"><strong>E-Mail:</strong> </td>
-                               <!-- filepath: /home/edilsonsantos/Documentos/Projetos/alfatur/resources/views/voucher_modal_content.blade.php -->
                             <td width="50%">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     {{ $viaje->email }}
@@ -416,7 +415,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('script')
@@ -602,6 +600,4 @@
         });
     });
 </script>
-
-
 @endsection

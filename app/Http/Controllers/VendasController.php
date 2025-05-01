@@ -9,7 +9,7 @@ use App\Models\TourPlaces;
 use App\Models\Logistica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\VendaEmail;
+use App\Mail\VoucherConfirmadoMail;
 use App\Models\Pagamento;
 use Illuminate\Support\Facades\Mail;
 
@@ -161,11 +161,15 @@ class VendasController extends Controller
         // Obtenha os tours relacionados à venda
         $tours = $venda->tours;
 
+        if ($venda->email) {
+            \Mail::to($venda->email)->send(new \App\Mail\VoucherConfirmadoMail($venda));
+        }
+
         // Redireciona com mensagem de sucesso
         return response()->json(['message' => 'Venda criada com sucesso']);
         // return redirect()->route('vendas.list')->with('success', 'Venda criada com sucesso!');
-    }
 
+    }
 
     public function edit($id)
     {
