@@ -45,9 +45,8 @@
                             @endforeach
                         </select>
                     </div> --}}
-                    <div class="col-md-1">
-                        <label class="form-label mb-3"></label>
-                        <button class="btn btn-primary">Buscar</button>
+                    <div class="col-md-1 d-grid align-items-end">
+                        <button class="btn btn-primary btn-viajes">Buscar</button>
                     </div>
                 </form>
             

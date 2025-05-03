@@ -1385,3 +1385,11 @@ th {
         background-color: #fff;
     }
 }
+.btn-viajes{
+    padding: 5px !important;
+    margin-bottom: 5px;
+    @media screen and (max-width: 769px) {
+        margin-bottom: 0px;
+        width: 100%
+    }
+}
