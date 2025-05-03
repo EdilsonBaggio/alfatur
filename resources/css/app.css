@@ -1150,6 +1150,7 @@ th {
 }
 .logistica tbody td {
   padding: 12px;
+  text-align: center;
 }
 
 .danger-row {
