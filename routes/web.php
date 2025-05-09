@@ -17,6 +17,8 @@ use App\Http\Controllers\PagamentoController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\VoucherLoginController;
+use App\Http\Controllers\LogisticsController;
+use App\Http\Controllers\OrcamentoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -86,6 +88,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/viajes-full/get-venda-details-logistica/{id}', [ViajesController::class, 'getVendaDetailsLogistica'])
         ->name('viajes.get-venda-details-logistica');
+
+    Route::post('/orcamentos', [OrcamentoController::class, 'store'])->name('orcamentos.store');
+    Route::get('/orcamentos', [OrcamentoController::class, 'lista'])->name('orcamentos.lista');
+    Route::get('/vendas/criar-de-orcamento/{orcamento}', [VendasController::class, 'criarDeOrcamento'])->name('vendas.criarDeOrcamento');
+    Route::delete('/orcamentos/{id}', [OrcamentoController::class, 'destroy'])->name('orcamentos.destroy');
+
 });
 
 Route::get('/esqueci', function () {
@@ -114,3 +122,5 @@ Route::post('/voucher-login', [VoucherLoginController::class, 'doLogin'])->name(
 Route::middleware('voucher.auth')->group(function () {
     Route::get('/viajes-full/get-venda-details-cliente/{id}', [VoucherLoginController::class, 'showVenda'])->name('voucher.show');
 });
+
+

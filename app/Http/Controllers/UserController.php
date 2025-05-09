@@ -86,23 +86,30 @@ class UserController extends Controller
         return view('users.edit', compact('user')); // Carrega a view para edição
     }
 
-    
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
         // Validação dos dados
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'role' => 'required|string',
             'rut' => 'required|string|max:20|unique:users,rut,' . $id,
             'whatsapp' => 'required|string|max:20',
             'commission_percentage' => 'nullable|numeric|min:0|max:100',
+            'password' => 'nullable|string|min:8',
         ]);
 
-        // Atualiza os dados
-        $user->update($request->all());
+        // Se a senha foi preenchida, criptografa; senão, ignora
+        if (!empty($validatedData['password'])) {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        } else {
+            unset($validatedData['password']);
+        }
+
+        // Atualiza o usuário
+        $user->update($validatedData);
 
         return redirect()->route('users.list')->with('success', 'Usuário atualizado com sucesso!');
     }

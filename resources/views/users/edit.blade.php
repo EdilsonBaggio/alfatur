@@ -21,6 +21,11 @@
                     <input type="email" name="email" value="{{ $user->email }}" class="form-control" required>
                 </div>
 
+                <div class="mb-3">
+                    <label for="password" class="form-label">Senha:</label>
+                    <input type="password" id="password" name="password" value="{{ $user->email }}" class="form-control" required>
+                </div>
+
                 <div class="form-group">
                     <label>Nível</label>
                     <select name="role" class="form-control" required>

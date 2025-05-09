@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\VoucherConfirmadoMail;
 use App\Models\Pagamento;
+use App\Models\Orcamento;
 use Illuminate\Support\Facades\Mail;
 
 class VendasController extends Controller
@@ -154,7 +155,7 @@ class VendasController extends Controller
                 'voucher' => $venda->id ?? 'N/A', // Voucher (padrão: N/A)
                 'observacao' => $venda->observacao ?? null, // Observação (opcional)
                 'conferido' => $request->conferido ?? null, // Conferido (opcional)
-                'status' => $request->status, // Pendente (opcional)
+                'status' => 'Reservado', // Pendente (opcional)
             ]);     
         }
 
@@ -268,4 +269,76 @@ class VendasController extends Controller
         return redirect()->route('vendas.list')->with('success', 'Venda atualizada com sucesso!');
     }
 
+
+    public function criarDeOrcamento(Request $request, $orcamentoId)
+    {
+        $orcamento = Orcamento::with('tours')->findOrFail($orcamentoId);
+
+        // Cria uma nova venda a partir dos dados do orçamento
+        $venda = Venda::create([
+            'user_id' => auth()->id(),
+            'vendedor' => auth()->user()->name,
+            'nome' => $orcamento->nome,
+            'telefone' => $orcamento->telefone,
+            'email' => $orcamento->email,
+            'hotel' => $orcamento->hotel,
+            'zona' => $orcamento->zona,
+            'direcao_hotel' => $orcamento->direcao_hotel,
+            'habitacao' => $orcamento->habitacao,
+            'pais_origem' => $orcamento->pais_origem,
+            'idioma' => $orcamento->idioma,
+            'estado_pagamento' => 'Pendiente',
+            'forma_pagamento' => 'Efectivo en Van',
+            'data_pagamento' => now()->toDateString(),
+            'valor_total' => $orcamento->valor_total,
+            'valor_pago' => 0,
+            'valor_a_pagar' => 0,
+            'status' => 'Reservado',
+        ]);
+
+        foreach ($orcamento->tours as $tour) {
+            $createdTour = $venda->tours()->create([
+                'tour' => $tour->tour,
+                'data_tour' => $tour->data_tour,
+                'pax_adulto' => $tour->pax_adulto,
+                'preco_adulto' => $tour->preco_adulto,
+                'pax_infantil' => $tour->pax_infantil,
+                'preco_infantil' => $tour->preco_infantil,
+            ]);
+
+            Logistica::create([
+                'venda_id' => $venda->id,
+                'data' => $createdTour->data_tour,
+                'hora' => $createdTour->hora ?? now()->format('H:i'),
+                'nome' => $venda->nome,
+                'tour' => $createdTour->tour,
+                'pax_total' => $createdTour->pax_adulto + ($createdTour->pax_infantil ?? 0),
+                'endereco' => $venda->zona,
+                'hotel' => $venda->hotel,
+                'estado_pagamento' => $venda->estado_pagamento,
+                'telefone' => $venda->telefone,
+                'vendedor' => $venda->vendedor,
+                'valor_total' => $venda->valor_total,
+                'condutor' => $createdTour->motorista ?? null,
+                'guia' => $createdTour->guia ?? null,
+                'valor_pago' => $venda->valor_pago,
+                'valor_a_pagar' => $venda->valor_a_pagar,
+                'voucher' => $venda->id,
+                'observacao' => $venda->observacao ?? null,
+                'conferido' => $request->conferido ?? null,
+                'status' => $request->status ?? 'Reservado',
+            ]);
+        }
+
+        // Obtenha os tours relacionados à venda
+        $tours = $venda->tours;
+
+        if ($venda->email) {
+            \Mail::to($venda->email)->send(new \App\Mail\VoucherConfirmadoMail($venda));
+        }
+
+        $orcamento->delete();
+        
+        return redirect()->route('vendas.list', $venda->id);
+    }
 }

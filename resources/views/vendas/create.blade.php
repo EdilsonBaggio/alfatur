@@ -170,11 +170,13 @@
                     <input type="file" name="comprovante">
                 </div>
 
-                <input type="hidden" name="status" value="Reservado">
+                {{-- <input type="hidden" name="status" value="Reservado"> --}}
                 <input type="hidden" id="valor_recebido" name="valor_recebido" value="">
 
                 <!-- Botão -->
                 <button type="submit" class="btn btn-primary">Ingresar Venda</button>
+                <button type="button" id="btn-orcamento" class="btn btn-warning">Enviar orçamento</button>
+                <a href="{{ route('orcamentos.lista') }}" class="btn btn-secondary">Lista de orçamentos</a>
             </form>
         </div>
     </div>
@@ -316,6 +318,49 @@
         });
 
         calcularValorTotal(); // Chamada inicial
+
+        $('#btn-orcamento').on('click', function () {
+            let form = $('#form-venda')[0];
+            let formData = new FormData(form);
+
+            $.ajax({
+                url: "{{ route('orcamentos.store') }}", // nova rota de orçamento
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: "¡Orçamento registrado!",
+                        text: "Redirigir a WhatsApp",
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: "Abrir WhatsApp"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#form-venda')[0].reset();
+                            window.open(response.whatsapp_link, '_blank');
+                        }
+                    });
+                },
+                error: function (xhr) {
+                    let message = xhr.responseJSON?.message;
+                    let errors = xhr.responseJSON?.errors;
+
+                    let html = `<strong>${message}</strong>`;
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al enviar la cotización',
+                        html: html,
+                    });
+                }
+            });
+        });
+
     });
 </script>
 @endsection
