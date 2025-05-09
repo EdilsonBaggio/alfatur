@@ -22,10 +22,18 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Senha:</label>
-                    <input type="password" id="password" name="password" value="{{ $user->email }}" class="form-control" required>
+                    <label for="password" class="form-label">Nova Senha:</label>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Digite uma nova senha">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                <i class="bi bi-eye"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-
+                
+            
                 <div class="form-group">
                     <label>Nível</label>
                     <select name="role" class="form-control" required>
@@ -107,6 +115,18 @@
         $('#rut').mask('00.000.000-0', {reverse: true});
         $('#whatsapp').mask('+00 90000-0000');
         $('#commission_percentage').mask('00');
+        $('#togglePassword').on('click', function() {
+            const input = $('#password');
+            const icon = $(this).find('i');
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
     });
 </script>
 @endsection
