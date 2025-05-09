@@ -1393,3 +1393,16 @@ th {
         width: 100%
     }
 }
+
+.botoes-venda{
+    @media screen and (max-width: 769px) {
+        button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        a {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+}

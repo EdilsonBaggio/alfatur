@@ -174,9 +174,11 @@
                 <input type="hidden" id="valor_recebido" name="valor_recebido" value="">
 
                 <!-- Botão -->
-                <button type="submit" class="btn btn-primary">Ingresar Venda</button>
-                <button type="button" id="btn-orcamento" class="btn btn-warning">Enviar orçamento</button>
-                <a href="{{ route('orcamentos.lista') }}" class="btn btn-secondary">Lista de orçamentos</a>
+                <div class="botoes-venda">
+                    <button type="submit" class="btn btn-primary">Ingresar Venda</button>
+                    <button type="button" id="btn-orcamento" class="btn btn-warning">Enviar orçamento</button>
+                    <a href="{{ route('orcamentos.lista') }}" class="btn btn-secondary">Lista de orçamentos</a>
+                </div>
             </form>
         </div>
     </div>

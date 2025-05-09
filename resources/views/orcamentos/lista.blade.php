@@ -7,33 +7,32 @@
             <div class="card-header">
                 Orçamentos
             </div>
-            <div class="card-body">
-              <div class="content-table">
-                <table id="orcamentosTable" class="table table-bordered table-striped">
-                    <thead>
+            <div class="card-body table">
+                <table class="table table-striped logistica">
+                    <thead class="table-dark">
                         <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Hotel</th>
-                            <th>Idioma</th>
-                            <th>Valor Total</th>
-                            <th>Data</th>
-                            <th>Tours</th>
-                            <th>Ação</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Hotel</th>
+                            <th scope="col">Idioma</th>
+                            <th scope="col">Valor Total</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Tours</th>
+                            <th scope="col">Ação</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($orcamentos as $orcamento)
                             <tr>
-                                <td>{{ $orcamento->nome }}</td>
-                                <td>{{ $orcamento->email }}</td>
-                                <td>{{ $orcamento->telefone }}</td>
-                                <td>{{ $orcamento->hotel }}</td>
-                                <td>{{ $orcamento->idioma }}</td>
-                                <td>CLP {{ number_format($orcamento->valor_total, 0, ',', '.') }}</td>
-                                <td>{{ $orcamento->created_at->format('d/m/Y') }}</td>
-                                <td>
+                                <td data-label="Nome">{{ $orcamento->nome }}</td>
+                                <td data-label="Email">{{ $orcamento->email }}</td>
+                                <td data-label="Telefone">{{ $orcamento->telefone }}</td>
+                                <td data-label="Hotel">{{ $orcamento->hotel }}</td>
+                                <td data-label="Idioma">{{ $orcamento->idioma }}</td>
+                                <td data-label="Valor Total">CLP {{ number_format($orcamento->valor_total, 0, ',', '.') }}</td>
+                                <td data-label="Data">{{ $orcamento->created_at->format('d/m/Y') }}</td>
+                                <td data-label="Tours">
                                     @if ($orcamento->tours->count())
                                         <ul class="mb-0 ps-3">
                                             @foreach ($orcamento->tours as $tour)
@@ -49,7 +48,7 @@
                                         Nenhum
                                     @endif
                                 </td>
-                                <td>
+                                <td data-label="Ação">
                                     <a href="{{ route('vendas.criarDeOrcamento', $orcamento->id) }}" class="btn btn-success btn-sm mb-1">Criar Venda</a>
                                 
                                     <form action="{{ route('orcamentos.destroy', $orcamento->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este orçamento?');" style="display: inline;">
@@ -62,8 +61,8 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    
                 </table>
-              </div>
             </div>
         </div>          
     </div>
@@ -71,20 +70,4 @@
 @endsection
 
 @section('scripts')
-    <!-- DataTables CSS e JS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#orcamentosTable').DataTable({
-                language: {
-                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json"
-                },
-                pageLength: 10,
-                responsive: true
-            });
-        });
-    </script>
 @endsection

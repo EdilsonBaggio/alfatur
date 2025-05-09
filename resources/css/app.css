@@ -1414,4 +1414,15 @@ th {
   }
 }
 
+@media screen and (max-width: 769px) {
+  .botoes-venda button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .botoes-venda a {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
 /*# sourceMappingURL=app.css.map */
