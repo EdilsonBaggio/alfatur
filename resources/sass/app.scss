@@ -341,6 +341,7 @@ table {
         .menu-logo{
             img{
                 height: 70px;
+                border-radius: 100%;
                 @media screen and (max-width: 769px) {
                     height: 30px;
                     margin: 0 15px;

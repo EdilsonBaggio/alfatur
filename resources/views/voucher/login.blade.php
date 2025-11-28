@@ -25,7 +25,7 @@
    <div class="row justify-content-center"> 
       <div class="col-md-7"> 
          <div class="col text-center content-logo">
-            <img  class="img-fluid" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+            <img  class="img-fluid" src="{{ Vite::asset('resources/images/logo.jpeg') }}" alt="">
          </div>
          <div class="card"> 
             <div class="card-body contant-login-form">
@@ -54,7 +54,7 @@
                      <a href="https://wa.me/56974909926?text=Hola,%20Olvide%20miu%20ID%20para%20ingresar%20a%20su%20sistema..." target="_blank" style="color: #fff;font-size: 14px;line-height: 40px; text-decoration: underline;">Pedir ayuda vía whatsapp </a>
                      <br>
                      {{-- <img class="img-fluid mt-1" height="20" src="{{ Vite::asset('resources/images/mountain.png') }}" alt=""> --}}
-                     <i class="derechos">ALFATUR Chile - Todos los Derechos Reservados</i>
+                     <i class="derechos">Turismo Chile - Todos los Derechos Reservados</i>
                 </form>
             </div>
          </div>

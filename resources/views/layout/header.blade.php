@@ -5,7 +5,7 @@
                 <i class="uil uil-bars"></i>
             </div>
             <div class="menu-logo">
-                <img class="img-fluid" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+                <img class="img-fluid" src="{{ Vite::asset('resources/images/logo.jpeg') }}" alt="">
             </div>
             @if(Auth::check())
                 <div class="d-flex menu-top-logado">

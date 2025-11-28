@@ -114,18 +114,18 @@
             <tr>
                <td>
                   <div style="text-align: center; margin:10px">
-                    <img width="150" src="{{ public_path('logo-8944cde3.jpg') }}" alt="Logo">
+                    <img width="150" src="{{ Vite::asset('resources/images/logo.jpeg') }}" alt="Logo">
                   </div>
                </td>
                <td>
                  <div class="header">
                       <p>
-                          <strong>ALFATUR Chile</strong><br>
+                          <strong>Turismo Chile</strong><br>
                           Luis Thayer Ojeda, Providencia.<br>
                           Santiago, CHILE.<br>
                           +56974909926<br>
-                          contacto@alfaturchile.com<br>
-                          www.alfaturchile.com
+                          contacto@turismochile.com<br>
+                          www.turismochile.com
                       </p>
                   </div>
                </td>
@@ -362,7 +362,7 @@
                                 <td style="padding: 0; background: #fff;">
                                     <div style="text-align: center;">
                                         <div style="background-color: #dfede1; padding: 10px;">
-                                            <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong> <br>
+                                            <strong>“TERMINOS Y CONDICIONES Turismo Chile”</strong> <br>
                                             <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Haga clic para ver</a>
                                         </div>
                                         <div style="background-color: #dee047; padding: 10px;">
