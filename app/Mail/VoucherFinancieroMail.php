@@ -28,7 +28,7 @@ class VoucherFinancieroMail extends Mailable
     public function build()
     {
         return $this->view('email.venda')
-                    ->subject('Voucher Financiero - ALFATUR')
+                    ->subject('Voucher Financiero - Turismo Chile')
                     ->with([
                         'venda' => $this->venda,
                         'viaje' => $this->viaje,
