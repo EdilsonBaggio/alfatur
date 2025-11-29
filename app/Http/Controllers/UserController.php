@@ -99,11 +99,37 @@ class UserController extends Controller
             'whatsapp' => 'required|string|max:20',
             'commission_percentage' => 'nullable|numeric|min:0|max:100',
             'password' => 'nullable|string|min:8',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'string',
         ]);
+
+        // Lista de permissões esperadas para padronizar
+        $permissionsMapping = [
+            'Mi conta' => 'home',
+            'Usuarios' => 'usuarios.create',
+            'Viajes/Vendedor' => 'viajes.vendedor',
+            'Logística' => 'logistica.index',
+            'Realizadas Por Pagar' => 'realizadas.pagar',
+            'Viajes FULL' => 'viajes.full',
+            'Pagos FULL' => 'pagos.full',
+            'Vender' => 'vendas.create',
+            'Mis Vendas' => 'vendas.list',
+            'Confirmados' => 'confirmados',
+            'Estimativo' => 'estimativo.index',
+            'Tours' => 'tours.create',
+            'Mis Liquidaciones' => 'mis.liquidaciones',
+            'Liquidaciones' => 'liquidaciones'
+        ];
+
+        // Mapeando as permissões para os novos valores padronizados
+        $permissions = collect($request->input('permissions', []))
+                        ->map(fn($p) => $permissionsMapping[$p] ?? $p)
+                        ->toArray();
+        $validatedData['permissions'] = $permissions;
 
         // Se a senha foi preenchida, criptografa; senão, ignora
         if (!empty($validatedData['password'])) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
+            $validatedData['password'] = Hash::make($validatedData['password']);
         } else {
             unset($validatedData['password']);
         }
