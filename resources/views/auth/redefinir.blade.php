@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="col text-center content-logo">
-                <img  class="img-fluid" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+                <img  class="img-fluid" src="{{ Vite::asset('resources/images/logo.jpeg') }}" alt="">
             </div>
             <div class="card">
                 <div class="card-body contant-login-form">
