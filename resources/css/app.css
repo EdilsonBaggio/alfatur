@@ -329,6 +329,7 @@ table {
 }
 .content-top-menu .container .menu-logo img {
   height: 70px;
+  border-radius: 100%;
 }
 @media screen and (max-width: 769px) {
   .content-top-menu .container .menu-logo img {

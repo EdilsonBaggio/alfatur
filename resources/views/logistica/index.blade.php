@@ -718,7 +718,7 @@ function populateModalVoucher(logistica) {
         <div class="row">
             <div class="col-md-6 text-left">
                 <div class="menu-logo">
-                    <img src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+                    <img src="{{ Vite::asset('resources/images/logo.jpeg') }}" alt="">
                 </div>
             </div>
             <div class="col-md-6 mt-4 text-right">
@@ -767,7 +767,7 @@ function populateModalVoucher(logistica) {
             <div class="col-md-12 mt-4 text-center">
                 <p>
                 <span>* Consultas de horário, onde está a van, contato com a logística, enviar whatsapp para +56974909926</span><br />
-                <strong>“TERMINOS Y CONDICIONES ALFATUR Chile”</strong><br />
+                <strong>“TERMINOS Y CONDICIONES Turismo Chile”</strong><br />
                 <a href="{{ Vite::asset('resources/images/TEC.pdf') }}" target="_blank">Haga clic para ver</a>
                 </p>
             </div>

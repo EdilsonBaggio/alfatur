@@ -69,7 +69,7 @@ class OrcamentoController extends Controller
         $telefone = preg_replace('/[^0-9]/', '', $orcamento->telefone);
         $cotacao = 0.006;
 
-        $mensagem = "*Orçamento Alfatur Chile*\n\n";
+        $mensagem = "*Orçamento Turismo Chile*\n\n";
         $mensagem .= "*Vendedor:* {$orcamento->vendedor}\n";
         $mensagem .= "*Cliente:* {$orcamento->nome}\n";
         $mensagem .= "*Telefone:* {$orcamento->telefone}\n";

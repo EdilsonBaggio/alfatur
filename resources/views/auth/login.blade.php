@@ -16,7 +16,7 @@
    <div class="row justify-content-center"> 
       <div class="col-md-7"> 
          <div class="col text-center content-logo">
-            <img  class="img-fluid" src="{{ Vite::asset('resources/images/logo.svg') }}" alt="">
+            <img  class="img-fluid" src="{{ Vite::asset('resources/images/logo.jpeg') }}" alt="">
          </div>
          <div class="card"> 
             <div class="card-body contant-login-form">
@@ -60,7 +60,7 @@
                      </button>
                   </div>
                   <img class="img-fluid mt-3" src="{{ Vite::asset('resources/images/mountain.png') }}" alt="">
-                  <i class="derechos">ALFATUR Chile - Todos los Derechos Reservados</i>
+                  <i class="derechos">Turismo Chile - Todos los Derechos Reservados</i>
                </form>
             </div>
          </div>

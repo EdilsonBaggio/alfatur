@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-715e6da3.css",
+    "file": "assets/app-613edc8b.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -24,41 +24,37 @@
     "file": "assets/edit-dec481f9.svg",
     "src": "resources/images/edit.svg"
   },
-  "resources/images/favicon/android-chrome-192x192.png": {
-    "file": "assets/android-chrome-192x192-06f1cdfe.png",
-    "src": "resources/images/favicon/android-chrome-192x192.png"
-  },
-  "resources/images/favicon/android-chrome-384x384.png": {
-    "file": "assets/android-chrome-384x384-85b4e43e.png",
-    "src": "resources/images/favicon/android-chrome-384x384.png"
-  },
   "resources/images/favicon/apple-touch-icon.png": {
-    "file": "assets/apple-touch-icon-59131d4c.png",
+    "file": "assets/apple-touch-icon-aa73524b.png",
     "src": "resources/images/favicon/apple-touch-icon.png"
   },
-  "resources/images/favicon/favicon-16x16.png": {
-    "file": "assets/favicon-16x16-62d35e1d.png",
-    "src": "resources/images/favicon/favicon-16x16.png"
-  },
-  "resources/images/favicon/favicon-32x32.png": {
-    "file": "assets/favicon-32x32-3d981b9b.png",
-    "src": "resources/images/favicon/favicon-32x32.png"
+  "resources/images/favicon/favicon-96x96.png": {
+    "file": "assets/favicon-96x96-837b1d72.png",
+    "src": "resources/images/favicon/favicon-96x96.png"
   },
   "resources/images/favicon/favicon.ico": {
-    "file": "assets/favicon-4f623332.ico",
+    "file": "assets/favicon-d5118f2a.ico",
     "src": "resources/images/favicon/favicon.ico"
   },
-  "resources/images/favicon/mstile-150x150.png": {
-    "file": "assets/mstile-150x150-3128e396.png",
-    "src": "resources/images/favicon/mstile-150x150.png"
+  "resources/images/favicon/favicon.svg": {
+    "file": "assets/favicon-74ff1463.svg",
+    "src": "resources/images/favicon/favicon.svg"
   },
   "resources/images/favicon/safari-pinned-tab.svg": {
     "file": "assets/safari-pinned-tab-d73e22a3.svg",
     "src": "resources/images/favicon/safari-pinned-tab.svg"
   },
   "resources/images/favicon/site.webmanifest": {
-    "file": "assets/site-3251ca33.webmanifest",
+    "file": "assets/site-300796a7.webmanifest",
     "src": "resources/images/favicon/site.webmanifest"
+  },
+  "resources/images/favicon/web-app-manifest-192x192.png": {
+    "file": "assets/web-app-manifest-192x192-0f134b04.png",
+    "src": "resources/images/favicon/web-app-manifest-192x192.png"
+  },
+  "resources/images/favicon/web-app-manifest-512x512.png": {
+    "file": "assets/web-app-manifest-512x512-7ed1d364.png",
+    "src": "resources/images/favicon/web-app-manifest-512x512.png"
   },
   "resources/images/footer-bg.svg": {
     "file": "assets/footer-bg-012fa306.svg",
@@ -87,6 +83,10 @@
   "resources/images/logo-8944cde3.jpg": {
     "file": "assets/logo-8944cde3-2d4b97f2.jpg",
     "src": "resources/images/logo-8944cde3.jpg"
+  },
+  "resources/images/logo.jpeg": {
+    "file": "assets/logo-7ee23519.jpeg",
+    "src": "resources/images/logo.jpeg"
   },
   "resources/images/logo.svg": {
     "file": "assets/logo-8944cde3.svg",

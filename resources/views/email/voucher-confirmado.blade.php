@@ -23,7 +23,7 @@
     Nombre: {{ explode(' ', $venda->nome)[0] }}</p>
 
     <p>Saludos,<br>
-    ALFATUR Chile.</p>
+    Turismo Chile.</p>
 
     <p style="font-size: 0.8em;">PD: E-mail generado automáticamente.<br>
     COD: ALF-MAILER-V01</p>

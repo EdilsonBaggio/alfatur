@@ -19,7 +19,7 @@ class VoucherConfirmadoMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Tu reserva está confirmada - ALFATUR Chile')
+        return $this->subject('Tu reserva está confirmada - Turismo Chile')
                     ->view('email.voucher-confirmado');
     }
 }
