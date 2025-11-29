@@ -93,6 +93,7 @@ table {
 .content-login .content-logo img {
   width: 364px;
   width: 364px;
+  border-radius: 100%;
 }
 .content-login .content-logo h1 {
   color: #FFFFFF;
@@ -1405,7 +1406,7 @@ th {
 }
 
 .btn-viajes {
-  padding: 5px !important;
+  padding: 5px;
   margin-bottom: 5px;
 }
 @media screen and (max-width: 769px) {
