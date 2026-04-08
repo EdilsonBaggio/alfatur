@@ -1,60 +1,115 @@
 @extends('layout.masterdash')
+
 @section('content')
-<div class="container">
-    <div class="tit-mi-conta">
-        <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 0C9.94783 0 0 9.94783 0 22C0 34.0522 9.94783 44 22 44C34.0522 44 44 34.1478 44 22C44 9.85218 34.1478 0 22 0ZM22 6.6C25.7304 6.6 28.6 9.46956 28.6 13.2C28.6 16.9304 25.7304 19.8 22 19.8C18.2696 19.8 15.4 16.9304 15.4 13.2C15.4 9.46956 18.2696 6.6 22 6.6ZM22 37.8782C16.5478 37.8782 11.6696 35.0087 8.8 30.8C8.8 26.4 17.6 24.0087 22 24.0087C26.4 24.0087 35.2 26.4 35.2 30.8C32.3304 35.0087 27.5478 37.8782 22 37.8782Z" fill="#EDEDED"/>
-        </svg>
-        <h2>Mi conta</h2>
+<div class="row mb-4 animate__animated animate__fadeIn">
+    <div class="col-12 d-flex align-items-center">
+        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+            <i class="fas fa-user-cog fa-lg"></i>
+        </div>
+        <div>
+            <h2 class="mb-0 fw-bold">Mi Cuenta</h2>
+            <p class="text-muted mb-0">Gestiona tu información personal y perfil</p>
+        </div>
     </div>
-    <div class="content-dados-conta">
-        <div class="row">
-            <div class="col-md-6 order-1">
-                <div class="d-flex">
-                    <div><i class="bi bi-person-circle"></i> Usuário:</div> {{ Auth::user()->email }}
-                </div>
-                <div class="d-flex">
-                    <div><i class="bi bi-lock-fill"></i>Contraseña:</div> <a href="{{ route('password.request') }}">Cambiar Contraseña</a>
-                </div>
-                <div class="d-flex">
-                    <div><i class="bi bi-person-circle"></i>Nombre:</div> {{ Auth::user()->name }}
-                </div>
-                <div class="d-flex">
-                    <div><i class="bi bi-person-fill-gear"></i>RUT:</div> {{ Auth::user()->rut }}
-                </div>
-                <div class="d-flex">
-                    <div><i class="bi bi-whatsapp"></i>Whatsapp:</div> {{ Auth::user()->whatsapp }}
-                </div>
-                <div class="d-flex">
-                    <div><i class="bi bi-person-arms-up"></i>Perfil:</div> {{ Auth::user()->role }}
-                </div>
-                <form action="{{ route('users.updatePhoto', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('POST')
-                
-                    <div class="d-flex">
-                        <div>
-                            <div class="mb-2"><i class="bi bi-card-image"></i> Foto:</div>
-                            <input type="file" name="photo" class="form-control" accept="image/*" required>
+</div>
+
+<div class="row g-4 animate__animated animate__fadeInUp">
+    <div class="col-lg-8">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-header bg-white py-3">
+                <h5 class="mb-0 fw-bold text-primary">Información Personal</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase">Email / Usuario</label>
+                        <div class="d-flex align-items-center p-2 bg-light rounded border">
+                            <i class="fas fa-envelope text-primary me-2 opacity-75"></i>
+                            <span class="fw-medium">{{ Auth::user()->email }}</span>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <button type="submit" class="foto-btn btn btn-primary mt-2">Atualizar Foto</button>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase">Nombre</label>
+                        <div class="d-flex align-items-center p-2 bg-light rounded border">
+                            <i class="fas fa-user text-primary me-2 opacity-75"></i>
+                            <span class="fw-medium">{{ Auth::user()->name }}</span>
+                        </div>
                     </div>
-                </form>  
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase">RUT</label>
+                        <div class="d-flex align-items-center p-2 bg-light rounded border">
+                            <i class="fas fa-id-card text-primary me-2 opacity-75"></i>
+                            <span class="fw-medium">{{ Auth::user()->rut }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase">WhatsApp</label>
+                        <div class="d-flex align-items-center p-2 bg-light rounded border">
+                            <i class="fab fa-whatsapp text-success me-2 opacity-75"></i>
+                            <span class="fw-medium">{{ Auth::user()->whatsapp }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase">Perfil / Rol</label>
+                        <div class="d-flex align-items-center p-2 bg-light rounded border">
+                            <i class="fas fa-user-tag text-primary me-2 opacity-75"></i>
+                            <span class="fw-medium">{{ Auth::user()->role }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-muted small text-uppercase">Contraseña</label>
+                        <div class="d-flex align-items-center p-2 bg-light rounded border">
+                            <i class="fas fa-lock text-warning me-2 opacity-75"></i>
+                            <a href="{{ route('password.request') }}" class="text-decoration-none fw-medium">Cambiar Contraseña</a>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4 opacity-50">
+
+                <h6 class="fw-bold mb-3">Actualizar Foto de Perfil</h6>
+                <form action="{{ route('users.updatePhoto', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row align-items-end g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0"><i class="fas fa-image text-muted"></i></span>
+                                <input type="file" name="photo" class="form-control border-start-0" accept="image/*" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-upload me-2"></i> Actualizar Foto
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="col-md-6 order-2">
-                <div class="text-center foto">
-                    @if(Auth::user()->photo) <!-- Verifica se o usuário possui uma foto cadastrada -->
-                        <img class="img-fluid" src="{{ asset('' . Auth::user()->photo) }}" alt="Foto do usuário">
-                    @else
-                        <img class="img-fluid" src="{{ Vite::asset('resources/images/foto.png') }}" alt="Foto padrão">
-                    @endif
-                </div>                               
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 text-center py-4 h-100">
+            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                <div class="position-relative mb-4">
+                    <div class="rounded-circle border border-4 border-primary p-1 shadow-sm overflow-hidden" style="width: 180px; height: 180px;">
+                        @if(Auth::user()->photo)
+                            <img src="{{ asset('' . Auth::user()->photo) }}" alt="Foto del usuario" class="img-fluid rounded-circle h-100 w-100 object-fit-cover">
+                        @else
+                            <img src="{{ Vite::asset('resources/images/avatar.png') }}" alt="Foto padrão" class="img-fluid rounded-circle h-100 w-100 object-fit-cover opacity-50">
+                        @endif
+                    </div>
+                    <div class="position-absolute bottom-0 end-0 bg-success border border-4 border-white rounded-circle shadow-sm" style="width: 30px; height: 30px;" title="Online"></div>
+                </div>
+                <h4 class="fw-bold mb-1">{{ Auth::user()->name }}</h4>
+                <p class="text-primary fw-medium mb-3">{{ Auth::user()->role }}</p>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">
+                        <i class="fas fa-calendar-alt me-1 text-primary"></i> Miembro desde {{ Auth::user()->created_at->format('M Y') }}
+                    </span>
+                </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
-@section('script')
 @endsection

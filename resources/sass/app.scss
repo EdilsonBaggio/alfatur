@@ -25,7 +25,7 @@ footer, header, hgroup, menu, nav, section {
     display: block;
 }
  
-//Fontes
+// Fontes
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
@@ -42,6 +42,147 @@ $laranja: #EF592A;
 $azul: #007bff;
 $vermelho: #fd0000;
 $amarelo: #d6c52c;
+
+// Modern Layout Styles
+.main-wrapper {
+    position: relative;
+}
+
+.sidebar {
+    width: 260px;
+    min-height: calc(100vh - 56px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    
+    @media (max-width: 991.98px) {
+        position: fixed;
+        left: -260px;
+        top: 56px;
+        height: calc(100vh - 56px);
+        
+        body.sidebar-open & {
+            left: 0;
+        }
+    }
+
+    .nav-link {
+        padding: 0.8rem 1rem;
+        border-radius: 0.5rem;
+        margin: 0.2rem 0;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        color: #4a5568;
+        
+        i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+        
+        &:hover {
+            background-color: #f7fafc;
+            color: $azul;
+            i { opacity: 1; }
+        }
+        
+        &.active {
+            background-color: rgba($azul, 0.1);
+            color: $azul;
+            i { opacity: 1; }
+        }
+    }
+}
+
+.main-content {
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+// Global Modern Overrides
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    
+    .card-header {
+        background-color: $branco;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 1.25rem;
+        font-weight: 600;
+    }
+    
+    .card-body {
+        padding: 1.25rem;
+    }
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+}
+
+.table {
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+    
+    thead th {
+        border-bottom: none;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        color: #718096;
+        padding: 1rem;
+    }
+    
+    tbody tr {
+        background-color: $branco;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+        
+        td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+            
+            &:first-child {
+                border-left: 1px solid #f1f5f9;
+                border-top-left-radius: 0.5rem;
+                border-bottom-left-radius: 0.5rem;
+            }
+            
+            &:last-child {
+                border-right: 1px solid #f1f5f9;
+                border-top-right-radius: 0.5rem;
+                border-bottom-right-radius: 0.5rem;
+            }
+        }
+        
+        &:hover {
+            transform: scale(1.005);
+            background-color: #fdfdfd;
+        }
+    }
+}
+
+// Bootstrap Utility Overrides
+.bg-primary { background-color: $azul !important; }
+.text-primary { color: $azul !important; }
+
+// Navbar custom styling
+.navbar {
+    padding: 0.75rem 1rem;
+}
  
 html{
     height: 100%;
